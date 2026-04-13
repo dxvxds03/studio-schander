@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -32,7 +33,7 @@ body {
   cursor: none;
 }
 
-a, button, input, textarea, select, [role="button"], [draggable] {
+a, button, input, textarea, select, [role="button"] {
   cursor: none !important;
 }
 
@@ -45,7 +46,6 @@ a, button, input, textarea, select, [role="button"], [draggable] {
 ::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--negroni); }
 
-/* Label utility */
 .label {
   font-size: 10px;
   letter-spacing: 0.22em;
@@ -54,9 +54,8 @@ a, button, input, textarea, select, [role="button"], [draggable] {
   color: var(--muted);
 }
 
-/* Bracketed label — IB Hasan style */
-.label-bracket::before { content: '['; margin-right: 0.2em; }
-.label-bracket::after  { content: ']'; margin-left:  0.2em; }
+.label-bracket::before { content: '['; margin-right: 0.25em; }
+.label-bracket::after  { content: ']'; margin-left:  0.25em; }
 
 .img-hover {
   transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);

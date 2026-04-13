@@ -4,7 +4,7 @@ const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     fontFamily: {
-      display: ['var(--font-syne)', 'Arial Black', 'Arial', 'sans-serif'],
+      display: ['"Cabinet Grotesk"', 'Arial Black', 'Arial', 'sans-serif'],
       sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
       mono: ['"Courier New"', 'Courier', 'monospace'],
     },

@@ -12,11 +12,13 @@ export default async function HomePage() {
     .order('order', { ascending: true })
     .order('created_at', { ascending: false })
 
+  const all = projects ?? []
+
   return (
     <main>
       <Navigation />
-      <HeroSection />
-      <ProjectsGrid projects={projects ?? []} />
+      <HeroSection projects={all} />
+      <ProjectsGrid projects={all} />
 
       <footer className="px-8 md:px-14 lg:px-20 py-16 border-t border-faint">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
@@ -27,7 +29,7 @@ export default async function HomePage() {
             >
               Studio Schander
             </p>
-            <p className="label label-bracket mt-2">Design & Direction</p>
+            <p className="label label-bracket mt-2">Design & Direction · Bielefeld</p>
           </div>
           <div className="flex flex-col items-end gap-1.5">
             <p className="label">© {new Date().getFullYear()} David Schander</p>
