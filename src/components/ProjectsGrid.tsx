@@ -73,21 +73,13 @@ function SectionHeader({ inView, count }: { inView: boolean; count: number }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55 }}
     >
-      <div className="flex items-baseline gap-4">
+      <div>
         <h2
           className="font-display text-ink"
-          style={{ fontSize: 'clamp(40px, 6vw, 88px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1 }}
+          style={{ fontSize: 'clamp(32px, 4.8vw, 72px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1 }}
         >
-          Projekte
+          Was bisher passiert ist.
         </h2>
-        {count > 0 && (
-          <span
-            className="font-display"
-            style={{ fontSize: 'clamp(20px, 2.5vw, 36px)', fontWeight: 800, color: 'var(--negroni)', letterSpacing: '-0.03em' }}
-          >
-            {String(count).padStart(2, '0')}
-          </span>
-        )}
       </div>
     </motion.div>
   )

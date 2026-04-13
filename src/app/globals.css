@@ -62,6 +62,21 @@ a, button, input, textarea, select, [role="button"] {
 }
 .img-hover:hover { transform: scale(1.03); }
 
+.btn-negroni {
+  display: inline-block;
+  background: var(--negroni);
+  color: var(--cream);
+  text-decoration: none;
+  font-family: 'Cabinet Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-negroni:hover {
+  background: var(--ink);
+  transform: translateY(-2px);
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-33.333%); }

@@ -18,6 +18,61 @@ export default async function HomePage() {
     <main>
       <Navigation />
       <HeroSection projects={all} />
+
+      {/* About */}
+      <section
+        style={{
+          borderTop: '2px solid #191917',
+          borderBottom: '2px solid #191917',
+          padding: 'clamp(64px, 9vw, 128px) clamp(32px, 5vw, 80px)',
+        }}
+      >
+        <div style={{ maxWidth: '960px' }}>
+          <p
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(30px, 4.8vw, 68px)',
+              letterSpacing: '-0.035em',
+              lineHeight: 1.04,
+              color: '#191917',
+              marginBottom: 'clamp(28px, 3vw, 48px)',
+            }}
+          >
+            Ich mache einfach,<br />was mir in den Kopf kommt.
+          </p>
+
+          <p
+            style={{
+              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontSize: 'clamp(15px, 1.3vw, 18px)',
+              lineHeight: 1.65,
+              color: '#191917',
+              maxWidth: '640px',
+              marginBottom: 'clamp(36px, 4vw, 56px)',
+            }}
+          >
+            Ich bin David. Ich designe, fotografiere, entwickle Webseiten und mache Editorial Design&nbsp;– meistens alles gleichzeitig.
+            <br /><br />
+            Angefangen hat es vor 6 Jahren mit einer Idee. Inzwischen sind es viele: Lernmaterialien auf Eduki, AI Prompts auf Promptbase, ein eigener Kochblog, Medienarbeit für Gastronomie&nbsp;– und was auch immer als nächstes kommt.
+            <br /><br />
+            Hintergrund in Informatik, Digitalisierung & digitalem Marketing.
+          </p>
+
+          <a
+            href="mailto:hello@davidschander.com"
+            className="btn-negroni"
+            data-hover
+            style={{
+              fontSize: 'clamp(16px, 1.6vw, 22px)',
+              padding: 'clamp(12px, 1.2vw, 18px) clamp(24px, 2.4vw, 36px)',
+            }}
+          >
+            Du hast auch eine Idee?&nbsp;↗
+          </a>
+        </div>
+      </section>
+
       <ProjectsGrid projects={all} />
 
       {/* Brand colors */}
