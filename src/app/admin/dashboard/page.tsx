@@ -11,6 +11,7 @@ interface Project {
   client: string | null
   cover_image: string | null
   images: string[]
+  link: string | null
   featured: boolean
   order: number
   description: string | null
@@ -24,6 +25,7 @@ const emptyForm = {
   client: '',
   tags: '',
   coverImage: '',
+  link: '',
   order: '0',
   featured: false,
 }
@@ -105,6 +107,7 @@ export default function Dashboard() {
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
       coverImage: form.coverImage || null,
       images: extraImages,
+      link: form.link || null,
       order: parseInt(form.order) || 0,
       featured: form.featured,
     }
@@ -147,6 +150,7 @@ export default function Dashboard() {
       client: p.client || '',
       tags: (p.tags ?? []).join(', '),
       coverImage: p.cover_image || '',
+      link: p.link || '',
       order: String(p.order),
       featured: p.featured,
     })
@@ -217,6 +221,14 @@ export default function Dashboard() {
             <div>
               <label style={lbl}>Tags (kommagetrennt)</label>
               <input style={inp} value={form.tags} onChange={(e) => setForm((p) => ({ ...p, tags: e.target.value }))} placeholder="Branding, Print, Web" />
+            </div>
+
+            <div>
+              <label style={lbl}>Externer Link (optional)</label>
+              <input style={inp} type="url" value={form.link} onChange={(e) => setForm((p) => ({ ...p, link: e.target.value }))} placeholder="https://example.com" />
+              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '10px', color: '#787672', marginTop: '4px' }}>
+                Wenn gesetzt, öffnet der Klick im Carousel diesen Link (↗ neuer Tab).
+              </p>
             </div>
 
             {/* Cover image */}

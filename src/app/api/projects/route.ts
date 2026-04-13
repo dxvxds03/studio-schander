@@ -33,6 +33,7 @@ export async function POST(request: Request) {
       tags: body.tags ?? [],
       cover_image: body.coverImage ?? null,
       images: body.images ?? [],
+      link: body.link ?? null,
       order: body.order ?? 0,
       featured: body.featured ?? false,
     })
