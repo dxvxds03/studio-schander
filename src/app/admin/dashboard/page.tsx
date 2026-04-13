@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { getSupabaseBrowserClient } from '@/lib/supabase'
 
 interface Project {
   id: number
@@ -121,8 +122,10 @@ export default function Dashboard() {
   }
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
+    const supabase = getSupabaseBrowserClient()
+    await supabase.auth.signOut()
     router.push('/admin')
+    router.refresh()
   }
 
   const inp: React.CSSProperties = {
