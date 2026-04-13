@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { verifyAdmin } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   const isAdmin = await verifyAdmin()
   if (!isAdmin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
