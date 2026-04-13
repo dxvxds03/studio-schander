@@ -24,12 +24,14 @@ export default function Navigation() {
           scrolled ? 'bg-cream/90 backdrop-blur-sm' : ''
         }`}
       >
-        <Link
-          href="/"
-          className="label hover:text-deadpoet transition-colors"
-          data-hover
-        >
-          Studio Schander
+        <Link href="/" data-hover className="flex items-center">
+          <motion.img
+            src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
+            alt="Studio Schander"
+            style={{ height: '28px', width: 'auto', display: 'block' }}
+            whileHover={{ opacity: 0.7 }}
+            transition={{ duration: 0.2 }}
+          />
         </Link>
 
         <div className="flex items-center gap-10">
