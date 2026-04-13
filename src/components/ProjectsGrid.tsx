@@ -10,6 +10,7 @@ interface Project {
   year: number | null
   client: string | null
   cover_image: string | null
+  images: string[]
   featured: boolean
 }
 
@@ -23,12 +24,20 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
     return (
       <section id="work" className="px-8 md:px-14 lg:px-20 py-28">
         <SectionHeader inView count={0} />
-        <div className="mt-20 py-24 flex flex-col items-center gap-3">
-          <p className="font-display" style={{ fontSize: '20px', fontWeight: 700, color: 'rgba(25,25,23,0.35)', letterSpacing: '-0.02em' }}>
+        <div className="mt-20 py-24 flex flex-col items-center gap-4">
+          <p
+            className="font-display"
+            style={{ fontSize: 'clamp(24px, 3vw, 48px)', fontWeight: 800, color: 'rgba(25,25,23,0.15)', letterSpacing: '-0.035em' }}
+          >
             Noch keine Projekte.
           </p>
-          <a href="/admin" className="label label-bracket hover:text-negroni transition-colors" data-hover>
-            Admin
+          <a
+            href="/admin"
+            className="font-display hover:text-negroni transition-colors"
+            data-hover
+            style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '-0.01em', color: '#191917' }}
+          >
+            Zum Admin ↗
           </a>
         </div>
       </section>
@@ -36,9 +45,9 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
   }
 
   return (
-    <section id="work" ref={ref} className="px-8 md:px-14 lg:px-20 py-28">
+    <section id="work" ref={ref} className="px-8 md:px-14 lg:px-20 py-24">
       <SectionHeader inView={inView} count={projects.length} />
-      <div className="mt-10 grid gap-5 md:gap-7" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+      <div className="mt-10 grid gap-6 md:gap-8" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         {projects.map((project, i) => (
           <motion.div
             key={project.id}
@@ -58,26 +67,27 @@ export default function ProjectsGrid({ projects }: { projects: Project[] }) {
 function SectionHeader({ inView, count }: { inView: boolean; count: number }) {
   return (
     <motion.div
-      className="flex items-end justify-between border-b border-faint pb-5"
+      className="flex items-end justify-between pb-5"
+      style={{ borderBottom: '2px solid #191917' }}
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55 }}
     >
-      <div>
-        <span className="label label-bracket">Ausgewählte Arbeiten</span>
-        <div className="mt-2 flex items-baseline gap-3">
-          <h2
-            className="font-display text-ink"
-            style={{ fontSize: 'clamp(32px, 5vw, 66px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}
+      <div className="flex items-baseline gap-4">
+        <h2
+          className="font-display text-ink"
+          style={{ fontSize: 'clamp(40px, 6vw, 88px)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1 }}
+        >
+          Projekte
+        </h2>
+        {count > 0 && (
+          <span
+            className="font-display"
+            style={{ fontSize: 'clamp(20px, 2.5vw, 36px)', fontWeight: 800, color: 'var(--negroni)', letterSpacing: '-0.03em' }}
           >
-            Projekte
-          </h2>
-          {count > 0 && (
-            <span style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', color: '#787672' }}>
-              ({count})
-            </span>
-          )}
-        </div>
+            {String(count).padStart(2, '0')}
+          </span>
+        )}
       </div>
     </motion.div>
   )

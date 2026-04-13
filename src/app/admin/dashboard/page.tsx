@@ -10,6 +10,7 @@ interface Project {
   year: number | null
   client: string | null
   cover_image: string | null
+  images: string[]
   featured: boolean
   order: number
   description: string | null
@@ -31,11 +32,13 @@ export default function Dashboard() {
   const router = useRouter()
   const [projects, setProjects] = useState<Project[]>([])
   const [form, setForm] = useState(emptyForm)
+  const [extraImages, setExtraImages] = useState<string[]>([])
   const [editingId, setEditingId] = useState<number | null>(null)
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
+  const multiFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => { fetchProjects() }, [])
 
@@ -62,6 +65,33 @@ export default function Dashboard() {
     }
   }
 
+  const handleMultiFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? [])
+    if (!files.length) return
+    setUploading(true)
+    try {
+      const urls: string[] = []
+      for (const file of files) {
+        const fd = new FormData()
+        fd.append('file', file)
+        const res = await fetch('/api/upload', { method: 'POST', body: fd })
+        if (!res.ok) throw new Error()
+        const { url } = await res.json()
+        urls.push(url)
+      }
+      setExtraImages((prev) => [...prev, ...urls])
+    } catch {
+      setMsg('Bild-Upload fehlgeschlagen.')
+    } finally {
+      setUploading(false)
+      if (multiFileRef.current) multiFileRef.current.value = ''
+    }
+  }
+
+  const removeExtraImage = (idx: number) => {
+    setExtraImages((prev) => prev.filter((_, i) => i !== idx))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true)
@@ -74,6 +104,7 @@ export default function Dashboard() {
       client: form.client || null,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
       coverImage: form.coverImage || null,
+      images: extraImages,
       order: parseInt(form.order) || 0,
       featured: form.featured,
     }
@@ -85,6 +116,7 @@ export default function Dashboard() {
     if (res.ok) {
       setMsg(editingId ? 'Aktualisiert.' : 'Erstellt.')
       setForm(emptyForm)
+      setExtraImages([])
       setEditingId(null)
       fetchProjects()
     } else if (res.status === 401) {
@@ -100,7 +132,7 @@ export default function Dashboard() {
     const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' })
     if (res.ok) {
       fetchProjects()
-      if (editingId === id) { setEditingId(null); setForm(emptyForm) }
+      if (editingId === id) { setEditingId(null); setForm(emptyForm); setExtraImages([]) }
     } else if (res.status === 401) {
       router.push('/admin')
     }
@@ -118,6 +150,7 @@ export default function Dashboard() {
       order: String(p.order),
       featured: p.featured,
     })
+    setExtraImages(p.images ?? [])
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -186,6 +219,7 @@ export default function Dashboard() {
               <input style={inp} value={form.tags} onChange={(e) => setForm((p) => ({ ...p, tags: e.target.value }))} placeholder="Branding, Print, Web" />
             </div>
 
+            {/* Cover image */}
             <div>
               <label style={lbl}>Cover-Bild</label>
               {form.coverImage && (
@@ -204,6 +238,37 @@ export default function Dashboard() {
               )}
             </div>
 
+            {/* Additional images */}
+            <div>
+              <label style={lbl}>Weitere Bilder (Hover-Galerie)</label>
+              {extraImages.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '10px' }}>
+                  {extraImages.map((url, idx) => (
+                    <div key={idx} style={{ position: 'relative' }}>
+                      <img src={url} alt="" style={{ width: '64px', height: '64px', objectFit: 'cover', display: 'block' }} />
+                      <button
+                        type="button"
+                        onClick={() => removeExtraImage(idx)}
+                        style={{
+                          position: 'absolute', top: '2px', right: '2px',
+                          background: '#E8581A', color: '#fff', border: 'none',
+                          width: '18px', height: '18px', fontSize: '10px',
+                          cursor: 'pointer', lineHeight: '18px', textAlign: 'center',
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <input ref={multiFileRef} type="file" accept="image/*" multiple onChange={handleMultiFileChange} style={{ display: 'none' }} />
+              <button type="button" onClick={() => multiFileRef.current?.click()} disabled={uploading}
+                style={{ ...inp, width: 'auto', padding: '8px 16px', background: 'none', cursor: 'pointer', color: '#787672' }}>
+                {uploading ? 'Lädt hoch…' : 'Bilder hinzufügen'}
+              </button>
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', alignItems: 'end' }}>
               <div>
                 <label style={lbl}>Reihenfolge</label>
@@ -216,7 +281,7 @@ export default function Dashboard() {
             </div>
 
             {msg && (
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes(' fehler') || msg.includes('Fehler') ? '#E8581A' : '#191917' }}>
+              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes('fehler') || msg.includes('Fehler') ? '#E8581A' : '#191917' }}>
                 {msg}
               </p>
             )}
@@ -227,7 +292,7 @@ export default function Dashboard() {
                 {saving ? 'Speichert…' : editingId ? 'Aktualisieren' : 'Erstellen'}
               </button>
               {editingId && (
-                <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); setMsg('') }}
+                <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); setExtraImages([]); setMsg('') }}
                   style={{ padding: '12px 24px', background: 'none', border: '1px solid #E8E5DF', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: '#787672' }}>
                   Abbrechen
                 </button>
@@ -262,6 +327,7 @@ export default function Dashboard() {
                     </p>
                     <p style={{ ...lbl, marginBottom: 0 }}>
                       {p.year}{p.year && p.client ? ' — ' : ''}{p.client}
+                      {(p.images?.length ?? 0) > 0 && ` · ${p.images.length + 1} Bilder`}
                     </p>
                   </div>
                   <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
