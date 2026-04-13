@@ -8,7 +8,7 @@ export const revalidate = 0
 export default async function HomePage() {
   const { data: projects } = await supabase
     .from('projects')
-    .select('id, title, year, client, cover_image, images, link, featured, order')
+    .select('*')
     .order('order', { ascending: true })
     .order('created_at', { ascending: false })
 

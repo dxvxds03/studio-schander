@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import DraggableLetters from './DraggableLetters'
 
 interface HeroProject {
   id: number
@@ -22,7 +21,6 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
   if (items.length === 0) return null
 
   const duration = Math.max(24, items.length * 8)
-  // Triple for seamless infinite loop (animation moves -33.333% = one set width)
   const tripled = [...items, ...items, ...items]
 
   return (
@@ -110,6 +108,16 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
   )
 }
 
+const bigType: React.CSSProperties = {
+  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+  fontWeight: 800,
+  fontSize: 'clamp(52px, 10.5vw, 158px)',
+  lineHeight: 0.88,
+  letterSpacing: '-0.035em',
+  color: '#191917',
+  display: 'block',
+}
+
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const { scrollY } = useScroll()
   const nameY       = useTransform(scrollY, [0, 500], [0, -60])
@@ -120,76 +128,36 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       className="relative flex flex-col justify-between overflow-hidden"
       style={{ minHeight: '100svh', paddingTop: '72px' }}
     >
-      {/* Top: playful badge + carousel */}
-      <div>
-        <motion.div
-          className="px-8 md:px-14 lg:px-20 pt-8 pb-5"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-        >
-          <motion.span
-            initial={{ rotate: -5 }}
-            animate={{ rotate: -2.5 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{ display: 'inline-block' }}
-          >
-            <span
-              style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(13px, 1.4vw, 18px)',
-                color: 'var(--negroni)',
-                border: '2px solid var(--negroni)',
-                padding: '5px 14px',
-                display: 'inline-block',
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Das ist Davids Portfolio
-            </span>
-          </motion.span>
-        </motion.div>
+      {/* Carousel */}
+      <motion.div
+        initial={{ opacity: 0, x: 60 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ paddingTop: '16px' }}
+      >
+        <HeroCarousel projects={projects} />
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5, duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <HeroCarousel projects={projects} />
-        </motion.div>
-      </div>
-
-      {/* Bottom: massive name */}
+      {/* Bottom: massive statement */}
       <motion.div
         style={{ y: nameY, opacity: nameOpacity }}
         className="px-8 md:px-14 lg:px-20 pb-10 md:pb-16"
       >
-        <DraggableLetters />
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.9, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <span
-            className="font-display block text-ink"
-            style={{
-              fontWeight: 800,
-              fontSize: 'clamp(52px, 10.5vw, 158px)',
-              lineHeight: 0.88,
-              letterSpacing: '-0.035em',
-            }}
-          >
-            SCHANDER
-          </span>
+          <span style={bigType}>Das ist</span>
+          <span style={bigType}>Davids</span>
+          <span style={{ ...bigType, color: 'var(--negroni)' }}>Portfolio.</span>
         </motion.div>
 
         <motion.div
           className="mt-8 flex items-center justify-between"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.7 }}
+          transition={{ delay: 1.2, duration: 0.7 }}
         >
           <div className="flex items-center gap-5">
             <div className="h-px bg-ink/20 w-12" />
