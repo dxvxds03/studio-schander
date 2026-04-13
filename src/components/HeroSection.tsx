@@ -67,15 +67,16 @@ export default function HeroSection() {
           style={{ gap: '0.15em' }}
         >
           <span
-            style={{
-              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 200,
-              fontSize: 'clamp(28px, 6vw, 88px)',
-              lineHeight: 0.9,
-              letterSpacing: '-0.02em',
-              color: '#191917',
-            }}
-          >
+            className="text-ink transition-colors duration-300 hover:text-deadpoet"
+          style={{
+            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 200,
+            fontSize: 'clamp(28px, 6vw, 88px)',
+            lineHeight: 0.9,
+            letterSpacing: '-0.02em',
+          }}
+          data-hover
+        >
             Schander
           </span>
           <span

@@ -20,7 +20,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
   return (
     <main className="min-h-screen" style={{ background: '#F4F2ED' }}>
       <div className="px-8 md:px-14 lg:px-20 pt-10">
-        <Link href="/" className="label hover:text-negroni transition-colors" data-hover>
+        <Link href="/" className="label hover:text-deadpoet transition-colors" data-hover>
           ← Zurück
         </Link>
       </div>

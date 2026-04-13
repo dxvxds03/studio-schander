@@ -26,7 +26,7 @@ export default function Navigation() {
       >
         <Link
           href="/"
-          className="label hover:text-negroni transition-colors"
+          className="label hover:text-deadpoet transition-colors"
           data-hover
         >
           Studio Schander
@@ -35,14 +35,14 @@ export default function Navigation() {
         <div className="flex items-center gap-10">
           <Link
             href="#work"
-            className="label hover:text-negroni transition-colors"
+            className="label hover:text-deadpoet transition-colors"
             data-hover
           >
             Arbeiten
           </Link>
           <Link
             href="mailto:hello@davidschander.com"
-            className="label hover:text-negroni transition-colors"
+            className="label hover:text-deadpoet transition-colors"
             data-hover
           >
             Kontakt

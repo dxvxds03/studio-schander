@@ -76,7 +76,7 @@ export default function CustomCursor() {
       >
         <div
           className="w-8 h-8 rounded-full -translate-x-1/2 -translate-y-1/2 border transition-colors duration-300"
-          style={{ borderColor: isDragging ? '#E8581A' : 'rgba(25,25,23,0.35)' }}
+          style={{ borderColor: isDragging ? '#E8581A' : '#0000CC' }}
         />
       </motion.div>
     </>
