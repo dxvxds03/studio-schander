@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from './supabase'
+import { getSupabaseServerClient } from './supabase-server'
 
 const ADMIN_EMAIL = 'davidschander03@icloud.com'
 
