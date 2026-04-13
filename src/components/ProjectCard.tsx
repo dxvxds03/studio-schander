@@ -36,9 +36,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center" style={{ background: 'rgba(25,25,23,0.06)' }}>
-              <span className="label" style={{ letterSpacing: '0.2em' }}>
-                Kein Bild
-              </span>
+              <span className="label label-bracket">Kein Bild</span>
             </div>
           )}
 
@@ -46,22 +44,28 @@ export default function ProjectCard({ project, index }: { project: Project; inde
           <motion.div
             className="absolute inset-0 flex flex-col justify-end p-5"
             initial={{ background: 'rgba(25,25,23,0)' }}
-            whileHover={{ background: 'rgba(25,25,23,0.72)' }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ background: 'rgba(25,25,23,0.75)' }}
+            transition={{ duration: 0.28 }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               whileHover={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.22 }}
             >
               {(project.year || project.client) && (
-                <p className="label mb-2" style={{ color: 'rgba(244,242,237,0.6)' }}>
+                <p className="label mb-1.5" style={{ color: 'rgba(244,242,237,0.55)' }}>
                   {project.year}{project.year && project.client ? ' — ' : ''}{project.client}
                 </p>
               )}
               <h3
-                className="text-display italic"
-                style={{ color: '#F4F2ED', fontSize: 'clamp(18px, 2vw, 26px)', lineHeight: 1.15, letterSpacing: '-0.01em' }}
+                className="font-display"
+                style={{
+                  color: '#F4F2ED',
+                  fontSize: 'clamp(18px, 2.2vw, 28px)',
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                }}
               >
                 {project.title}
               </h3>
@@ -69,8 +73,9 @@ export default function ProjectCard({ project, index }: { project: Project; inde
           </motion.div>
         </div>
 
+        {/* Below image */}
         <div className="px-1 pt-3 pb-1">
-          <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '13px', color: '#191917', letterSpacing: '-0.01em' }}>
+          <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '13px', color: '#191917', letterSpacing: '-0.01em', fontWeight: 500 }}>
             {project.title}
           </p>
           {project.year && <p className="label mt-0.5">{project.year}</p>}

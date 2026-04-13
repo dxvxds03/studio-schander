@@ -22,18 +22,16 @@ export default async function HomePage() {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           <div>
             <p
-              className="text-display italic"
-              style={{ fontSize: 'clamp(24px, 3vw, 40px)', color: '#191917', letterSpacing: '-0.01em' }}
+              className="font-display text-ink"
+              style={{ fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}
             >
               Studio Schander
             </p>
-            <p className="label mt-1">Design & Direction</p>
+            <p className="label label-bracket mt-2">Design & Direction</p>
           </div>
-          <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col items-end gap-1.5">
             <p className="label">© {new Date().getFullYear()} David Schander</p>
-            <a href="/admin" className="label hover:text-negroni transition-colors" data-hover>
-              Admin
-            </a>
+            <a href="/admin" className="label hover:text-negroni transition-colors" data-hover>Admin</a>
           </div>
         </div>
       </footer>

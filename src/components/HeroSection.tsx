@@ -5,139 +5,85 @@ import DraggableLetters from './DraggableLetters'
 
 export default function HeroSection() {
   const { scrollY } = useScroll()
-  const contentY = useTransform(scrollY, [0, 500], [0, -80])
-  const contentOpacity = useTransform(scrollY, [0, 350], [1, 0])
+  const contentY = useTransform(scrollY, [0, 500], [0, -60])
+  const contentOpacity = useTransform(scrollY, [0, 380], [1, 0])
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Large faint year — decorative */}
+    <section
+      className="relative overflow-hidden flex flex-col justify-between"
+      style={{ minHeight: '100svh', paddingTop: '96px' }}
+    >
+      {/* Top bar */}
       <motion.div
-        className="absolute right-8 top-1/2 -translate-y-1/2 select-none pointer-events-none"
+        className="px-8 md:px-14 lg:px-20 flex items-center justify-between"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 1 }}
-        aria-hidden
+        transition={{ delay: 1.6, duration: 0.7 }}
       >
-        <span
-          className="text-display font-black"
-          style={{
-            fontSize: 'clamp(120px, 22vw, 340px)',
-            color: 'rgba(25,25,23,0.04)',
-            lineHeight: 1,
-            letterSpacing: '-0.04em',
-          }}
-        >
-          DS
-        </span>
+        <span className="label label-bracket">Das ist Davids Portfolio</span>
+        <span className="label">{new Date().getFullYear()}</span>
       </motion.div>
 
+      {/* Middle — space (project teasers later) */}
+      <div className="flex-1" />
+
+      {/* Bottom — massive name, IB Hasan style */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 px-8 md:px-14 lg:px-20"
+        className="px-8 md:px-14 lg:px-20 pb-10 md:pb-14"
       >
-        {/* "Das ist" */}
-        <motion.div
-          className="flex justify-end mb-1"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <span
-            className="text-display italic"
-            style={{
-              fontSize: 'clamp(32px, 6.5vw, 96px)',
-              color: 'rgba(25,25,23,0.65)',
-              lineHeight: 1,
-              letterSpacing: '-0.01em',
-            }}
-          >
-            Das ist
-          </span>
-        </motion.div>
-
         {/* DAVID — draggable */}
         <DraggableLetters />
 
-        {/* SCHANDER + 's Portfolio. */}
+        {/* SCHANDER — Syne 800 */}
         <motion.div
-          className="mt-0 flex items-baseline flex-wrap"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ gap: '0.15em' }}
+          transition={{ duration: 0.8, delay: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mt-[-0.05em]"
         >
           <span
-            className="text-ink transition-colors duration-300 hover:text-deadpoet"
-          style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 200,
-            fontSize: 'clamp(28px, 6vw, 88px)',
-            lineHeight: 0.9,
-            letterSpacing: '-0.02em',
-          }}
-          data-hover
-        >
-            Schander
-          </span>
-          <span
-            className="text-display italic"
+            className="font-display block text-ink"
             style={{
-              fontSize: 'clamp(22px, 4.5vw, 68px)',
-              color: '#191917',
-              lineHeight: 0.9,
-              letterSpacing: '-0.01em',
+              fontWeight: 800,
+              fontSize: 'clamp(52px, 10.5vw, 158px)',
+              lineHeight: 0.88,
+              letterSpacing: '-0.035em',
             }}
           >
-            's{' '}
-          </span>
-          <span
-            className="text-display italic"
-            style={{
-              fontSize: 'clamp(22px, 4.5vw, 68px)',
-              color: '#191917',
-              lineHeight: 0.9,
-              letterSpacing: '-0.01em',
-            }}
-          >
-            Portfolio
-          </span>
-          <span
-            className="text-display"
-            style={{
-              fontSize: 'clamp(22px, 4.5vw, 68px)',
-              color: '#E8581A',
-              lineHeight: 0.9,
-            }}
-          >
-            .
+            SCHANDER
           </span>
         </motion.div>
 
-        {/* Divider + scroll hint */}
+        {/* Divider + meta */}
         <motion.div
-          className="mt-16 flex items-center gap-4"
+          className="mt-7 flex items-center gap-5"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
+          transition={{ delay: 1.3, duration: 0.7 }}
         >
-          <div className="h-px bg-ink/20 flex-grow max-w-[120px]" />
-          <span className="label">Ausgewählte Arbeiten</span>
-          <ScrollArrow />
+          <div className="h-px bg-ink/15 w-14" />
+          <span className="label">Design & Direction</span>
+          <span style={{ color: 'var(--negroni)', fontSize: '10px', letterSpacing: '0.22em' }}>·</span>
+          <span className="label">Wien</span>
+          <div className="flex-1 h-px bg-ink/10" />
+          <ScrollHint />
         </motion.div>
       </motion.div>
     </section>
   )
 }
 
-function ScrollArrow() {
+function ScrollHint() {
   return (
-    <motion.div
-      animate={{ y: [0, 6, 0] }}
-      transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+    <motion.button
+      animate={{ y: [0, 5, 0] }}
+      transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
       className="label"
-      style={{ color: '#E8581A' }}
+      style={{ color: 'var(--negroni)', background: 'none', border: 'none', padding: 0 }}
+      onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
     >
-      ↓
-    </motion.div>
+      ↓ Arbeiten
+    </motion.button>
   )
 }
