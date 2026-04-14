@@ -18,15 +18,14 @@ const LEISTUNGEN = [
     nr: '2',
     name: 'Webentwicklung',
     lines: [
-      'Websites und Web-Apps die funktionieren und gut aussehen.',
-      'HTML, CSS, JavaScript. Eigene Projekte, Kundenprojekte, beides.',
+      'Websites und Web-Apps die funktionieren und gut aussehen. HTML, CSS, JavaScript. Eigene Projekte, Kundenprojekte, beides.',
     ],
   },
   {
     nr: '3',
     name: 'Design & Branding',
     lines: [
-      'Visuelle Identitäten, Editorial Design, Magazingestaltung.Dinge die man ansieht und sofort weiß worum es geht.',
+      'Visuelle Identitäten, Editorial Design, Magazingestaltung. Dinge die man ansieht und sofort weiß worum es geht.',
     ],
   },
   {
@@ -40,7 +39,7 @@ const LEISTUNGEN = [
     nr: '5',
     name: 'KI-Integration',
     lines: [
-      'Ich arbeite täglich mit KI-Tools und setze sie sinnvoll ein.Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
+      'Ich arbeite täglich mit KI-Tools und setze sie sinnvoll ein. Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
     ],
   },
 ]
