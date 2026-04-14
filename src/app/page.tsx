@@ -81,7 +81,7 @@ export default async function HomePage() {
             letterSpacing: '-0.03em',
             lineHeight: 0.95,
             textTransform: 'uppercase',
-            color: 'var(--ink)',
+            color: 'var(--dead-poet)',
             padding: '0 clamp(16px, 2vw, 24px)',
             margin: '0 0 clamp(24px, 3.5vw, 48px) 0',
           }}
@@ -147,7 +147,8 @@ export default async function HomePage() {
           paddingTop: 'clamp(72px, 10vw, 140px)',
           paddingBottom: 'clamp(72px, 10vw, 140px)',
           paddingLeft: 'clamp(16px, 2vw, 24px)',
-          paddingRight: 'clamp(176px, 22vw, 304px)',
+          paddingRight: 'clamp(16px, 2vw, 24px)',
+          marginRight: 'clamp(160px, 20vw, 280px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
