@@ -75,14 +75,15 @@ export default async function HomePage() {
       >
         <h2
           style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 400,
-            fontSize: 'clamp(11px, 0.9vw, 13px)',
-            letterSpacing: '0.2em',
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(32px, 5.5vw, 80px)',
+            letterSpacing: '-0.03em',
+            lineHeight: 0.95,
             textTransform: 'uppercase',
-            color: 'var(--muted)',
+            color: 'var(--ink)',
             padding: '0 clamp(16px, 2vw, 24px)',
-            margin: '0 0 clamp(16px, 2vw, 28px) 0',
+            margin: '0 0 clamp(24px, 3.5vw, 48px) 0',
           }}
         >
           Was ich mache.
@@ -106,7 +107,7 @@ export default async function HomePage() {
                 fontSize: 'clamp(26px, 5vw, 76px)',
                 letterSpacing: '-0.04em',
                 lineHeight: 0.92,
-                color: 'var(--negroni)',
+                color: 'var(--ink)',
                 textTransform: 'uppercase',
                 margin: 0,
                 flex: 1,
@@ -126,9 +127,9 @@ export default async function HomePage() {
                   key={j}
                   style={{
                     fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                    fontSize: 'clamp(10px, 0.82vw, 12px)',
+                    fontSize: 'clamp(12px, 1.1vw, 16px)',
                     lineHeight: 1.6,
-                    color: 'var(--muted)',
+                    color: 'var(--dead-poet)',
                     margin: 0,
                   }}
                 >
@@ -158,30 +159,23 @@ export default async function HomePage() {
             fontWeight: 800,
             fontSize: 'clamp(36px, 7vw, 112px)',
             letterSpacing: '-0.04em',
-            lineHeight: 0.92,
+            lineHeight: 1.0,
             color: 'var(--ink)',
-            margin: '0 0 clamp(32px, 5vw, 64px) 0',
+            margin: 0,
           }}
         >
-          Lass uns zusammen<br />Ideen umsetzen.
+          Lass uns zusammen<br />
+          Ideen umsetzen.<br />
+          Nimm jetzt{' '}
+          <a
+            href="mailto:hello@davidschander.com"
+            data-hover
+            className="kontakt-link"
+          >
+            Kontakt
+          </a>
+          {' '}auf.
         </p>
-        <a
-          href="mailto:hello@davidschander.com"
-          data-hover
-          className="btn-negroni"
-          style={{
-            display: 'inline-block',
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(13px, 1.1vw, 16px)',
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            padding: 'clamp(14px, 1.8vw, 22px) clamp(28px, 4vw, 48px)',
-          }}
-        >
-          Kontakt aufnehmen →
-        </a>
       </section>
 
       {/* Brand colors */}
