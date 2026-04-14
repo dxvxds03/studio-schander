@@ -270,49 +270,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       >
         <SchanderTicker />
 
-        {/* Active project name — above carousel */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 2,
-            height: 'clamp(40px, 5vh, 60px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {items.map((project) => (
-            <span
-              key={project.id}
-              className="hero-proj-name"
-              style={{
-                position: 'absolute',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(12px, 1.3vw, 16px)',
-                letterSpacing: '0.01em',
-                lineHeight: 1,
-                color: 'var(--cream)',
-                background: 'var(--ink)',
-                borderRadius: '100px',
-                padding: '7px 18px',
-                whiteSpace: 'nowrap',
-                pointerEvents: 'none',
-                userSelect: 'none',
-                transition: 'opacity 0.3s ease',
-              }}
-            >
-              {project.title}
-              {project.link && (
-                <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
-              )}
-            </span>
-          ))}
-        </div>
-
-        {/* Carousel area */}
+        {/* Carousel area — title pill sits inside as absolute overlay */}
         <div
           style={{
             flex: 1,
@@ -321,11 +279,50 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             overflow: 'hidden',
             position: 'relative',
             zIndex: 1,
-            // Fade edges to show depth
             WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
             maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
           }}
         >
+          {/* Active project name pill — directly above carousel */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '12px',
+              left: 0,
+              right: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              zIndex: 3,
+              pointerEvents: 'none',
+            }}
+          >
+            {items.map((project) => (
+              <span
+                key={project.id}
+                className="hero-proj-name"
+                style={{
+                  position: 'absolute',
+                  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: 800,
+                  fontSize: 'clamp(12px, 1.3vw, 16px)',
+                  letterSpacing: '0.01em',
+                  lineHeight: 1,
+                  color: 'var(--cream)',
+                  background: 'var(--ink)',
+                  borderRadius: '100px',
+                  padding: '7px 18px',
+                  whiteSpace: 'nowrap',
+                  userSelect: 'none',
+                  transition: 'opacity 0.3s ease',
+                }}
+              >
+                {project.title}
+                {project.link && (
+                  <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
+                )}
+              </span>
+            ))}
+          </div>
           <div
             ref={carouselRef}
             style={{
@@ -360,7 +357,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                     alt={project.title}
                     draggable={false}
                     style={{
-                      height: 'clamp(200px, 28vh, 360px)',
+                      height: 'clamp(240px, 34vh, 432px)',
                       width: 'auto',
                       display: 'block',
                       maxWidth: '480px',
