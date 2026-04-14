@@ -24,20 +24,18 @@ export default async function ProjektePage() {
     >
       <Navigation />
 
-      {/* Bordered cream frame */}
+      {/* Polaroid — großes Querformat-Rechteck */}
       <div
         style={{
           flex: 1,
           minHeight: 0,
-          margin: `61px clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px)`,
-          border: '2px solid var(--ink)',
+          margin: `61px clamp(20px, 2.5vw, 36px) clamp(14px, 1.8vw, 24px)`,
           background: 'var(--cream)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
-          padding: 'clamp(20px, 2.5vw, 32px)',
-          overflow: 'hidden',
-          position: 'relative',
+          padding: 'clamp(24px, 3vw, 44px)',
+          boxShadow: '0 20px 80px rgba(0,0,0,0.6)',
         }}
       >
         <h1
@@ -49,23 +47,24 @@ export default async function ProjektePage() {
             lineHeight: 0.88,
             color: 'var(--ink)',
             textTransform: 'uppercase',
+            margin: 0,
           }}
         >
           Alle<br />Projekte.
         </h1>
       </div>
 
-      {/* Project filmstrip on ink */}
+      {/* Projekt-Carousel im schwarzen Bereich */}
       <div
         className="projekte-strip"
         style={{
-          height: 'clamp(145px, 22vh, 195px)',
+          height: 'clamp(140px, 21vh, 190px)',
           display: 'flex',
           alignItems: 'flex-start',
           paddingTop: 'clamp(10px, 1.2vh, 16px)',
           paddingBottom: 'clamp(10px, 1.2vh, 16px)',
-          paddingLeft: 'clamp(16px, 2vw, 24px)',
-          paddingRight: 'clamp(16px, 2vw, 24px)',
+          paddingLeft: 'clamp(20px, 2.5vw, 36px)',
+          paddingRight: 'clamp(20px, 2.5vw, 36px)',
           gap: 'clamp(8px, 1vw, 14px)',
           overflowX: 'auto',
           overflowY: 'hidden',
