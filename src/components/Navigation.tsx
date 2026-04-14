@@ -17,50 +17,68 @@ export default function Navigation() {
       className="fixed top-0 left-0 right-0 z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1.8, duration: 0.6 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
     >
       <div
-        className={`flex items-center justify-between px-8 md:px-14 lg:px-20 transition-all duration-500 ${
-          scrolled ? 'bg-cream/95 backdrop-blur-sm border-b border-faint' : ''
-        }`}
-        style={{ paddingTop: '14px', paddingBottom: '14px' }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '10px 20px 10px 16px',
+          borderBottom: scrolled ? '2px solid #191917' : '2px solid transparent',
+          background: scrolled ? 'rgba(244,242,237,0.97)' : 'transparent',
+          transition: 'background 0.3s ease, border-color 0.3s ease',
+        }}
       >
-        <Link href="/" data-hover className="flex items-center">
+        {/* Logo flush to edge */}
+        <Link href="/" data-hover style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <motion.img
             src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
             alt="Studio Schander"
-            style={{ height: '38px', width: 'auto', display: 'block' }}
-            whileHover={{ opacity: 0.65 }}
-            transition={{ duration: 0.2 }}
+            style={{ height: '34px', width: 'auto', display: 'block' }}
+            whileHover={{ opacity: 0.55 }}
+            transition={{ duration: 0.15 }}
           />
         </Link>
 
-        <div className="flex items-center gap-7">
-          <Link
-            href="#work"
-            data-hover
+        {/* Subtitle small-caps right */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+          <span
             style={{
               fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 500,
-              fontSize: '13px',
-              letterSpacing: '0.01em',
+              fontVariant: 'small-caps',
+              fontSize: '11px',
+              letterSpacing: '0.08em',
               color: '#787672',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease',
+              lineHeight: 1,
+              userSelect: 'none',
             }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#191917')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#787672')}
           >
-            Arbeiten
-          </Link>
+            Ich mache einfach, was mir in den Kopf kommt — Studio
+          </span>
           <Link
             href="mailto:hello@davidschander.com"
             data-hover
-            className="btn-negroni"
             style={{
-              fontSize: '12px',
-              padding: '7px 18px',
-              letterSpacing: '0.01em',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '11px',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              color: '#191917',
+              textDecoration: 'none',
+              border: '2px solid #191917',
+              padding: '5px 12px',
+              lineHeight: 1,
+              transition: 'background 0.15s ease, color 0.15s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = '#191917'
+              e.currentTarget.style.color = '#F4F2ED'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.color = '#191917'
             }}
           >
             Kontakt

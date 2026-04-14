@@ -82,3 +82,14 @@ a, button, input, textarea, select, [role="button"] {
   from { transform: translateX(0); }
   to   { transform: translateX(-33.333%); }
 }
+
+@keyframes schanderTicker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Brutalist contact button in nav */
+a[href^="mailto"].nav-kontakt:hover {
+  background: #191917;
+  color: var(--cream);
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState } from 'react'
 
 interface HeroProject {
   id: number
@@ -9,194 +10,259 @@ interface HeroProject {
   link: string | null
 }
 
-const ROTATIONS = [-2.4, 1.7, -1.1, 2.6, -1.9, 1.3, -2.8, 1.5, -1.4, 2.1]
-const Y_OFFSETS = [0, 38, -20, 52, 8, -42, 26, -14, 44, -28]
+// Organic scatter config for image pile — fixed, intentional
+const PILE = [
+  { x: -260, y:  48, rot: -6.5, z: 1, w: 200 },
+  { x: -100, y: -30, rot:  3.5, z: 3, w: 220 },
+  { x:   20, y:  12, rot: -1.5, z: 5, w: 240 }, // front / center
+  { x:  170, y: -44, rot:  7.0, z: 4, w: 195 },
+  { x:  300, y:  36, rot: -4.5, z: 2, w: 210 },
+]
 
-function HeroCarousel({ projects }: { projects: HeroProject[] }) {
-  const { scrollY } = useScroll()
-  const parallaxX = useTransform(scrollY, [0, 1800], [0, -200])
-
-  const items = projects.filter(p => p.cover_image)
+function ImagePile({ projects }: { projects: HeroProject[] }) {
+  const items = projects.filter(p => p.cover_image).slice(0, 5)
   if (items.length === 0) return null
 
-  const duration = Math.max(28, items.length * 9)
-  const tripled = [...items, ...items, ...items]
-
   return (
-    <motion.div style={{ x: parallaxX }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'flex-end', // bottom-align so mixed heights look intentional
-          gap: '24px',
-          paddingTop: '8px',
-          paddingBottom: '24px',
-          animation: `marquee ${duration}s linear infinite`,
-          willChange: 'transform',
-        }}
-      >
-        {tripled.map((project, i) => {
-          const idx  = i % items.length
-          const rot  = ROTATIONS[idx % ROTATIONS.length]
-          const yOff = Y_OFFSETS[idx % Y_OFFSETS.length]
-          const href = project.link ?? `/projects/${project.id}`
-          const isExternal = !!project.link
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: 'clamp(300px, 40vw, 520px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {items.map((project, i) => {
+        const cfg = PILE[i % PILE.length]
+        const href = project.link ?? `/projects/${project.id}`
+        const isExternal = !!project.link
 
-          return (
-            <a
-              key={i}
-              href={href}
-              target={isExternal ? '_blank' : '_self'}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-              data-hover
-              style={{ flexShrink: 0, textDecoration: 'none', display: 'inline-block' }}
+        return (
+          <motion.a
+            key={project.id}
+            href={href}
+            target={isExternal ? '_blank' : '_self'}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+            data-hover
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              marginLeft: cfg.x,
+              marginTop: cfg.y - cfg.w * 0.65,
+              width: cfg.w,
+              zIndex: cfg.z,
+              textDecoration: 'none',
+              transformOrigin: 'center center',
+              rotate: `${cfg.rot}deg`,
+            }}
+            whileHover={{
+              zIndex: 20,
+              scale: 1.07,
+              rotate: 0,
+              boxShadow: '0 0 0 3px #E8581A, 0 8px 40px rgba(232,88,26,0.45)',
+              transition: { type: 'spring', stiffness: 300, damping: 24 },
+            }}
+          >
+            <img
+              src={project.cover_image!}
+              alt={project.title}
+              draggable={false}
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                outline: '2px solid #191917',
+              }}
+            />
+            <p
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: '9px',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: '#787672',
+                marginTop: '6px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
             >
-              <motion.div
-                style={{
-                  transform: `rotate(${rot}deg) translateY(${yOff}px)`,
-                  display: 'inline-block',
-                }}
-                whileHover={{ scale: 1.08, rotate: 0, y: 0 }}
-                transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-              >
-                <div style={{ overflow: 'hidden', display: 'block' }}>
-                  <img
-                    src={project.cover_image!}
-                    alt={project.title}
-                    style={{
-                      height: 'clamp(190px, 24vw, 320px)',
-                      width: 'auto',
-                      display: 'block',
-                      maxWidth: 'none',
-                    }}
-                    draggable={false}
-                  />
-                </div>
-                <div style={{ marginTop: '8px' }}>
-                  <p
-                    style={{
-                      fontFamily:
-                        '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                      fontWeight: 700,
-                      fontSize: '11px',
-                      letterSpacing: '-0.01em',
-                      color: '#191917',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      maxWidth: '100%',
-                    }}
-                  >
-                    {project.title}
-                  </p>
-                  {isExternal && (
-                    <span
-                      style={{
-                        fontSize: '10px',
-                        color: 'var(--negroni)',
-                        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                        letterSpacing: '0.06em',
-                      }}
-                    >
-                      ↗ ansehen
-                    </span>
-                  )}
-                </div>
-              </motion.div>
-            </a>
-          )
-        })}
-      </div>
-    </motion.div>
+              {project.title}
+            </p>
+          </motion.a>
+        )
+      })}
+    </div>
   )
 }
 
-const bigType: React.CSSProperties = {
-  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-  fontWeight: 800,
-  fontSize: 'clamp(52px, 10.5vw, 158px)',
-  lineHeight: 0.88,
-  letterSpacing: '-0.035em',
-  color: '#191917',
-  display: 'block',
+function SchanderTicker() {
+  const text = 'SCHANDER — '
+  const repeated = text.repeat(8)
+
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          whiteSpace: 'nowrap',
+          animation: 'schanderTicker 18s linear infinite',
+          willChange: 'transform',
+        }}
+      >
+        {[repeated, repeated].map((t, i) => (
+          <span
+            key={i}
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(120px, 18vw, 220px)',
+              letterSpacing: '-0.04em',
+              lineHeight: 0.85,
+              color: 'transparent',
+              WebkitTextStroke: '2px #D8D5CF',
+              userSelect: 'none',
+            }}
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function CircleScrollButton() {
+  const scrollDown = () =>
+    document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
+
+  return (
+    <motion.button
+      onClick={scrollDown}
+      data-hover
+      style={{
+        width: '56px',
+        height: '56px',
+        borderRadius: '50%',
+        border: '2px solid #191917',
+        background: 'transparent',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+        padding: 0,
+      }}
+      whileHover={{
+        background: '#191917',
+        scale: 1.08,
+      }}
+      animate={{ y: [0, 5, 0] }}
+      transition={{
+        y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' },
+        background: { duration: 0.15 },
+        scale: { duration: 0.15 },
+      }}
+    >
+      <motion.svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        style={{ display: 'block' }}
+        whileHover={{ color: '#F4F2ED' }}
+      >
+        <motion.path
+          d="M10 3v14M4 11l6 6 6-6"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ color: '#191917' }}
+        />
+      </motion.svg>
+    </motion.button>
+  )
 }
 
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const { scrollY } = useScroll()
-  const nameY       = useTransform(scrollY, [0, 500], [0, -60])
-  const nameOpacity = useTransform(scrollY, [0, 380], [1, 0])
+  const tickerY = useTransform(scrollY, [0, 600], [0, 120])
 
   return (
     <section
-      className="relative flex flex-col justify-between overflow-hidden"
-      style={{ minHeight: '100svh', paddingTop: '72px' }}
+      style={{
+        position: 'relative',
+        minHeight: '100svh',
+        paddingTop: '56px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        overflow: 'hidden',
+        borderBottom: '2px solid #191917',
+      }}
     >
-      {/* Carousel */}
-      <motion.div
-        initial={{ opacity: 0, x: 60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4, duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{ paddingTop: '12px' }}
-      >
-        <HeroCarousel projects={projects} />
+      {/* SCHANDER ticker background */}
+      <motion.div style={{ y: tickerY, flex: 1, position: 'relative' }}>
+        <SchanderTicker />
+
+        {/* Image pile */}
+        <motion.div
+          style={{ position: 'relative', zIndex: 1, flex: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
+          <ImagePile projects={projects} />
+        </motion.div>
       </motion.div>
 
-      {/* Bottom: massive statement */}
+      {/* Bottom bar — headline + button */}
       <motion.div
-        style={{ y: nameY, opacity: nameOpacity }}
-        className="px-8 md:px-14 lg:px-20 pb-10 md:pb-16"
+        style={{
+          borderTop: '2px solid #191917',
+          padding: 'clamp(20px, 2.5vw, 32px) clamp(16px, 2vw, 24px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '24px',
+          background: 'var(--cream)',
+          position: 'relative',
+          zIndex: 2,
+        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.7 }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        <h1
+          style={{
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(32px, 5.5vw, 80px)',
+            letterSpacing: '-0.04em',
+            lineHeight: 1,
+            color: '#191917',
+            margin: 0,
+          }}
         >
-          <span style={bigType}>Das ist</span>
-          <span style={bigType}>Davids</span>
-          <span style={{ ...bigType, color: 'var(--negroni)' }}>Portfolio.</span>
-        </motion.div>
+          Das ist Davids{' '}
+          <span style={{ color: 'var(--negroni)' }}>Portfolio.</span>
+        </h1>
 
-        <motion.div
-          className="mt-7 flex items-center justify-between"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.7 }}
-        >
-          <div className="flex items-center gap-4">
-            <div className="h-px bg-ink/20 w-10" />
-            <span
-              className="font-display"
-              style={{ fontWeight: 700, fontSize: '14px', letterSpacing: '-0.01em', color: '#191917' }}
-            >
-              Bielefeld
-            </span>
-          </div>
-          <ScrollHint />
-        </motion.div>
+        <CircleScrollButton />
       </motion.div>
     </section>
-  )
-}
-
-function ScrollHint() {
-  return (
-    <motion.button
-      animate={{ y: [0, 6, 0] }}
-      transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
-      className="font-display"
-      style={{
-        color: 'var(--negroni)',
-        background: 'none',
-        border: 'none',
-        padding: 0,
-        fontSize: '14px',
-        fontWeight: 700,
-        letterSpacing: '-0.01em',
-        cursor: 'pointer',
-      }}
-      onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-    >
-      ↓ Arbeiten
-    </motion.button>
   )
 }
