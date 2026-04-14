@@ -88,6 +88,8 @@ a, button, input, textarea, select, [role="button"] {
   to   { transform: translateX(-50%); }
 }
 
+.projekte-strip::-webkit-scrollbar { display: none; }
+
 /* Brutalist contact button in nav */
 a[href^="mailto"].nav-kontakt:hover {
   background: var(--ink);
