@@ -221,6 +221,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const portfolioRef = useRef<HTMLSpanElement>(null)
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
+  const [showStickyHeader, setShowStickyHeader] = useState(false)
 
   useEffect(() => {
     if (!sectionRef.current || !carouselRef.current || n === 0) return
@@ -347,6 +348,14 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               document.body.classList.add('negroni-hero-active')
             }
           },
+        })
+
+        // Detect when hero is fully scrolled past → show sticky heading
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom top',
+          onEnter: () => setShowStickyHeader(true),
+          onLeaveBack: () => setShowStickyHeader(false),
         })
 
         ScrollTrigger.refresh()
@@ -547,6 +556,43 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           <CircleScrollButton />
         </motion.div>
       </div>
+
+      {/* Sticky heading — always mounted so CyclingWord stays in sync with hero */}
+      <motion.div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 48,
+          background: 'var(--cream)',
+          paddingTop: '61px',
+          paddingLeft: 'clamp(20px, 2.5vw, 32px)',
+          paddingRight: 'clamp(20px, 2.5vw, 32px)',
+          paddingBottom: 'clamp(12px, 1.5vw, 20px)',
+          pointerEvents: showStickyHeader ? 'auto' : 'none',
+        }}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: showStickyHeader ? 1 : 0, y: showStickyHeader ? 0 : -10 }}
+        transition={{ duration: 0.32, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <h1
+          style={{
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(48px, 8.5vw, 130px)',
+            letterSpacing: '-0.045em',
+            lineHeight: 1,
+            margin: 0,
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: '0.18em',
+          }}
+        >
+          <CyclingWord />
+          <span style={{ color: 'var(--negroni)', whiteSpace: 'nowrap' }}>Portfolio.</span>
+        </h1>
+      </motion.div>
     </section>
   )
 }
