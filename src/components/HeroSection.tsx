@@ -438,7 +438,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   color: 'var(--cream)',
                   background: 'var(--ink)',
                   borderRadius: '100px',
-                  padding: '7px 18px 8px',
+                  padding: '11px 18px 8px',
                   whiteSpace: 'nowrap',
                   userSelect: 'none',
                   transition: 'opacity 0.3s ease',
