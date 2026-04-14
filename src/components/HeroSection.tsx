@@ -223,9 +223,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
     let lastY = window.scrollY
     const onScroll = () => {
       const y = window.scrollY
-      const heroH = sectionRef.current?.offsetHeight ?? 0
-      if (y < lastY && y > heroH) setShowStickyHeader(true)
-      else if (y >= lastY || y <= heroH) setShowStickyHeader(false)
+      const threshold = window.innerHeight
+      if (y < lastY && y > threshold) setShowStickyHeader(true)
+      else if (y >= lastY || y <= threshold) setShowStickyHeader(false)
       lastY = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -495,76 +495,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           </h1>
         </motion.div>
 
-        {/* Right sidebar — 20% width, replaces negroni half */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '61px', // below nav
-            right: 0,
-            bottom: 0,
-            width: '20%',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            padding: 'clamp(16px, 2vw, 28px) clamp(12px, 1.5vw, 20px)',
-            borderLeft: '1px solid var(--faint)',
-          }}
-        >
-          <CircleScrollButton />
-
-          <a
-            href="mailto:hello@davidschander.com"
-            data-hover
-            className="nav-cta-btn"
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: '11px',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              border: '2px solid currentColor',
-              padding: '8px 14px',
-              lineHeight: 1.3,
-              background: 'transparent',
-              textAlign: 'center',
-            }}
-          >
-            ich habe<br />eine idee →
-          </a>
-
-          <a
-            href="/projekte"
-            data-hover
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: '11px',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              color: 'var(--ink)',
-              textDecoration: 'none',
-              border: '2px solid var(--ink)',
-              padding: '8px 14px',
-              lineHeight: 1.3,
-              background: 'transparent',
-              textAlign: 'center',
-              transition: 'background 0.15s ease, color 0.15s ease',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'var(--ink)'
-              e.currentTarget.style.color = 'var(--cream)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.color = 'var(--ink)'
-            }}
-          >
-            Alle<br />Projekte
-          </a>
-        </div>
       </div>
 
       {/* Sticky heading — always mounted so CyclingWord stays in sync with hero */}

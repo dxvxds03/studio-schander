@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import LoadingScreen from '@/components/LoadingScreen'
+import Sidebar from '@/components/Sidebar'
 
 export const metadata: Metadata = {
   title: 'David Schander — Portfolio',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <LoadingScreen />
         <CustomCursor />
+        <Sidebar />
         {children}
       </body>
     </html>
