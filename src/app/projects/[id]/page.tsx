@@ -25,6 +25,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
       {/* Hero image */}
       {project.cover_image && (
         <div
+          className="project-hero-img"
           style={{
             marginTop: '61px',
             width: '100%',
@@ -48,6 +49,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
 
       {/* Title + meta */}
       <section
+        className="project-detail-grid"
         style={{
           padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) 0',
           display: 'grid',
@@ -108,6 +110,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
 
         {/* Meta sidebar */}
         <div
+          className="project-meta"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -189,6 +192,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
                 Tags
               </p>
               <div
+                className="flex-end-tags"
                 style={{
                   display: 'flex',
                   flexWrap: 'wrap',

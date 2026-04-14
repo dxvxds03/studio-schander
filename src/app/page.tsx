@@ -65,6 +65,7 @@ export default async function HomePage() {
       {/* Leistungen */}
       <section
         id="leistungen"
+        className="sidebar-aware"
         style={{
           paddingTop: 'clamp(96px, 14vw, 180px)',
           paddingBottom: 'clamp(32px, 5vw, 64px)',
@@ -92,6 +93,7 @@ export default async function HomePage() {
         {LEISTUNGEN.map((item, i) => (
           <div
             key={item.nr}
+            className="leistungen-row"
             style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -117,6 +119,7 @@ export default async function HomePage() {
               ({item.nr}) {item.name}
             </h3>
             <div
+              className="leistungen-desc"
               style={{
                 flexShrink: 0,
                 width: 'clamp(130px, 20%, 240px)',
@@ -144,6 +147,7 @@ export default async function HomePage() {
 
       {/* Kontakt */}
       <section
+        className="sidebar-aware"
         style={{
           paddingTop: 'clamp(72px, 10vw, 140px)',
           paddingBottom: 'clamp(72px, 10vw, 140px)',

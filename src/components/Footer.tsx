@@ -12,6 +12,7 @@ export default function Footer() {
 
       {/* White footer content */}
       <div
+        className="footer-inner"
         style={{
           padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
           display: 'flex',
@@ -65,6 +66,7 @@ export default function Footer() {
         </div>
 
         <div
+          className="footer-links"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -127,7 +129,7 @@ export default function Footer() {
       </div>
 
       {/* Brand colors */}
-      <div style={{ display: 'flex', minHeight: '280px' }}>
+      <div className="footer-colors" style={{ display: 'flex', minHeight: '280px' }}>
         <div
           style={{
             flex: 1,

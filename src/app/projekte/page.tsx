@@ -26,6 +26,7 @@ export default async function ProjektePage() {
         }}
       >
         <div
+          className="projekte-header"
           style={{
             display: 'flex',
             alignItems: 'flex-end',

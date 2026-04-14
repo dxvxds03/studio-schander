@@ -34,6 +34,7 @@ export default function Sidebar() {
 
   return (
     <div
+      className="sidebar-root"
       style={{
         position: 'fixed',
         right: 0,

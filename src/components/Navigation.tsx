@@ -24,6 +24,7 @@ export default function Navigation() {
           <motion.img
             src="/logo_schander.svg"
             alt="Studio Schander"
+            className="nav-logo"
             style={{ height: '51px', width: 'auto', display: 'block' }}
             whileHover={{ opacity: 0.55 }}
             transition={{ duration: 0.15 }}

@@ -238,6 +238,21 @@ a[href^="mailto"].nav-kontakt:hover {
     align-items: flex-start !important;
     gap: 8px !important;
   }
+
+  /* Project hero image: shorter on mobile */
+  .project-hero-img {
+    max-height: 50vh !important;
+  }
+  .project-hero-img img {
+    max-height: 50vh !important;
+  }
+
+  /* Nav CTA: smaller on mobile */
+  .nav-cta-btn {
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+    letter-spacing: 0.02em !important;
+  }
 }
 
 /* Projekte list rows */

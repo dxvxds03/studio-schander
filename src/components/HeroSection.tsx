@@ -29,7 +29,7 @@ function CircularTextButton() {
       className="hero-carousel-card"
       style={{ flexShrink: 0, display: 'block', textDecoration: 'none', transformOrigin: 'center center' }}
     >
-      <div style={{ width: '180px', height: '180px', position: 'relative' }}>
+      <div className="hero-end-btn" style={{ width: '180px', height: '180px', position: 'relative' }}>
         {/* Rotating text ring */}
         <motion.svg
           viewBox="0 0 200 200"
@@ -440,6 +440,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           transition={{ delay: 0.5, duration: 0.7 }}
         >
           <h1
+            className="hero-h1"
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
