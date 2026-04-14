@@ -138,7 +138,7 @@ export default async function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: '#E8331A',
+            background: '#34160f',
             padding: 'clamp(24px, 4vw, 56px)',
           }}
         >
@@ -165,7 +165,7 @@ export default async function HomePage() {
                 letterSpacing: '-0.04em',
               }}
             >
-              Negroni
+              Dead Poet
             </p>
             <p
               style={{
@@ -176,7 +176,7 @@ export default async function HomePage() {
                 letterSpacing: '0.06em',
               }}
             >
-              #E8331A
+              #34160f
             </p>
           </div>
         </div>
@@ -187,7 +187,7 @@ export default async function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: '#34160f',
+            background: '#E8331A',
             padding: 'clamp(24px, 4vw, 56px)',
           }}
         >
@@ -214,7 +214,7 @@ export default async function HomePage() {
                 letterSpacing: '-0.04em',
               }}
             >
-              Dead Poet
+              Negroni
             </p>
             <p
               style={{
@@ -225,7 +225,7 @@ export default async function HomePage() {
                 letterSpacing: '0.06em',
               }}
             >
-              #34160f
+              #E8331A
             </p>
           </div>
         </div>

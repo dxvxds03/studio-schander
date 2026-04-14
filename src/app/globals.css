@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 :root {
-  --negroni: #E8331A;
-  --dead-poet: #34160f;
+  --negroni: #34160f;
+  --dead-poet: #E8331A;
   --cream: #F4F2ED;
   --ink: #191917;
   --muted: #787672;

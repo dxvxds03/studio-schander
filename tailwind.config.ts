@@ -10,8 +10,8 @@ const config: Config = {
     },
     extend: {
       colors: {
-        negroni: '#E8581A',
-        deadpoet: '#34160f',
+        negroni: '#34160f',
+        deadpoet: '#E8581A',
         cream: '#F4F2ED',
         ink: '#191917',
         muted: '#787672',
