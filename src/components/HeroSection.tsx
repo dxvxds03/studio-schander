@@ -443,18 +443,18 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   transition: 'opacity 0.3s ease',
                 }}
               >
-                <span>
-                  {project.title}
-                  {project.link && (
-                    <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
-                  )}
-                </span>
                 <ClientBadge
                   projectType={project.project_type ?? null}
                   client={project.client ?? null}
                   variant="light"
                   size="sm"
                 />
+                <span>
+                  {project.title}
+                  {project.link && (
+                    <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
+                  )}
+                </span>
               </span>
             ))}
           </div>

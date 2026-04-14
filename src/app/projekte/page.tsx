@@ -97,8 +97,16 @@ export default async function ProjektePage() {
                 borderBottom: '1px solid var(--faint)',
               }}
             >
-              {/* Left: title + badge */}
+              {/* Left: badge + title */}
               <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ marginBottom: '6px' }}>
+                  <ClientBadge
+                    projectType={(project.project_type as 'client' | 'schander' | 'personal' | null) ?? null}
+                    client={project.client ?? null}
+                    variant="dark"
+                    size="md"
+                  />
+                </div>
                 <h2
                   className="projekte-title"
                   style={{
@@ -130,14 +138,6 @@ export default async function ProjektePage() {
                     </span>
                   )}
                 </h2>
-                <div style={{ marginTop: '6px' }}>
-                  <ClientBadge
-                    projectType={(project.project_type as 'client' | 'schander' | 'personal' | null) ?? null}
-                    client={project.client ?? null}
-                    variant="dark"
-                    size="md"
-                  />
-                </div>
               </div>
 
               {/* Right: thumbnail */}
