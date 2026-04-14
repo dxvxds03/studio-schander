@@ -7,11 +7,11 @@ import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
 
-export default async function ProjectPage({ params }: { params: { id: string } }) {
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
   const { data: project } = await supabase
     .from('projects')
     .select('*')
-    .eq('id', parseInt(params.id))
+    .eq('slug', params.slug)
     .single()
 
   if (!project) notFound()

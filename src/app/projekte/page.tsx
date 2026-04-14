@@ -8,7 +8,7 @@ export const revalidate = 0
 export default async function ProjektePage() {
   const { data: projects } = await supabase
     .from('projects')
-    .select('id, title, cover_image, link, year, client, tags, project_type')
+    .select('id, slug, title, cover_image, link, year, client, tags, project_type')
     .order('order', { ascending: true })
     .order('created_at', { ascending: false })
 
@@ -77,7 +77,7 @@ export default async function ProjektePage() {
         }}
       >
         {all.map((project, i) => {
-          const href = project.link ?? `/projects/${project.id}`
+          const href = project.link ?? `/projects/${project.slug}`
           const isExternal = !!project.link
 
           return (

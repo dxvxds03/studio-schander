@@ -6,6 +6,7 @@ import { useState, useRef } from 'react'
 
 interface Project {
   id: number
+  slug: string
   title: string
   year: number | null
   client: string | null
@@ -38,7 +39,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
   }
 
   return (
-    <Link href={`/projects/${project.id}`} data-hover>
+    <Link href={`/projects/${project.slug}`} data-hover>
       <motion.article
         className="group relative overflow-hidden bg-faint"
         initial={{ rotate: rot }}

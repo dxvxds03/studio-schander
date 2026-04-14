@@ -8,6 +8,7 @@ import FlowerIcon from './FlowerIcon'
 import ClientBadge from './ClientBadge'
 
 interface HeroProject {
+  slug: string
   id: number
   title: string
   cover_image: string | null
@@ -447,7 +448,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             {items.map((project) => {
-              const href       = project.link ?? `/projects/${project.id}`
+              const href       = project.link ?? `/projects/${project.slug}`
               const isExternal = !!project.link
 
               return (

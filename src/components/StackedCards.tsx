@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 interface Project {
   id: number
+  slug: string
   title: string
   cover_image: string | null
   link: string | null
@@ -95,7 +96,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
         }}
       >
         {items.map((project, i) => {
-          const href = project.link ?? `/projects/${project.id}`
+          const href = project.link ?? `/projects/${project.slug}`
           const isExternal = !!project.link
 
           return (
