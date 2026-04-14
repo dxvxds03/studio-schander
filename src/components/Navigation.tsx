@@ -32,27 +32,19 @@ export default function Navigation() {
         <Link
           href="mailto:hello@davidschander.com"
           data-hover
+          className="nav-cta-btn"
           style={{
             fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
             fontWeight: 800,
             fontSize: '13px',
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
-            color: 'var(--negroni)',
             textDecoration: 'none',
-            border: '2px solid var(--negroni)',
+            border: '2px solid currentColor',
             padding: '8px 18px',
             lineHeight: 1,
-            transition: 'background 0.15s ease, color 0.15s ease',
             whiteSpace: 'nowrap',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = 'var(--negroni)'
-            e.currentTarget.style.color = 'var(--cream)'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = 'transparent'
-            e.currentTarget.style.color = 'var(--negroni)'
+            background: 'transparent',
           }}
         >
           ich habe eine idee →

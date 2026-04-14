@@ -25,6 +25,7 @@ function CircularTextButton() {
     <a
       href="/projekte"
       data-hover
+      data-end=""
       className="hero-carousel-card"
       style={{ flexShrink: 0, display: 'block', textDecoration: 'none', transformOrigin: 'center center' }}
     >
@@ -215,8 +216,9 @@ function CircleScrollButton() {
 }
 
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
-  const sectionRef  = useRef<HTMLElement>(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
+  const sectionRef   = useRef<HTMLElement>(null)
+  const carouselRef  = useRef<HTMLDivElement>(null)
+  const portfolioRef = useRef<HTMLSpanElement>(null)
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
 
@@ -225,6 +227,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
 
     gsap.registerPlugin(ScrollTrigger)
     let ctx: gsap.Context | null = null
+
+    document.body.classList.add('negroni-hero-active')
 
     const setup = () => {
       ctx?.revert()
@@ -261,12 +265,19 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         // ── Glow + rotation + name opacity ─────────────────────────
         const applyGlow = (rawIdx: number) => {
           cards.forEach((card, i) => {
-            const dist    = Math.abs(rawIdx - i)
-            const t       = Math.max(0, 1 - dist)
+            const dist = Math.abs(rawIdx - i)
+            const t    = Math.max(0, 1 - dist)
+
+            // Circular end-button: scale only, no glow, no rotation
+            if (card.dataset.end !== undefined) {
+              gsap.set(card, { scale: 0.88 + 0.12 * t })
+              return
+            }
+
             const baseRot = CARD_ROTS[i % CARD_ROTS.length]
             gsap.set(card, {
               scale: 0.86 + 0.14 * t,
-              rotate: baseRot * (1 - t * 0.75), // straighten toward center
+              rotate: baseRot * (1 - t * 0.75),
               boxShadow: t > 0.04
                 ? `0 0 ${Math.round(t * 90)}px rgba(232,88,26,${(t * 0.58).toFixed(2)}), 0 0 ${Math.round(t * 45)}px rgba(232,88,26,${(t * 0.32).toFixed(2)})`
                 : 'none',
@@ -306,9 +317,34 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             applyGlow(rawIdx)
 
             // Negroni half: slides out to the right in the last 30% of scroll
-            if (negroniEl) {
-              const exitFrac = Math.max(0, Math.min(1, (self.progress - 0.7) / 0.3))
-              gsap.set(negroniEl, { xPercent: exitFrac * 100 })
+            const exitFrac = negroniEl
+              ? Math.max(0, Math.min(1, (self.progress - 0.7) / 0.3))
+              : 0
+            if (negroniEl) gsap.set(negroniEl, { xPercent: exitFrac * 100 })
+
+            // Portfolio. → plain ink once negroni starts leaving
+            const pEl = portfolioRef.current
+            if (pEl) {
+              if (exitFrac > 0) {
+                pEl.style.background = 'none'
+                pEl.style.backgroundAttachment = 'auto'
+                pEl.style.setProperty('-webkit-background-clip', 'unset')
+                pEl.style.backgroundClip = 'unset'
+                pEl.style.setProperty('-webkit-text-fill-color', 'var(--ink)')
+              } else {
+                pEl.style.background = 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)'
+                pEl.style.backgroundAttachment = 'fixed'
+                pEl.style.setProperty('-webkit-background-clip', 'text')
+                pEl.style.backgroundClip = 'text'
+                pEl.style.setProperty('-webkit-text-fill-color', 'transparent')
+              }
+            }
+
+            // Nav CTA: cream while negroni visible, negroni when gone
+            if (exitFrac >= 1) {
+              document.body.classList.remove('negroni-hero-active')
+            } else {
+              document.body.classList.add('negroni-hero-active')
             }
           },
         })
@@ -327,7 +363,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       )
     ).then(setup)
 
-    return () => ctx?.revert()
+    return () => {
+      ctx?.revert()
+      document.body.classList.remove('negroni-hero-active')
+    }
   }, [n])
 
   if (n === 0) return null
@@ -496,7 +535,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{
+            <span ref={portfolioRef} style={{
               whiteSpace: 'nowrap',
               background: 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)',
               backgroundAttachment: 'fixed',
