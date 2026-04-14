@@ -90,7 +90,7 @@ a, button, input, textarea, select, [role="button"] {
 
 .projekte-strip::-webkit-scrollbar { display: none; }
 
-/* Nav CTA — negroni by default, cream when negroni hero panel is active */
+/* Nav CTA */
 .nav-cta-btn {
   color: var(--negroni);
   transition: background 0.18s ease, color 0.18s ease;
@@ -98,13 +98,6 @@ a, button, input, textarea, select, [role="button"] {
 .nav-cta-btn:hover {
   background: var(--negroni) !important;
   color: var(--cream) !important;
-}
-.negroni-hero-active .nav-cta-btn {
-  color: var(--cream);
-}
-.negroni-hero-active .nav-cta-btn:hover {
-  background: var(--cream) !important;
-  color: var(--negroni) !important;
 }
 
 /* Brutalist contact button in nav */

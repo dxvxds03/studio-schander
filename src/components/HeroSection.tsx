@@ -138,11 +138,7 @@ function CyclingWord() {
             display: 'block',
             lineHeight: 'inherit',
             whiteSpace: 'nowrap',
-            background: 'linear-gradient(to right, var(--ink) 50%, var(--cream) 50%)',
-            backgroundAttachment: 'fixed',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            color: 'var(--ink)',
           }}
           initial={{ y: '105%' }}
           animate={{ y: 0 }}
@@ -192,19 +188,19 @@ function CircleScrollButton() {
       onClick={scrollDown}
       data-hover
       style={{
-        width: '90px',
-        height: '90px',
+        width: '72px',
+        height: '72px',
         borderRadius: '50%',
-        border: '2.5px solid var(--cream)',
+        border: '2px solid var(--ink)',
         background: 'transparent',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
         padding: 0,
-        color: 'var(--cream)',
+        color: 'var(--ink)',
       }}
-      whileHover={{ background: 'var(--cream)', color: '#34160f', scale: 1.06 }}
+      whileHover={{ background: 'var(--ink)', color: 'var(--cream)', scale: 1.06 }}
       animate={{ y: [0, 7, 0] }}
       transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
@@ -216,20 +212,31 @@ function CircleScrollButton() {
 }
 
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
-  const sectionRef      = useRef<HTMLElement>(null)
-  const carouselRef     = useRef<HTMLDivElement>(null)
-  const heroCompleteRef = useRef(false)
+  const sectionRef  = useRef<HTMLElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
   const [showStickyHeader, setShowStickyHeader] = useState(false)
+
+  // Scroll-up sticky header
+  useEffect(() => {
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      const heroH = sectionRef.current?.offsetHeight ?? 0
+      if (y < lastY && y > heroH) setShowStickyHeader(true)
+      else if (y >= lastY || y <= heroH) setShowStickyHeader(false)
+      lastY = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     if (!sectionRef.current || !carouselRef.current || n === 0) return
 
     gsap.registerPlugin(ScrollTrigger)
     let ctx: gsap.Context | null = null
-
-    document.body.classList.add('negroni-hero-active')
 
     const setup = () => {
       ctx?.revert()
@@ -292,8 +299,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
 
         applyGlow(0) // initial state
 
-        const negroniEl = section.querySelector<HTMLElement>('.hero-negroni-half')
-
         if (total <= 1) return
 
         ScrollTrigger.create({
@@ -317,25 +322,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             gsap.set(carousel, { x: tx })
             applyGlow(rawIdx)
 
-            // Negroni half: slides out to the right in the last 30% of scroll
-            const exitFrac = negroniEl
-              ? Math.max(0, Math.min(1, (self.progress - 0.7) / 0.3))
-              : 0
-            if (negroniEl) gsap.set(negroniEl, { xPercent: exitFrac * 100 })
-
-            // Nav CTA: cream while negroni visible, negroni when gone
-            if (exitFrac >= 1) {
-              document.body.classList.remove('negroni-hero-active')
-            } else {
-              document.body.classList.add('negroni-hero-active')
-            }
-
-            // Sticky header: show early so word appears to "stick"
-            const stickyShow = self.progress > 0.90
-            if (stickyShow !== heroCompleteRef.current) {
-              heroCompleteRef.current = stickyShow
-              setShowStickyHeader(stickyShow)
-            }
           },
         })
 
@@ -353,10 +339,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       )
     ).then(setup)
 
-    return () => {
-      ctx?.revert()
-      document.body.classList.remove('negroni-hero-active')
-    }
+    return () => { ctx?.revert() }
   }, [n])
 
   if (n === 0) return null
@@ -380,21 +363,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       >
         <SchanderTicker />
 
-        {/* Negroni right half — full viewport height, behind everything */}
-        <div
-          className="hero-negroni-half"
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: '50%',
-            background: 'var(--negroni)',
-            zIndex: 0,
-            pointerEvents: 'none',
-          }}
-        />
-
         {/* Carousel area — title pill sits inside as absolute overlay */}
         <div
           style={{
@@ -404,8 +372,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             overflow: 'hidden',
             position: 'relative',
             zIndex: 1,
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 100%)',
           }}
         >
           {/* Active project name pill — directly above carousel */}
@@ -501,8 +469,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             padding: 'clamp(14px, 1.8vw, 26px) clamp(20px, 2.5vw, 32px)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '24px',
             background: 'transparent',
             position: 'relative',
             zIndex: 10,
@@ -525,17 +491,80 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{
-              whiteSpace: 'nowrap',
-              background: 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)',
-              backgroundAttachment: 'fixed',
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>Portfolio.</span>
+            <span style={{ whiteSpace: 'nowrap', color: 'var(--negroni)' }}>Portfolio.</span>
           </h1>
-          <CircleScrollButton />
         </motion.div>
+
+        {/* Right sidebar — 20% width, replaces negroni half */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '61px', // below nav
+            right: 0,
+            bottom: 0,
+            width: '20%',
+            zIndex: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            padding: 'clamp(16px, 2vw, 28px) clamp(12px, 1.5vw, 20px)',
+            borderLeft: '1px solid var(--faint)',
+          }}
+        >
+          <CircleScrollButton />
+
+          <a
+            href="mailto:hello@davidschander.com"
+            data-hover
+            className="nav-cta-btn"
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '11px',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              border: '2px solid currentColor',
+              padding: '8px 14px',
+              lineHeight: 1.3,
+              background: 'transparent',
+              textAlign: 'center',
+            }}
+          >
+            ich habe<br />eine idee →
+          </a>
+
+          <a
+            href="/projekte"
+            data-hover
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '11px',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              color: 'var(--ink)',
+              textDecoration: 'none',
+              border: '2px solid var(--ink)',
+              padding: '8px 14px',
+              lineHeight: 1.3,
+              background: 'transparent',
+              textAlign: 'center',
+              transition: 'background 0.15s ease, color 0.15s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'var(--ink)'
+              e.currentTarget.style.color = 'var(--cream)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'transparent'
+              e.currentTarget.style.color = 'var(--ink)'
+            }}
+          >
+            Alle<br />Projekte
+          </a>
+        </div>
       </div>
 
       {/* Sticky heading — always mounted so CyclingWord stays in sync with hero */}
