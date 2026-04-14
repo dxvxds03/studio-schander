@@ -18,7 +18,7 @@ const GAP = 36
 // Organic tilts per card position
 const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
-const CYCLING_WORDS = ['Schander.', 'David.', 'Studio.', 'Ideen.']
+const CYCLING_WORDS = ['Marken.', 'Schander.', 'David.', 'Studio.', 'Ideen.']
 
 function CyclingWord() {
   const [idx, setIdx] = useState(0)
@@ -269,13 +269,55 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       >
         <SchanderTicker />
 
+        {/* Active project name — above carousel */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            height: 'clamp(44px, 6vh, 72px)',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 clamp(20px, 2.5vw, 32px)',
+            overflow: 'hidden',
+            paddingTop: '56px',
+          }}
+        >
+          {items.map((project) => (
+            <span
+              key={project.id}
+              className="hero-proj-name"
+              style={{
+                position: 'absolute',
+                left: 'clamp(20px, 2.5vw, 32px)',
+                right: 'clamp(20px, 2.5vw, 32px)',
+                top: '56px',
+                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(22px, 3.5vw, 52px)',
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                color: '#191917',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            >
+              {project.title}
+              {project.link && (
+                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>↗</span>
+              )}
+            </span>
+          ))}
+        </div>
+
         {/* Carousel area */}
         <div
           style={{
             flex: 1,
             display: 'flex',
             alignItems: 'center',
-            paddingTop: '56px',
             overflow: 'hidden',
             position: 'relative',
             zIndex: 1,
@@ -330,51 +372,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           </div>
         </div>
 
-        {/* Active project name */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 2,
-            height: 'clamp(52px, 7vh, 88px)',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 clamp(16px, 2vw, 24px)',
-            overflow: 'hidden',
-          }}
-        >
-          {items.map((project) => (
-            <span
-              key={project.id}
-              className="hero-proj-name"
-              style={{
-                position: 'absolute',
-                left: 'clamp(16px, 2vw, 24px)',
-                right: 'clamp(16px, 2vw, 24px)',
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(22px, 3.5vw, 52px)',
-                letterSpacing: '-0.04em',
-                lineHeight: 1,
-                color: '#0000CC',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                pointerEvents: 'none',
-                userSelect: 'none',
-              }}
-            >
-              {project.title}
-              {project.link && (
-                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>↗</span>
-              )}
-            </span>
-          ))}
-        </div>
-
         {/* Bottom bar */}
         <motion.div
           style={{
-            padding: 'clamp(14px, 1.8vw, 26px) clamp(16px, 2vw, 24px)',
+            padding: 'clamp(14px, 1.8vw, 26px) clamp(20px, 2.5vw, 32px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
