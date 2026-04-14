@@ -17,6 +17,7 @@ interface Project {
   description: string | null
   tags: string[]
   show_in_carousel: boolean
+  project_type: 'client' | 'schander' | 'personal' | null
 }
 
 const emptyForm = {
@@ -30,6 +31,7 @@ const emptyForm = {
   order: '0',
   featured: false,
   showInCarousel: true,
+  projectType: 'client' as 'client' | 'schander' | 'personal',
 }
 
 export default function Dashboard() {
@@ -105,7 +107,8 @@ export default function Dashboard() {
       title: form.title,
       description: form.description || null,
       year: form.year ? parseInt(form.year) : null,
-      client: form.client || null,
+      client: form.projectType === 'client' ? (form.client || null) : null,
+      projectType: form.projectType,
       tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
       coverImage: form.coverImage || null,
       images: extraImages,
@@ -162,6 +165,7 @@ export default function Dashboard() {
       order: String(p.order),
       featured: p.featured,
       showInCarousel: p.show_in_carousel !== false,
+      projectType: (p.project_type ?? 'client') as 'client' | 'schander' | 'personal',
     })
     setExtraImages(p.images ?? [])
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -222,10 +226,31 @@ export default function Dashboard() {
                 <input style={inp} type="number" value={form.year} onChange={(e) => setForm((p) => ({ ...p, year: e.target.value }))} placeholder="2024" min="1990" max="2099" />
               </div>
               <div>
-                <label style={lbl}>Kunde</label>
-                <input style={inp} value={form.client} onChange={(e) => setForm((p) => ({ ...p, client: e.target.value }))} placeholder="Kundenname" />
+                <label style={lbl}>Projekttyp</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingTop: '4px' }}>
+                  {([['client', 'Externer Kunde'], ['schander', 'Schander Marke'], ['personal', 'Persönliches Projekt']] as const).map(([val, label]) => (
+                    <label key={val} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                      <input
+                        type="radio"
+                        name="projectType"
+                        value={val}
+                        checked={form.projectType === val}
+                        onChange={() => setForm((p) => ({ ...p, projectType: val }))}
+                        style={{ accentColor: '#E8331A', cursor: 'pointer' }}
+                      />
+                      <span style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#787672' }}>{label}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {form.projectType === 'client' && (
+              <div>
+                <label style={lbl}>Kundenname</label>
+                <input style={inp} value={form.client} onChange={(e) => setForm((p) => ({ ...p, client: e.target.value }))} placeholder="z.B. Sparkasse Herford" />
+              </div>
+            )}
 
             <div>
               <label style={lbl}>Tags (kommagetrennt)</label>

@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -7,7 +8,7 @@ export const revalidate = 0
 export default async function ProjektePage() {
   const { data: projects } = await supabase
     .from('projects')
-    .select('id, title, cover_image, link, year, client, tags')
+    .select('id, title, cover_image, link, year, client, tags, project_type')
     .order('order', { ascending: true })
     .order('created_at', { ascending: false })
 
@@ -150,20 +151,28 @@ export default async function ProjektePage() {
                   </h2>
                 </div>
 
-                {project.tags && project.tags.length > 0 && (
-                  <p
-                    style={{
-                      fontFamily: '"Source Code Pro", monospace',
-                      fontSize: 'clamp(10px, 0.85vw, 12px)',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      color: 'var(--dead-poet)',
-                      marginTop: '5px',
-                    }}
-                  >
-                    {project.tags.join(' · ')}
-                  </p>
-                )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px', flexWrap: 'wrap' }}>
+                  <ClientBadge
+                    projectType={(project as any).project_type ?? null}
+                    client={project.client ?? null}
+                    variant="dark"
+                    size="sm"
+                  />
+                  {project.tags && project.tags.length > 0 && (
+                    <p
+                      style={{
+                        fontFamily: '"Source Code Pro", monospace',
+                        fontSize: 'clamp(10px, 0.85vw, 12px)',
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: 'var(--dead-poet)',
+                        margin: 0,
+                      }}
+                    >
+                      {project.tags.join(' · ')}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Right: year + thumbnail */}
@@ -175,37 +184,18 @@ export default async function ProjektePage() {
                   flexShrink: 0,
                 }}
               >
-                {(project.year || project.client) && (
-                  <div style={{ textAlign: 'right' }}>
-                    {project.year && (
-                      <p
-                        style={{
-                          fontFamily: '"Source Code Pro", monospace',
-                          fontSize: 'clamp(11px, 0.85vw, 13px)',
-                          letterSpacing: '0.06em',
-                          color: 'var(--muted)',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {project.year}
-                      </p>
-                    )}
-                    {project.client && (
-                      <p
-                        style={{
-                          fontFamily: '"Source Code Pro", monospace',
-                          fontSize: 'clamp(10px, 0.8vw, 12px)',
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: 'var(--muted)',
-                          marginTop: '2px',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {project.client}
-                      </p>
-                    )}
-                  </div>
+                {project.year && (
+                  <p
+                    style={{
+                      fontFamily: '"Source Code Pro", monospace',
+                      fontSize: 'clamp(11px, 0.85vw, 13px)',
+                      letterSpacing: '0.06em',
+                      color: 'var(--muted)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {project.year}
+                  </p>
                 )}
 
                 {project.cover_image && (

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ProjectCarousel from '@/components/ProjectCarousel'
+import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -130,7 +131,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
             </div>
           )}
 
-          {project.client && (
+          {(project.project_type || project.client) && (
             <div>
               <p
                 style={{
@@ -139,22 +140,17 @@ export default async function ProjectPage({ params }: { params: { id: string } }
                   letterSpacing: '0.22em',
                   textTransform: 'uppercase',
                   color: 'var(--muted)',
-                  marginBottom: '4px',
+                  marginBottom: '8px',
                 }}
               >
-                Kunde
+                {project.project_type === 'client' ? 'Kunde' : 'Projekt'}
               </p>
-              <p
-                style={{
-                  fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-                  fontWeight: 800,
-                  fontSize: 'clamp(18px, 2vw, 28px)',
-                  letterSpacing: '-0.02em',
-                  color: 'var(--ink)',
-                }}
-              >
-                {project.client}
-              </p>
+              <ClientBadge
+                projectType={project.project_type ?? null}
+                client={project.client ?? null}
+                variant="dark"
+                size="md"
+              />
             </div>
           )}
 

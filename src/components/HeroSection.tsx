@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlowerIcon from './FlowerIcon'
+import ClientBadge from './ClientBadge'
 
 interface HeroProject {
   id: number
@@ -13,6 +14,8 @@ interface HeroProject {
   link: string | null
   tags: string[]
   show_in_carousel?: boolean
+  project_type?: 'client' | 'schander' | 'personal' | null
+  client?: string | null
 }
 
 const CIRCLE_TEXT = 'WEITERE PROJEKTE · WEITERE PROJEKTE · WEITERE PROJEKTE · '
@@ -352,6 +355,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 className="hero-proj-name"
                 style={{
                   position: 'absolute',
+                  display: 'inline-flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '6px',
                   fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                   fontWeight: 800,
                   fontSize: 'clamp(12px, 1.3vw, 16px)',
@@ -360,16 +367,24 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   color: 'var(--cream)',
                   background: 'var(--ink)',
                   borderRadius: '100px',
-                  padding: '7px 18px',
+                  padding: '7px 18px 8px',
                   whiteSpace: 'nowrap',
                   userSelect: 'none',
                   transition: 'opacity 0.3s ease',
                 }}
               >
-                {project.title}
-                {project.link && (
-                  <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
-                )}
+                <span>
+                  {project.title}
+                  {project.link && (
+                    <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
+                  )}
+                </span>
+                <ClientBadge
+                  projectType={project.project_type ?? null}
+                  client={project.client ?? null}
+                  variant="light"
+                  size="sm"
+                />
               </span>
             ))}
           </div>

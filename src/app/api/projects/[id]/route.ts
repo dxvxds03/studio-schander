@@ -37,6 +37,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       order: body.order ?? 0,
       featured: body.featured ?? false,
       show_in_carousel: body.showInCarousel ?? true,
+      project_type: body.projectType ?? 'client',
     })
     .eq('id', parseInt(params.id))
     .select()
