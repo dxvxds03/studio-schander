@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { getSupabaseAdminClient } from '@/lib/supabase-server'
 import { verifyAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -21,7 +22,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 
   const body = await request.json()
 
-  const { data, error } = await supabase
+  const db = getSupabaseAdminClient()
+  const { data, error } = await db
     .from('projects')
     .update({
       title: body.title,
@@ -47,7 +49,8 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   const isAdmin = await verifyAdmin()
   if (!isAdmin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const { error } = await supabase
+  const db = getSupabaseAdminClient()
+  const { error } = await db
     .from('projects')
     .delete()
     .eq('id', parseInt(params.id))

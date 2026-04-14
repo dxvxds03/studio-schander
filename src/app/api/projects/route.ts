@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { getSupabaseAdminClient } from '@/lib/supabase-server'
 import { verifyAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -22,7 +23,8 @@ export async function POST(request: Request) {
   const body = await request.json()
   const slug = `${body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`
 
-  const { data, error } = await supabase
+  const db = getSupabaseAdminClient()
+  const { data, error } = await db
     .from('projects')
     .insert({
       title: body.title,

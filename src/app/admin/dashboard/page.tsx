@@ -125,7 +125,12 @@ export default function Dashboard() {
     } else if (res.status === 401) {
       router.push('/admin')
     } else {
-      setMsg('Fehler beim Speichern.')
+      try {
+        const err = await res.json()
+        setMsg(`Fehler: ${err.error ?? res.statusText}`)
+      } catch {
+        setMsg(`Fehler beim Speichern (${res.status}).`)
+      }
     }
     setSaving(false)
   }
