@@ -127,3 +127,16 @@ a[href^="mailto"].nav-kontakt:hover {
 .kontakt-link:hover {
   background-size: 100% 5px;
 }
+
+/* Projekte list rows */
+.projekte-row {
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.18s ease;
+}
+.projekte-row:hover {
+  background: rgba(25,25,23,0.03);
+}
+.projekte-row:hover .projekte-title {
+  color: var(--dead-poet) !important;
+}

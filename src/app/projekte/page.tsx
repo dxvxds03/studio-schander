@@ -13,69 +13,70 @@ export default async function ProjektePage() {
   const all = projects ?? []
 
   return (
-    <main
-      style={{
-        height: '100dvh',
-        overflow: 'hidden',
-        background: 'var(--ink)',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <main style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Navigation />
 
-      {/* Polaroid — großes Querformat-Rechteck */}
-      <div
+      {/* Page header */}
+      <section
         style={{
-          flex: 1,
-          minHeight: 0,
-          margin: `61px clamp(20px, 2.5vw, 36px) clamp(14px, 1.8vw, 24px)`,
-          background: 'var(--cream)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: 'clamp(24px, 3vw, 44px)',
-          boxShadow: '0 20px 80px rgba(0,0,0,0.6)',
+          paddingTop: '61px',
+          paddingLeft: 'clamp(16px, 2vw, 24px)',
+          paddingRight: 'clamp(16px, 2vw, 24px)',
         }}
       >
-        <h1
+        <div
           style={{
-            fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-            fontWeight: 800,
-            fontSize: 'clamp(56px, 13vw, 200px)',
-            letterSpacing: '-0.05em',
-            lineHeight: 0.88,
-            color: 'var(--ink)',
-            textTransform: 'uppercase',
-            margin: 0,
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            gap: '24px',
+            borderBottom: '1px solid var(--faint)',
+            paddingTop: 'clamp(48px, 8vw, 112px)',
+            paddingBottom: 'clamp(24px, 3vw, 40px)',
           }}
         >
-          Alle<br />Projekte.
-        </h1>
-      </div>
+          <h1
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+              fontWeight: 800,
+              fontSize: 'clamp(56px, 10vw, 160px)',
+              letterSpacing: '-0.045em',
+              lineHeight: 0.88,
+              color: 'var(--ink)',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}
+          >
+            Alle<br />Projekte.
+          </h1>
+          <p
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: 'clamp(11px, 0.9vw, 13px)',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+              marginBottom: '8px',
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {all.length} Arbeiten
+          </p>
+        </div>
+      </section>
 
-      {/* Projekt-Carousel im schwarzen Bereich */}
-      <div
-        className="projekte-strip"
+      {/* Project list */}
+      <section
         style={{
-          height: 'clamp(140px, 21vh, 190px)',
-          display: 'flex',
-          alignItems: 'flex-start',
-          paddingTop: 'clamp(10px, 1.2vh, 16px)',
-          paddingBottom: 'clamp(10px, 1.2vh, 16px)',
-          paddingLeft: 'clamp(20px, 2.5vw, 36px)',
-          paddingRight: 'clamp(20px, 2.5vw, 36px)',
-          gap: 'clamp(8px, 1vw, 14px)',
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        } as React.CSSProperties}
+          paddingLeft: 'clamp(16px, 2vw, 24px)',
+          paddingRight: 'clamp(16px, 2vw, 24px)',
+        }}
       >
         {all.map((project, i) => {
           const href = project.link ?? `/projects/${project.id}`
           const isExternal = !!project.link
-          const index = String(i + 1).padStart(3, '0')
+          const index = String(i + 1).padStart(2, '0')
 
           return (
             <a
@@ -84,75 +85,157 @@ export default async function ProjektePage() {
               target={isExternal ? '_blank' : '_self'}
               rel={isExternal ? 'noopener noreferrer' : undefined}
               data-hover
+              className="projekte-row"
               style={{
-                flexShrink: 0,
-                textDecoration: 'none',
                 display: 'flex',
-                flexDirection: 'column',
-                gap: '5px',
-                width: 'clamp(62px, 8vw, 100px)',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 'clamp(16px, 3vw, 48px)',
+                padding: `clamp(14px, 1.8vw, 24px) 0`,
+                borderBottom: '1px solid var(--faint)',
               }}
             >
-              <div
-                style={{
-                  aspectRatio: '3/4',
-                  overflow: 'hidden',
-                  background: '#2C2A27',
-                }}
-              >
-                {project.cover_image ? (
-                  <img
-                    src={project.cover_image}
-                    alt={project.title}
-                    draggable={false}
-                    className="img-hover"
+              {/* Left: index + title + tags */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: '0.45em',
+                  }}
+                >
+                  <span
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
+                      fontFamily: '"Source Code Pro", monospace',
+                      fontSize: 'clamp(10px, 0.85vw, 13px)',
+                      letterSpacing: '0.1em',
+                      color: 'var(--muted)',
+                      flexShrink: 0,
                     }}
-                  />
-                ) : null}
+                  >
+                    ({index})
+                  </span>
+                  <h2
+                    className="projekte-title"
+                    style={{
+                      fontFamily:
+                        '"Cabinet Grotesk", "Source Code Pro", monospace',
+                      fontWeight: 800,
+                      fontSize: 'clamp(22px, 4vw, 64px)',
+                      letterSpacing: '-0.04em',
+                      lineHeight: 0.92,
+                      color: 'var(--ink)',
+                      textTransform: 'uppercase',
+                      margin: 0,
+                      transition: 'color 0.18s ease',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {project.title}
+                    {isExternal && (
+                      <span
+                        style={{
+                          color: 'var(--dead-poet)',
+                          fontSize: '0.55em',
+                          marginLeft: '0.2em',
+                        }}
+                      >
+                        ↗
+                      </span>
+                    )}
+                  </h2>
+                </div>
+
+                {project.tags && project.tags.length > 0 && (
+                  <p
+                    style={{
+                      fontFamily: '"Source Code Pro", monospace',
+                      fontSize: 'clamp(10px, 0.85vw, 12px)',
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color: 'var(--dead-poet)',
+                      marginTop: '5px',
+                    }}
+                  >
+                    {project.tags.join(' · ')}
+                  </p>
+                )}
               </div>
 
-              <div>
-                <p
-                  style={{
-                    fontFamily: '"Source Code Pro", monospace',
-                    fontSize: '9px',
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    color: '#5A5856',
-                    marginBottom: '2px',
-                  }}
-                >
-                  [{index}]{project.year ? ` ${project.year}` : ''}
-                </p>
-                <p
-                  style={{
-                    fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-                    fontWeight: 800,
-                    fontSize: 'clamp(10px, 1vw, 13px)',
-                    letterSpacing: '-0.02em',
-                    color: 'var(--cream)',
-                    lineHeight: 1.1,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                  }}
-                >
-                  {project.title}
-                  {project.link && (
-                    <span style={{ color: 'var(--negroni)', marginLeft: '3px', fontSize: '0.75em' }}>↗</span>
-                  )}
-                </p>
+              {/* Right: year + thumbnail */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'clamp(16px, 2.5vw, 36px)',
+                  flexShrink: 0,
+                }}
+              >
+                {(project.year || project.client) && (
+                  <div style={{ textAlign: 'right' }}>
+                    {project.year && (
+                      <p
+                        style={{
+                          fontFamily: '"Source Code Pro", monospace',
+                          fontSize: 'clamp(11px, 0.85vw, 13px)',
+                          letterSpacing: '0.06em',
+                          color: 'var(--muted)',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {project.year}
+                      </p>
+                    )}
+                    {project.client && (
+                      <p
+                        style={{
+                          fontFamily: '"Source Code Pro", monospace',
+                          fontSize: 'clamp(10px, 0.8vw, 12px)',
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase',
+                          color: 'var(--muted)',
+                          marginTop: '2px',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {project.client}
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                {project.cover_image && (
+                  <div
+                    style={{
+                      width: 'clamp(44px, 5.5vw, 72px)',
+                      aspectRatio: '3/4',
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      src={project.cover_image}
+                      alt={project.title}
+                      draggable={false}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                        transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </a>
           )
         })}
-      </div>
+      </section>
+
+      <div style={{ height: 'clamp(64px, 8vw, 112px)' }} />
     </main>
   )
 }
