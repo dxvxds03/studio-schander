@@ -277,7 +277,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           right: 0,
           bottom: 0,
           width: '50%',
-          background: '#0000CC',
+          background: 'var(--negroni)',
           zIndex: 0,
           pointerEvents: 'none',
         }} />
@@ -411,7 +411,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{ color: 'var(--negroni)', whiteSpace: 'nowrap' }}>Portfolio.</span>
+            <span style={{ color: '#0000CC', whiteSpace: 'nowrap' }}>Portfolio.</span>
           </h1>
           <CircleScrollButton />
         </motion.div>
