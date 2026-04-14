@@ -6,10 +6,10 @@
 :root {
   --negroni: #E8581A;
   --dead-poet: #0000CC;
-  --cream: #111110;
-  --ink: #EDE9E2;
-  --muted: #9A9690;
-  --faint: #272624;
+  --cream: #F4F2ED;
+  --ink: #191917;
+  --muted: #787672;
+  --faint: #E8E5DF;
 }
 
 * {

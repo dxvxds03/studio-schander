@@ -97,7 +97,7 @@ function SchanderTicker() {
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
               color: 'transparent',
-              WebkitTextStroke: '1.5px #2A2927',
+              WebkitTextStroke: '1.5px #D8D5CF',
               userSelect: 'none',
             }}
           >
