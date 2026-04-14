@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       colors: {
         negroni: '#34160f',
-        deadpoet: '#E8581A',
+        deadpoet: '#E8331A',
         cream: '#F4F2ED',
         ink: '#191917',
         muted: '#787672',

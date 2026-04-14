@@ -181,38 +181,6 @@ function SchaderSvgLogo() {
   )
 }
 
-function CircleScrollButton() {
-  const scrollDown = () =>
-    document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
-
-  return (
-    <motion.button
-      onClick={scrollDown}
-      data-hover
-      style={{
-        width: '72px',
-        height: '72px',
-        borderRadius: '50%',
-        border: '2px solid var(--ink)',
-        background: 'transparent',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-        padding: 0,
-        color: 'var(--ink)',
-      }}
-      whileHover={{ background: 'var(--ink)', color: 'var(--cream)', scale: 1.06 }}
-      animate={{ y: [0, 7, 0] }}
-      transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
-    >
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-        <path d="M15 4v22M5 17l10 9 10-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </motion.button>
-  )
-}
-
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const sectionRef  = useRef<HTMLElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)

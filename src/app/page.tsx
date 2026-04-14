@@ -82,9 +82,7 @@ export default async function HomePage() {
             textTransform: 'uppercase',
             color: 'var(--muted)',
             padding: '0 clamp(16px, 2vw, 24px)',
-            marginBottom: 'clamp(16px, 2vw, 28px)',
             margin: '0 0 clamp(16px, 2vw, 28px) 0',
-            paddingLeft: 'clamp(16px, 2vw, 24px)',
           }}
         >
           Was ich mache.
