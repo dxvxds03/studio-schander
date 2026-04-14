@@ -218,15 +218,13 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const n = items.length
   const [showStickyHeader, setShowStickyHeader] = useState(false)
 
-  // Scroll-up sticky header
+  // Sticky header: show past the last carousel slide, hide before it.
+  // Threshold = heroHeight - viewport = (n-1) * 100vh — adapts automatically.
   useEffect(() => {
-    let lastY = window.scrollY
     const onScroll = () => {
-      const y = window.scrollY
-      const threshold = window.innerHeight
-      if (y < lastY && y > threshold) setShowStickyHeader(true)
-      else if (y >= lastY || y <= threshold) setShowStickyHeader(false)
-      lastY = y
+      const heroH = sectionRef.current?.offsetHeight ?? 0
+      const threshold = Math.max(0, heroH - window.innerHeight)
+      setShowStickyHeader(threshold > 0 && window.scrollY >= threshold)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
