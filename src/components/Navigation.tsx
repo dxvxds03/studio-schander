@@ -23,7 +23,7 @@ export default function Navigation() {
           <motion.img
             src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
             alt="Studio Schander"
-            style={{ height: '51px', width: 'auto', display: 'block' }}
+            style={{ height: '51px', width: 'auto', display: 'block', filter: 'brightness(0)' }}
             whileHover={{ opacity: 0.55 }}
             transition={{ duration: 0.15 }}
           />
