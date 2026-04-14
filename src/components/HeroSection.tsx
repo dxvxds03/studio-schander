@@ -69,7 +69,7 @@ function CyclingWord() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={idx}
-          style={{ display: 'block', color: '#0000CC', lineHeight: 'inherit', whiteSpace: 'nowrap' }}
+          style={{ display: 'block', color: 'var(--ink)', lineHeight: 'inherit', whiteSpace: 'nowrap' }}
           initial={{ y: '105%' }}
           animate={{ y: 0 }}
           exit={{ y: '-105%' }}
@@ -121,16 +121,16 @@ function CircleScrollButton() {
         width: '90px',
         height: '90px',
         borderRadius: '50%',
-        border: '2.5px solid #0000CC',
+        border: '2.5px solid var(--cream)',
         background: 'transparent',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
         padding: 0,
-        color: '#0000CC',
+        color: 'var(--cream)',
       }}
-      whileHover={{ background: '#0000CC', color: '#F4F2ED', scale: 1.06 }}
+      whileHover={{ background: 'var(--cream)', color: '#0000CC', scale: 1.06 }}
       animate={{ y: [0, 7, 0] }}
       transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
@@ -270,6 +270,18 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       >
         <SchanderTicker />
 
+        {/* Blue right half — full viewport height, behind everything */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: '50%',
+          background: '#0000CC',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }} />
+
         {/* Carousel area — title pill sits inside as absolute overlay */}
         <div
           style={{
@@ -377,7 +389,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '24px',
-            background: 'var(--cream)',
+            background: 'transparent',
             position: 'relative',
             zIndex: 10,
           }}
