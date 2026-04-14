@@ -26,24 +26,21 @@ const LEISTUNGEN = [
     nr: '3',
     name: 'Design & Branding',
     lines: [
-      'Visuelle Identitäten, Editorial Design, Magazingestaltung.',
-      'Dinge die man ansieht und sofort weiß worum es geht.',
+      'Visuelle Identitäten, Editorial Design, Magazingestaltung.Dinge die man ansieht und sofort weiß worum es geht.',
     ],
   },
   {
     nr: '4',
     name: 'Konzeption',
     lines: [
-      'Bevor irgendetwas gebaut wird, muss es gedacht werden.',
-      'Struktur, Strategie, Content – auch das ist Handwerk.',
+      'Bevor irgendetwas gebaut wird, muss es gedacht werden. Struktur, Strategie, Content – auch das ist Handwerk.',
     ],
   },
   {
     nr: '5',
     name: 'KI-Integration',
     lines: [
-      'Ich arbeite täglich mit KI-Tools und setze sie sinnvoll ein.',
-      'Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
+      'Ich arbeite täglich mit KI-Tools und setze sie sinnvoll ein.Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
     ],
   },
 ]

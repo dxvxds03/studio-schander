@@ -409,6 +409,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         >
           {/* Active project name pill — directly above carousel */}
           <div
+            className="hero-namepill-wrapper"
             style={{
               position: 'absolute',
               top: 'clamp(16px, 7vh, 64px)',

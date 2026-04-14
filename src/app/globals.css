@@ -300,6 +300,11 @@ a[href^="mailto"].nav-kontakt:hover {
     padding-top: clamp(24px, 8vh, 60px) !important;
   }
 
+  /* Name pill closer to carousel on mobile */
+  .hero-namepill-wrapper {
+    top: calc(50% - clamp(130px, 18vh, 200px)) !important;
+  }
+
   /* Logo bigger on mobile */
   .nav-logo { height: clamp(40px, 11vw, 54px) !important; }
 }
