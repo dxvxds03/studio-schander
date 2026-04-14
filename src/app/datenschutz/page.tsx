@@ -111,11 +111,11 @@ export default function DatenschutzPage() {
             <p style={{ fontWeight: 700, marginBottom: '8px' }}>5. Kontakt</p>
             <p>
               <a
-                href="mailto:hello@davidschander.com"
+                href="mailto:mail@studio-schander.de"
                 data-hover
                 style={{ color: 'var(--negroni)', textDecoration: 'none' }}
               >
-                hello@davidschander.com
+                  mail@studio-schander.de
               </a>
             </p>
           </div>

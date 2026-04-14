@@ -65,11 +65,11 @@ export default function ImpressumPage() {
             <p>
               E-Mail:{' '}
               <a
-                href="mailto:hello@davidschander.com"
+                href="mailto:mail@studio-schander.de"
                 data-hover
                 style={{ color: 'var(--negroni)', textDecoration: 'none' }}
               >
-                hello@davidschander.com
+                  mail@studio-schander.de
               </a>
             </p>
           </div>

@@ -170,7 +170,7 @@ export default async function HomePage() {
           Ideen umsetzen.<br />
           Nimm jetzt{' '}
           <a
-            href="mailto:hello@davidschander.com"
+            href="mailto:mail@studio-schander.de"
             data-hover
             className="kontakt-link"
           >
