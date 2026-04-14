@@ -1,6 +1,6 @@
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
-import ProjectsGrid from '@/components/ProjectsGrid'
+import StackedCards from '@/components/StackedCards'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -19,61 +19,142 @@ export default async function HomePage() {
       <Navigation />
       <HeroSection projects={all} />
 
-      {/* About */}
+      {/* About — editorial two-column */}
       <section
         style={{
           borderTop: '2px solid #191917',
           borderBottom: '2px solid #191917',
-          padding: 'clamp(64px, 9vw, 128px) clamp(32px, 5vw, 80px)',
+          padding: 'clamp(56px, 8vw, 112px) clamp(32px, 5vw, 80px)',
         }}
       >
-        <div style={{ maxWidth: '960px' }}>
-          <p
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(30px, 4.8vw, 68px)',
-              letterSpacing: '-0.035em',
-              lineHeight: 1.04,
-              color: '#191917',
-              marginBottom: 'clamp(28px, 3vw, 48px)',
-            }}
-          >
-            Ich mache einfach,<br />was mir in den Kopf kommt.
-          </p>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 'clamp(40px, 6vw, 96px)',
+            alignItems: 'start',
+          }}
+        >
+          {/* Left: headline + CTA */}
+          <div>
+            <p
+              style={{
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(28px, 4vw, 56px)',
+                letterSpacing: '-0.035em',
+                lineHeight: 1.04,
+                color: '#191917',
+                marginBottom: 'clamp(32px, 4vw, 56px)',
+              }}
+            >
+              Ich mache einfach,{' '}
+              <span style={{ color: 'var(--negroni)' }}>
+                was mir in den Kopf kommt.
+              </span>
+            </p>
 
-          <p
-            style={{
-              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontSize: 'clamp(15px, 1.3vw, 18px)',
-              lineHeight: 1.65,
-              color: '#191917',
-              maxWidth: '640px',
-              marginBottom: 'clamp(36px, 4vw, 56px)',
-            }}
-          >
-            Ich bin David. Ich designe, fotografiere, entwickle Webseiten und mache Editorial Design&nbsp;– meistens alles gleichzeitig.
-            <br /><br />
-            Angefangen hat es vor 6 Jahren mit einer Idee. Inzwischen sind es viele: Lernmaterialien auf Eduki, AI Prompts auf Promptbase, ein eigener Kochblog, Medienarbeit für Gastronomie&nbsp;– und was auch immer als nächstes kommt.
-            <br /><br />
-            Hintergrund in Informatik, Digitalisierung & digitalem Marketing.
-          </p>
+            <a
+              href="mailto:hello@davidschander.com"
+              className="btn-negroni"
+              data-hover
+              style={{
+                fontSize: 'clamp(15px, 1.4vw, 20px)',
+                padding: 'clamp(12px, 1.2vw, 18px) clamp(24px, 2.2vw, 36px)',
+              }}
+            >
+              Du hast auch eine Idee?&nbsp;↗
+            </a>
+          </div>
 
-          <a
-            href="mailto:hello@davidschander.com"
-            className="btn-negroni"
-            data-hover
+          {/* Right: bio text */}
+          <div
             style={{
-              fontSize: 'clamp(16px, 1.6vw, 22px)',
-              padding: 'clamp(12px, 1.2vw, 18px) clamp(24px, 2.4vw, 36px)',
+              paddingTop: '6px',
             }}
           >
-            Du hast auch eine Idee?&nbsp;↗
-          </a>
+            <p
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: 'clamp(15px, 1.2vw, 17px)',
+                lineHeight: 1.7,
+                color: '#191917',
+              }}
+            >
+              Ich bin David. Ich designe, fotografiere, entwickle Webseiten und
+              mache Editorial Design&nbsp;– meistens alles gleichzeitig.
+            </p>
+            <p
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: 'clamp(15px, 1.2vw, 17px)',
+                lineHeight: 1.7,
+                color: '#191917',
+                marginTop: '20px',
+              }}
+            >
+              Angefangen hat es vor 6 Jahren mit einer Idee. Inzwischen sind es
+              viele: Lernmaterialien auf Eduki, AI Prompts auf Promptbase, ein
+              eigener Kochblog, Medienarbeit für Gastronomie&nbsp;– und was auch
+              immer als nächstes kommt.
+            </p>
+            <p
+              style={{
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontSize: 'clamp(15px, 1.2vw, 17px)',
+                lineHeight: 1.7,
+                color: '#787672',
+                marginTop: '20px',
+              }}
+            >
+              Hintergrund in Informatik, Digitalisierung & digitalem Marketing.
+            </p>
+          </div>
         </div>
       </section>
 
-      <ProjectsGrid projects={all} />
+      {/* Projects section header */}
+      <div
+        id="work"
+        style={{
+          borderBottom: '2px solid #191917',
+          padding: 'clamp(20px, 2.5vw, 32px) clamp(32px, 5vw, 80px)',
+          display: 'flex',
+          alignItems: 'baseline',
+          gap: '16px',
+        }}
+      >
+        <h2
+          style={{
+            fontFamily:
+              '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(28px, 4vw, 56px)',
+            letterSpacing: '-0.04em',
+            lineHeight: 1,
+            color: '#191917',
+          }}
+        >
+          Was bisher passiert ist.
+        </h2>
+        {all.length > 0 && (
+          <span
+            style={{
+              fontFamily:
+                '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(18px, 2vw, 28px)',
+              color: 'var(--negroni)',
+              letterSpacing: '-0.03em',
+            }}
+          >
+            {String(all.length).padStart(2, '0')}
+          </span>
+        )}
+      </div>
+
+      <StackedCards projects={all} />
 
       {/* Brand colors */}
       <section style={{ display: 'flex', minHeight: '340px' }}>
@@ -101,7 +182,8 @@ export default async function HomePage() {
           <div>
             <p
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
                 fontSize: 'clamp(44px, 8vw, 112px)',
                 color: '#F4F2ED',
@@ -149,7 +231,8 @@ export default async function HomePage() {
           <div>
             <p
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
                 fontSize: 'clamp(44px, 8vw, 112px)',
                 color: '#F4F2ED',
@@ -178,7 +261,7 @@ export default async function HomePage() {
       <footer
         style={{
           borderTop: '2px solid #191917',
-          padding: 'clamp(32px, 5vw, 72px) clamp(32px, 5vw, 80px)',
+          padding: 'clamp(32px, 5vw, 64px) clamp(32px, 5vw, 80px)',
         }}
       >
         <div
@@ -194,7 +277,8 @@ export default async function HomePage() {
           <div>
             <p
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
                 fontSize: 'clamp(28px, 5vw, 64px)',
                 letterSpacing: '-0.04em',
@@ -206,7 +290,8 @@ export default async function HomePage() {
             </p>
             <p
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 700,
                 fontSize: '14px',
                 letterSpacing: '-0.01em',
@@ -218,13 +303,21 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px' }}>
-            <div style={{ display: 'flex', gap: '24px' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              gap: '10px',
+            }}
+          >
+            <div style={{ display: 'flex', gap: '20px' }}>
               <a
                 href="/impressum"
                 data-hover
                 style={{
-                  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontFamily:
+                    '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                   fontWeight: 700,
                   fontSize: '14px',
                   letterSpacing: '-0.01em',
@@ -238,7 +331,8 @@ export default async function HomePage() {
                 href="/datenschutz"
                 data-hover
                 style={{
-                  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontFamily:
+                    '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                   fontWeight: 700,
                   fontSize: '14px',
                   letterSpacing: '-0.01em',
@@ -262,7 +356,8 @@ export default async function HomePage() {
               href="/admin"
               data-hover
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 700,
                 fontSize: '13px',
                 letterSpacing: '-0.01em',

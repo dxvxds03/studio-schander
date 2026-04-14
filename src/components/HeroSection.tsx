@@ -9,7 +9,6 @@ interface HeroProject {
   link: string | null
 }
 
-const WIDTHS =    [185, 228, 156, 212, 168, 244, 174, 202, 188, 158]
 const ROTATIONS = [-2.4, 1.7, -1.1, 2.6, -1.9, 1.3, -2.8, 1.5, -1.4, 2.1]
 const Y_OFFSETS = [0, 38, -20, 52, 8, -42, 26, -14, 44, -28]
 
@@ -20,7 +19,7 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
   const items = projects.filter(p => p.cover_image)
   if (items.length === 0) return null
 
-  const duration = Math.max(24, items.length * 8)
+  const duration = Math.max(28, items.length * 9)
   const tripled = [...items, ...items, ...items]
 
   return (
@@ -28,17 +27,16 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
       <div
         style={{
           display: 'flex',
-          alignItems: 'flex-start',
-          gap: '20px',
-          paddingTop: '16px',
-          paddingBottom: '20px',
+          alignItems: 'flex-end', // bottom-align so mixed heights look intentional
+          gap: '24px',
+          paddingTop: '8px',
+          paddingBottom: '24px',
           animation: `marquee ${duration}s linear infinite`,
           willChange: 'transform',
         }}
       >
         {tripled.map((project, i) => {
           const idx  = i % items.length
-          const w    = WIDTHS[idx % WIDTHS.length]
           const rot  = ROTATIONS[idx % ROTATIONS.length]
           const yOff = Y_OFFSETS[idx % Y_OFFSETS.length]
           const href = project.link ?? `/projects/${project.id}`
@@ -51,28 +49,34 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
               target={isExternal ? '_blank' : '_self'}
               rel={isExternal ? 'noopener noreferrer' : undefined}
               data-hover
-              style={{ flexShrink: 0, textDecoration: 'none' }}
+              style={{ flexShrink: 0, textDecoration: 'none', display: 'inline-block' }}
             >
               <motion.div
                 style={{
-                  width: `${w}px`,
                   transform: `rotate(${rot}deg) translateY(${yOff}px)`,
+                  display: 'inline-block',
                 }}
                 whileHover={{ scale: 1.08, rotate: 0, y: 0 }}
                 transition={{ type: 'spring', stiffness: 280, damping: 26 }}
               >
-                <div style={{ overflow: 'hidden' }}>
+                <div style={{ overflow: 'hidden', display: 'block' }}>
                   <img
                     src={project.cover_image!}
                     alt={project.title}
-                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                    style={{
+                      height: 'clamp(190px, 24vw, 320px)',
+                      width: 'auto',
+                      display: 'block',
+                      maxWidth: 'none',
+                    }}
                     draggable={false}
                   />
                 </div>
-                <div style={{ marginTop: '8px', paddingLeft: '2px' }}>
+                <div style={{ marginTop: '8px' }}>
                   <p
                     style={{
-                      fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                      fontFamily:
+                        '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                       fontWeight: 700,
                       fontSize: '11px',
                       letterSpacing: '-0.01em',
@@ -80,7 +84,7 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      maxWidth: `${w}px`,
+                      maxWidth: '100%',
                     }}
                   >
                     {project.title}
@@ -92,7 +96,6 @@ function HeroCarousel({ projects }: { projects: HeroProject[] }) {
                         color: 'var(--negroni)',
                         fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                         letterSpacing: '0.06em',
-                        fontWeight: 500,
                       }}
                     >
                       ↗ ansehen
@@ -133,7 +136,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4, duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{ paddingTop: '16px' }}
+        style={{ paddingTop: '12px' }}
       >
         <HeroCarousel projects={projects} />
       </motion.div>
@@ -154,20 +157,13 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         </motion.div>
 
         <motion.div
-          className="mt-8 flex items-center justify-between"
+          className="mt-7 flex items-center justify-between"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.7 }}
         >
-          <div className="flex items-center gap-5">
-            <div className="h-px bg-ink/20 w-12" />
-            <span
-              className="font-display"
-              style={{ fontWeight: 700, fontSize: '14px', letterSpacing: '-0.01em', color: '#191917' }}
-            >
-              Design & Direction
-            </span>
-            <span style={{ color: 'var(--negroni)', fontWeight: 700, fontSize: '18px' }}>·</span>
+          <div className="flex items-center gap-4">
+            <div className="h-px bg-ink/20 w-10" />
             <span
               className="font-display"
               style={{ fontWeight: 700, fontSize: '14px', letterSpacing: '-0.01em', color: '#191917' }}

@@ -20,34 +20,48 @@ export default function Navigation() {
       transition={{ delay: 1.8, duration: 0.6 }}
     >
       <div
-        className={`flex items-center justify-between px-8 md:px-14 lg:px-20 py-3 transition-all duration-500 ${
+        className={`flex items-center justify-between px-8 md:px-14 lg:px-20 transition-all duration-500 ${
           scrolled ? 'bg-cream/95 backdrop-blur-sm border-b border-faint' : ''
         }`}
+        style={{ paddingTop: '14px', paddingBottom: '14px' }}
       >
         <Link href="/" data-hover className="flex items-center">
           <motion.img
             src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
             alt="Studio Schander"
-            style={{ height: '52px', width: 'auto', display: 'block' }}
+            style={{ height: '38px', width: 'auto', display: 'block' }}
             whileHover={{ opacity: 0.65 }}
             transition={{ duration: 0.2 }}
           />
         </Link>
 
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-7">
           <Link
             href="#work"
             data-hover
-            className="font-display hover:text-negroni transition-colors"
-            style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '-0.01em', color: '#191917' }}
+            style={{
+              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 500,
+              fontSize: '13px',
+              letterSpacing: '0.01em',
+              color: '#787672',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#191917')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#787672')}
           >
             Arbeiten
           </Link>
           <Link
             href="mailto:hello@davidschander.com"
             data-hover
-            className="font-display hover:text-negroni transition-colors"
-            style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '-0.01em', color: '#191917' }}
+            className="btn-negroni"
+            style={{
+              fontSize: '12px',
+              padding: '7px 18px',
+              letterSpacing: '0.01em',
+            }}
           >
             Kontakt
           </Link>

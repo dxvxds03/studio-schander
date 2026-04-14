@@ -69,7 +69,8 @@ a, button, input, textarea, select, [role="button"] {
   text-decoration: none;
   font-family: 'Cabinet Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  border-radius: 100px;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 .btn-negroni:hover {
