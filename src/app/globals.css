@@ -247,12 +247,6 @@ a[href^="mailto"].nav-kontakt:hover {
     max-height: 50vh !important;
   }
 
-  /* Nav CTA: smaller on mobile */
-  .nav-cta-btn {
-    font-size: 11px !important;
-    padding: 6px 12px !important;
-    letter-spacing: 0.02em !important;
-  }
 }
 
 /* Projekte list rows */
@@ -270,29 +264,37 @@ a[href^="mailto"].nav-kontakt:hover {
 
 /* ── Hero sticky viewport: use small viewport height to avoid address-bar overlap */
 .hero-sticky {
-  height: 100svh;
+  height: 100vh;   /* fallback */
+  height: 100svh;  /* actual small viewport height (accounts for browser chrome) */
 }
 
-/* ── Tablet + Mobile (≤ 1024px): hero fixes ─────────────────── */
+/* ── Tablet + Mobile (≤ 1024px): hero + nav fixes ───────────── */
 @media (max-width: 1024px) {
-  /* "Alle Projekte" link visible on mobile/tablet (sidebar is hidden) */
-  .nav-projekte-mobile { display: inline-block !important; }
+  /* Show mobile nav buttons group, hide desktop CTA */
+  .nav-mobile-btns { display: flex !important; }
+  .nav-cta-desktop { display: none !important; }
 
   /* Slightly tighter bottom bar padding so h1 stays visible */
   .hero-bottom-bar {
-    padding-top: clamp(8px, 1.5vw, 16px) !important;
-    padding-bottom: clamp(8px, 1.5vw, 16px) !important;
+    padding-top: clamp(6px, 1.2vw, 14px) !important;
+    padding-bottom: clamp(6px, 1.2vw, 14px) !important;
   }
 
-  /* Hero h1 larger on tablet so it's readable */
+  /* Hero h1 larger on tablet */
   .hero-h1 {
     font-size: clamp(40px, 7vw, 100px) !important;
   }
+
+  /* Logo bigger on tablet/mobile */
+  .nav-logo { height: clamp(40px, 9vw, 51px) !important; }
 }
 
 @media (max-width: 680px) {
-  /* Hero h1 bigger on mobile than before */
+  /* Hero h1 bigger on mobile */
   .hero-h1 {
-    font-size: clamp(42px, 13vw, 80px) !important;
+    font-size: clamp(44px, 13vw, 80px) !important;
   }
+
+  /* Logo bigger on mobile */
+  .nav-logo { height: clamp(40px, 11vw, 54px) !important; }
 }

@@ -17,7 +17,7 @@ export default function Navigation() {
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
-          padding: '0 clamp(20px, 2.5vw, 32px) 10px clamp(20px, 2.5vw, 32px)',
+          padding: '0 clamp(16px, 2.5vw, 32px) 10px clamp(16px, 2.5vw, 32px)',
         }}
       >
         <Link href="/" data-hover style={{ display: 'flex', alignItems: 'flex-end', flexShrink: 0 }}>
@@ -31,33 +31,11 @@ export default function Navigation() {
           />
         </Link>
 
-        <Link
-          href="/projekte"
-          data-hover
-          className="nav-projekte-mobile"
-          style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 800,
-            fontSize: '13px',
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            color: 'var(--dead-poet)',
-            border: '2px solid var(--dead-poet)',
-            padding: '8px 18px',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            background: 'transparent',
-            display: 'none',
-          }}
-        >
-          Alle Projekte →
-        </Link>
-
+        {/* Desktop: single CTA button */}
         <Link
           href="mailto:hello@davidschander.com"
           data-hover
-          className="nav-cta-btn"
+          className="nav-cta-btn nav-cta-desktop"
           style={{
             fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
             fontWeight: 800,
@@ -75,6 +53,60 @@ export default function Navigation() {
         >
           ich habe eine idee →
         </Link>
+
+        {/* Mobile: two stacked buttons */}
+        <div
+          className="nav-mobile-btns"
+          style={{
+            display: 'none',
+            flexDirection: 'column',
+            gap: '8px',
+            alignItems: 'stretch',
+          }}
+        >
+          <Link
+            href="/projekte"
+            data-hover
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '11px',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              color: 'var(--dead-poet)',
+              border: '2px solid var(--dead-poet)',
+              padding: '7px 14px',
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+              background: 'transparent',
+              textAlign: 'center',
+            }}
+          >
+            Alle Projekte →
+          </Link>
+          <Link
+            href="mailto:hello@davidschander.com"
+            data-hover
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: '11px',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              color: '#E8581A',
+              border: '2px solid #E8581A',
+              padding: '7px 14px',
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+              background: 'transparent',
+              textAlign: 'center',
+            }}
+          >
+            Ich habe eine Idee →
+          </Link>
+        </div>
       </div>
     </motion.nav>
   )
