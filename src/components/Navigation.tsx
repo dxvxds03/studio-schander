@@ -7,7 +7,7 @@ export default function Navigation() {
   return (
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50"
-      style={{ background: 'var(--cream)' }}
+      style={{ background: 'transparent' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
@@ -42,7 +42,8 @@ export default function Navigation() {
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
             textDecoration: 'none',
-            border: '2px solid currentColor',
+            color: '#E8581A',
+            border: '2px solid #E8581A',
             padding: '8px 18px',
             lineHeight: 1,
             whiteSpace: 'nowrap',
