@@ -31,11 +31,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  cursor: none;
 }
 
-a, button, input, textarea, select, [role="button"] {
-  cursor: none !important;
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
 }
 
 ::selection {
@@ -146,6 +148,96 @@ a[href^="mailto"].nav-kontakt:hover {
 }
 .kontakt-link:hover {
   background-size: 100% 5px;
+}
+
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+
+  /* Sidebar hidden */
+  .sidebar-root { display: none !important; }
+
+  /* Sections: remove sidebar margin */
+  .sidebar-aware { margin-right: 0 !important; }
+
+  /* Leistungen rows: stack vertically */
+  .leistungen-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  .leistungen-desc {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  /* Projekte list: stack rows */
+  .projekte-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .projekte-row img {
+    height: clamp(120px, 35vw, 180px) !important;
+    width: auto !important;
+  }
+
+  /* Project detail: single column */
+  .project-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .project-meta {
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding-top: 0 !important;
+  }
+  .project-meta .flex-end-tags {
+    justify-content: flex-start !important;
+  }
+
+  /* Footer: stack */
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .footer-links {
+    align-items: flex-start !important;
+  }
+
+  /* Footer color blocks: shorter */
+  .footer-colors { min-height: 180px !important; }
+
+  /* Nav logo smaller */
+  .nav-logo { height: clamp(32px, 8vw, 44px) !important; }
+
+  /* Hero h1: stack cycling word above Portfolio */
+  .hero-h1 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+    line-height: 0.9 !important;
+    font-size: clamp(36px, 12vw, 80px) !important;
+  }
+
+  /* Hero carousel card image: smaller */
+  .hero-carousel-card img {
+    height: clamp(180px, 28vh, 280px) !important;
+  }
+
+  /* Circular end button: smaller */
+  .hero-end-btn { width: clamp(80px, 24vw, 130px) !important; height: clamp(80px, 24vw, 130px) !important; }
+  .hero-end-btn svg { width: clamp(80px, 24vw, 130px) !important; height: clamp(80px, 24vw, 130px) !important; }
+  .hero-end-btn > div { width: clamp(52px, 15vw, 80px) !important; height: clamp(52px, 15vw, 80px) !important; }
+
+  /* StackedCards: narrower */
+  .sc-card { width: clamp(200px, 80vw, 320px) !important; }
+
+  /* projekte header */
+  .projekte-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
 }
 
 /* Projekte list rows */
