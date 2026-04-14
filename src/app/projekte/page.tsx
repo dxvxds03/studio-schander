@@ -1,4 +1,5 @@
 import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -226,7 +227,7 @@ export default async function ProjektePage() {
         })}
       </section>
 
-      <div style={{ height: 'clamp(64px, 8vw, 112px)' }} />
+      <Footer />
     </main>
   )
 }

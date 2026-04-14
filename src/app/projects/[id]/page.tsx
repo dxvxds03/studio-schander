@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -18,69 +19,252 @@ export default async function ProjectPage({ params }: { params: { id: string } }
   const allImages = [project.cover_image, ...images].filter(Boolean) as string[]
 
   return (
-    <main className="min-h-screen" style={{ background: '#F4F2ED' }}>
-      <div className="px-8 md:px-14 lg:px-20 pt-10">
-        <Link href="/" className="label hover:text-deadpoet transition-colors" data-hover>
-          ← Zurück
-        </Link>
-      </div>
+    <main style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <Navigation />
 
+      {/* Hero image */}
       {project.cover_image && (
-        <div className="mt-10 mx-8 md:mx-14 lg:mx-20 overflow-hidden" style={{ aspectRatio: '16/9', maxHeight: '72vh' }}>
-          <img src={project.cover_image} alt={project.title} className="w-full h-full object-cover img-hover" />
+        <div
+          style={{
+            marginTop: '61px',
+            width: '100%',
+            overflow: 'hidden',
+            maxHeight: '75vh',
+          }}
+        >
+          <img
+            src={project.cover_image}
+            alt={project.title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+              maxHeight: '75vh',
+            }}
+          />
         </div>
       )}
 
-      <div className="px-8 md:px-14 lg:px-20 mt-14 grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div className="md:col-span-2">
+      {/* Title + meta */}
+      <section
+        style={{
+          padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) 0',
+          display: 'grid',
+          gridTemplateColumns: '1fr auto',
+          gap: 'clamp(24px, 4vw, 64px)',
+          alignItems: 'flex-start',
+        }}
+      >
+        <div>
+          {/* Back link */}
+          <a
+            href="/projekte"
+            data-hover
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: 'clamp(10px, 0.85vw, 12px)',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+              textDecoration: 'none',
+              display: 'inline-block',
+              marginBottom: 'clamp(20px, 3vw, 40px)',
+            }}
+          >
+            ← Alle Projekte
+          </a>
+
           <h1
-            className="font-display text-ink"
-            style={{ fontSize: 'clamp(40px, 7vw, 100px)', fontWeight: 800, lineHeight: 0.92, letterSpacing: '-0.035em' }}
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+              fontWeight: 800,
+              fontSize: 'clamp(40px, 8vw, 120px)',
+              letterSpacing: '-0.045em',
+              lineHeight: 0.9,
+              color: 'var(--ink)',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}
           >
             {project.title}
           </h1>
+
           {project.description && (
-            <p className="mt-7" style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '16px', lineHeight: 1.72, color: '#787672', maxWidth: '58ch' }}>
+            <p
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: 'clamp(13px, 1.1vw, 16px)',
+                lineHeight: 1.75,
+                color: 'var(--muted)',
+                marginTop: 'clamp(20px, 3vw, 36px)',
+                maxWidth: '56ch',
+              }}
+            >
               {project.description}
             </p>
           )}
         </div>
 
-        <div className="flex flex-col gap-6 md:items-end md:text-right">
+        {/* Meta sidebar */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            alignItems: 'flex-end',
+            textAlign: 'right',
+            paddingTop: 'clamp(48px, 7vw, 80px)',
+            flexShrink: 0,
+          }}
+        >
           {project.year && (
             <div>
-              <p className="label label-bracket mb-1.5">Jahr</p>
-              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '15px', fontWeight: 500 }}>{project.year}</p>
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: 'var(--muted)',
+                  marginBottom: '4px',
+                }}
+              >
+                Jahr
+              </p>
+              <p
+                style={{
+                  fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                  fontWeight: 800,
+                  fontSize: 'clamp(18px, 2vw, 28px)',
+                  letterSpacing: '-0.02em',
+                  color: 'var(--ink)',
+                }}
+              >
+                {project.year}
+              </p>
             </div>
           )}
+
           {project.client && (
             <div>
-              <p className="label label-bracket mb-1.5">Kunde</p>
-              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '15px', fontWeight: 500 }}>{project.client}</p>
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: 'var(--muted)',
+                  marginBottom: '4px',
+                }}
+              >
+                Kunde
+              </p>
+              <p
+                style={{
+                  fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                  fontWeight: 800,
+                  fontSize: 'clamp(18px, 2vw, 28px)',
+                  letterSpacing: '-0.02em',
+                  color: 'var(--ink)',
+                }}
+              >
+                {project.client}
+              </p>
             </div>
           )}
+
           {tags.length > 0 && (
             <div>
-              <p className="label label-bracket mb-1.5">Tags</p>
-              <div className="flex flex-wrap md:justify-end gap-1.5">
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: 'var(--muted)',
+                  marginBottom: '8px',
+                }}
+              >
+                Tags
+              </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'flex-end',
+                  gap: '6px',
+                }}
+              >
                 {tags.map((tag) => (
-                  <span key={tag} className="label px-2 py-0.5 border border-faint text-ink">{tag}</span>
+                  <span
+                    key={tag}
+                    style={{
+                      fontFamily: '"Source Code Pro", monospace',
+                      fontSize: '10px',
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color: 'var(--dead-poet)',
+                      border: '1px solid var(--dead-poet)',
+                      padding: '3px 8px',
+                    }}
+                  >
+                    {tag}
+                  </span>
                 ))}
               </div>
             </div>
           )}
-        </div>
-      </div>
 
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-hover
+              className="btn-negroni"
+              style={{
+                fontSize: '12px',
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                padding: '10px 20px',
+              }}
+            >
+              Projekt ansehen ↗
+            </a>
+          )}
+        </div>
+      </section>
+
+      {/* Additional images */}
       {allImages.length > 1 && (
-        <div className="px-8 md:px-14 lg:px-20 mt-16 grid grid-cols-1 md:grid-cols-2 gap-5 pb-24">
+        <section
+          style={{
+            padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))',
+            gap: 'clamp(12px, 1.5vw, 20px)',
+          }}
+        >
           {allImages.slice(1).map((src, i) => (
-            <div key={i} className="overflow-hidden">
-              <img src={src} alt={`${project.title} — ${i + 2}`} className="w-full object-cover img-hover" style={{ aspectRatio: '4/3' }} />
+            <div key={i} style={{ overflow: 'hidden' }}>
+              <img
+                src={src}
+                alt={`${project.title} — ${i + 2}`}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                }}
+                className="img-hover"
+              />
             </div>
           ))}
-        </div>
+        </section>
       )}
+
+      <Footer />
     </main>
   )
 }
