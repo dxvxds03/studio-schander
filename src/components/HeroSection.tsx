@@ -264,7 +264,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 className="hero-card"
                 style={{
                   position: 'absolute',
-                  width: 'clamp(200px, 26vw, 360px)',
                   transformOrigin: 'center bottom',
                 }}
               >
@@ -275,26 +274,40 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   data-hover
                   style={{ display: 'block', textDecoration: 'none' }}
                 >
-                  <img
-                    src={project.cover_image!}
-                    alt={project.title}
-                    draggable={false}
+                  {/* Fixed height container — same height for all ratios */}
+                  <div
                     style={{
-                      width: '100%',
-                      height: 'auto',
-                      display: 'block',
+                      height: 'clamp(260px, 36vh, 440px)',
+                      width: 'auto',
+                      overflow: 'hidden',
                       outline: '2px solid #191917',
+                      display: 'flex',
+                      alignItems: 'center',
                     }}
-                  />
+                  >
+                    <img
+                      src={project.cover_image!}
+                      alt={project.title}
+                      draggable={false}
+                      style={{
+                        height: '100%',
+                        width: 'auto',
+                        display: 'block',
+                        flexShrink: 0,
+                      }}
+                    />
+                  </div>
                 </a>
 
-                {/* Meta — only visible when this card is front */}
+                {/* Meta — only visible when this card is front, solid background for readability */}
                 <div
                   className="hero-card-meta"
                   style={{
-                    marginTop: '12px',
+                    marginTop: '10px',
                     paddingTop: '10px',
-                    borderTop: '1px solid rgba(25,25,23,0.18)',
+                    paddingBottom: '4px',
+                    borderTop: '2px solid #191917',
+                    background: 'var(--cream)',
                   }}
                 >
                   <a
