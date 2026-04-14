@@ -16,6 +16,7 @@ interface Project {
   order: number
   description: string | null
   tags: string[]
+  show_in_carousel: boolean
 }
 
 const emptyForm = {

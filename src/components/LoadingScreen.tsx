@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import FlowerIcon from './FlowerIcon'
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true)
@@ -32,12 +33,9 @@ export default function LoadingScreen() {
           }}
         >
           {/* Flower — spins + bounces */}
-          <motion.img
-            src="/flower.png"
-            alt=""
+          <motion.div
             aria-hidden
-            draggable={false}
-            style={{ width: '140px', height: '140px', userSelect: 'none' }}
+            style={{ width: '140px', height: '140px' }}
             initial={{ scale: 0.4, opacity: 0, rotate: 0 }}
             animate={{
               scale:   [0.4, 1.08, 1, 1.06, 1],
@@ -52,7 +50,9 @@ export default function LoadingScreen() {
                 ease: [0.25, 0.46, 0.45, 0.94],
               },
             }}
-          />
+          >
+            <FlowerIcon color="var(--cream)" size={140} />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

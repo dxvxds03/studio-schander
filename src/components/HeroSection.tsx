@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import FlowerIcon from './FlowerIcon'
 
 interface HeroProject {
   id: number
@@ -69,12 +70,7 @@ function CircularTextButton() {
           justifyContent: 'center',
           background: 'var(--cream)',
         }}>
-          <img
-            src="/flower.png"
-            alt=""
-            draggable={false}
-            style={{ width: '60px', height: '60px', userSelect: 'none' }}
-          />
+          <FlowerIcon color="var(--negroni)" size={60} />
         </div>
       </div>
     </a>
