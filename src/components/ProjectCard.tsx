@@ -96,7 +96,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
               {(project.year || project.client) && (
                 <p
                   style={{
-                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Source Code Pro", monospace',
                     fontSize: '11px',
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
@@ -127,7 +127,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     marginTop: '8px',
-                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Source Code Pro", monospace',
                   }}
                 >
                   {imgIndex + 1} / {allImages.length}
@@ -154,7 +154,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
           {project.year && (
             <p
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '12px',
                 color: '#787672',
                 marginTop: '3px',

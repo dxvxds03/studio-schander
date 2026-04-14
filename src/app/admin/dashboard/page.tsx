@@ -175,12 +175,12 @@ export default function Dashboard() {
   }
 
   const inp: React.CSSProperties = {
-    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontFamily: '"Source Code Pro", monospace',
     fontSize: '14px', color: '#191917', background: 'transparent',
     border: '1px solid #E8E5DF', padding: '10px 14px', width: '100%', outline: 'none',
   }
   const lbl: React.CSSProperties = {
-    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '10px',
+    fontFamily: '"Source Code Pro", monospace', fontSize: '10px',
     letterSpacing: '0.2em', textTransform: 'uppercase', color: '#787672',
     display: 'block', marginBottom: '6px',
   }
@@ -189,7 +189,7 @@ export default function Dashboard() {
     <main style={{ background: '#F4F2ED', minHeight: '100vh', cursor: 'default' }}>
       {/* Header */}
       <div style={{ borderBottom: '1px solid #E8E5DF', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '13px', fontWeight: 600, color: '#191917' }}>
+        <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '13px', fontWeight: 600, color: '#191917' }}>
           Studio Schander — Admin
         </p>
         <div style={{ display: 'flex', gap: '20px' }}>
@@ -235,7 +235,7 @@ export default function Dashboard() {
             <div>
               <label style={lbl}>Externer Link (optional)</label>
               <input style={inp} type="url" value={form.link} onChange={(e) => setForm((p) => ({ ...p, link: e.target.value }))} placeholder="https://example.com" />
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '10px', color: '#787672', marginTop: '4px' }}>
+              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', color: '#787672', marginTop: '4px' }}>
                 Wenn gesetzt, öffnet der Klick im Carousel diesen Link (↗ neuer Tab).
               </p>
             </div>
@@ -308,19 +308,19 @@ export default function Dashboard() {
             </div>
 
             {msg && (
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes('fehler') || msg.includes('Fehler') ? '#E8331A' : '#191917' }}>
+              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes('fehler') || msg.includes('Fehler') ? '#E8331A' : '#191917' }}>
                 {msg}
               </p>
             )}
 
             <div style={{ display: 'flex', gap: '10px' }}>
               <button type="submit" disabled={saving}
-                style={{ padding: '12px 24px', background: saving ? '#787672' : '#191917', color: '#F4F2ED', border: 'none', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: saving ? 'not-allowed' : 'pointer', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+                style={{ padding: '12px 24px', background: saving ? '#787672' : '#191917', color: '#F4F2ED', border: 'none', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: saving ? 'not-allowed' : 'pointer', fontFamily: '"Source Code Pro", monospace' }}>
                 {saving ? 'Speichert…' : editingId ? 'Aktualisieren' : 'Erstellen'}
               </button>
               {editingId && (
                 <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); setExtraImages([]); setMsg('') }}
-                  style={{ padding: '12px 24px', background: 'none', border: '1px solid #E8E5DF', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', color: '#787672' }}>
+                  style={{ padding: '12px 24px', background: 'none', border: '1px solid #E8E5DF', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"Source Code Pro", monospace', color: '#787672' }}>
                   Abbrechen
                 </button>
               )}
@@ -338,7 +338,7 @@ export default function Dashboard() {
           </div>
 
           {projects.length === 0 ? (
-            <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '14px', color: '#787672' }}>
+            <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#787672' }}>
               Noch keine Projekte vorhanden.
             </p>
           ) : (
@@ -349,7 +349,7 @@ export default function Dashboard() {
                     <img src={p.cover_image} alt="" style={{ width: '44px', height: '44px', objectFit: 'cover', flexShrink: 0 }} />
                   )}
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '14px', color: '#191917', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {p.title}
                     </p>
                     <p style={{ ...lbl, marginBottom: 0 }}>
@@ -359,11 +359,11 @@ export default function Dashboard() {
                   </div>
                   <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
                     <button onClick={() => handleEdit(p)}
-                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid #E8E5DF', padding: '5px 10px', cursor: 'pointer', color: '#191917', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid #E8E5DF', padding: '5px 10px', cursor: 'pointer', color: '#191917', fontFamily: '"Source Code Pro", monospace' }}>
                       Edit
                     </button>
                     <button onClick={() => handleDelete(p.id, p.title)}
-                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Source Code Pro", monospace' }}>
                       ✕
                     </button>
                   </div>

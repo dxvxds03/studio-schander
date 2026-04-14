@@ -42,7 +42,7 @@ function Letter({ char, index }: { char: string; index: number }) {
       style={{
         display: 'inline-block',
         touchAction: 'none',
-        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+        fontFamily: '"Source Code Pro", monospace',
         fontWeight: 900,
         fontSize: 'clamp(70px, 13.5vw, 200px)',
         lineHeight: 0.88,

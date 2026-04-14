@@ -17,7 +17,7 @@ export default function ImpressumPage() {
       >
         <p
           style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Source Code Pro", monospace',
             fontSize: '11px',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
@@ -30,7 +30,7 @@ export default function ImpressumPage() {
 
         <h1
           style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
             fontWeight: 800,
             fontSize: 'clamp(40px, 6vw, 80px)',
             letterSpacing: '-0.04em',
@@ -44,7 +44,7 @@ export default function ImpressumPage() {
 
         <div
           style={{
-            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Source Code Pro", monospace',
             fontSize: '15px',
             lineHeight: 1.75,
             color: '#191917',
@@ -96,7 +96,7 @@ export default function ImpressumPage() {
             href="/"
             data-hover
             style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
               fontWeight: 700,
               fontSize: '14px',
               letterSpacing: '-0.01em',

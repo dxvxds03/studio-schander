@@ -40,7 +40,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
             {project.title}
           </h1>
           {project.description && (
-            <p className="mt-7" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '16px', lineHeight: 1.72, color: '#787672', maxWidth: '58ch' }}>
+            <p className="mt-7" style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '16px', lineHeight: 1.72, color: '#787672', maxWidth: '58ch' }}>
               {project.description}
             </p>
           )}
@@ -50,13 +50,13 @@ export default async function ProjectPage({ params }: { params: { id: string } }
           {project.year && (
             <div>
               <p className="label label-bracket mb-1.5">Jahr</p>
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '15px', fontWeight: 500 }}>{project.year}</p>
+              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '15px', fontWeight: 500 }}>{project.year}</p>
             </div>
           )}
           {project.client && (
             <div>
               <p className="label label-bracket mb-1.5">Kunde</p>
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '15px', fontWeight: 500 }}>{project.client}</p>
+              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '15px', fontWeight: 500 }}>{project.client}</p>
             </div>
           )}
           {tags.length > 0 && (

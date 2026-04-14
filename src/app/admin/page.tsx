@@ -52,7 +52,7 @@ export default function AdminLogin() {
             required
             autoFocus
             className="w-full border border-faint bg-transparent px-4 py-3 outline-none focus:border-ink transition-colors"
-            style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '14px', color: '#191917' }}
+            style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917' }}
           />
 
           {error && <p className="label" style={{ color: '#E8331A' }}>{error}</p>}

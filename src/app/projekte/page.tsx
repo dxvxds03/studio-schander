@@ -40,7 +40,7 @@ export default async function ProjektePage() {
       >
         <h1
           style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
             fontWeight: 800,
             fontSize: 'clamp(56px, 13vw, 200px)',
             letterSpacing: '-0.05em',
@@ -119,7 +119,7 @@ export default async function ProjektePage() {
               <div>
                 <p
                   style={{
-                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Source Code Pro", monospace',
                     fontSize: '9px',
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',
@@ -131,7 +131,7 @@ export default async function ProjektePage() {
                 </p>
                 <p
                   style={{
-                    fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
                     fontWeight: 800,
                     fontSize: 'clamp(10px, 1vw, 13px)',
                     letterSpacing: '-0.02em',

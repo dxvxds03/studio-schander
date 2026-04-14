@@ -147,7 +147,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
                 <span
                   style={{
                     display: 'block',
-                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Source Code Pro", monospace',
                     fontSize: '11px',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
@@ -162,7 +162,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
                   style={{
                     display: 'block',
                     fontFamily:
-                      '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                      '"Cabinet Grotesk", "Source Code Pro", monospace',
                     fontWeight: 800,
                     fontSize: 'clamp(24px, 3.2vw, 44px)',
                     color: '#F4F2ED',
@@ -177,7 +177,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
                 {project.tags && project.tags.length > 0 && (
                   <span
                     style={{
-                      fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                      fontFamily: '"Source Code Pro", monospace',
                       fontSize: '10px',
                       letterSpacing: '0.14em',
                       textTransform: 'uppercase',

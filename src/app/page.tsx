@@ -75,7 +75,7 @@ export default async function HomePage() {
       >
         <h2
           style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
             fontWeight: 800,
             fontSize: 'clamp(32px, 5.5vw, 80px)',
             letterSpacing: '-0.03em',
@@ -102,7 +102,7 @@ export default async function HomePage() {
           >
             <h3
               style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
                 fontWeight: 800,
                 fontSize: 'clamp(26px, 5vw, 76px)',
                 letterSpacing: '-0.04em',
@@ -126,7 +126,7 @@ export default async function HomePage() {
                 <p
                   key={j}
                   style={{
-                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontFamily: '"Source Code Pro", monospace',
                     fontSize: 'clamp(12px, 1.1vw, 16px)',
                     lineHeight: 1.6,
                     color: 'var(--dead-poet)',
@@ -156,7 +156,7 @@ export default async function HomePage() {
       >
         <p
           style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
             fontWeight: 800,
             fontSize: 'clamp(36px, 7vw, 112px)',
             letterSpacing: '-0.04em',
@@ -195,13 +195,13 @@ export default async function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: '#34160f',
+            background: '#E8331A',
             padding: 'clamp(24px, 4vw, 56px)',
           }}
         >
           <span
             style={{
-              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily: '"Source Code Pro", monospace',
               fontSize: '10px',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
@@ -214,7 +214,7 @@ export default async function HomePage() {
             <p
               style={{
                 fontFamily:
-                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  '"Cabinet Grotesk", "Source Code Pro", monospace',
                 fontWeight: 800,
                 fontSize: 'clamp(40px, 7vw, 96px)',
                 color: '#F4F2ED',
@@ -222,18 +222,18 @@ export default async function HomePage() {
                 letterSpacing: '-0.04em',
               }}
             >
-              Dead Poet
+              Negroni
             </p>
             <p
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '12px',
                 color: 'rgba(244,242,237,0.5)',
                 marginTop: '8px',
                 letterSpacing: '0.06em',
               }}
             >
-              #34160f
+              #E8331A
             </p>
           </div>
         </div>
@@ -244,13 +244,13 @@ export default async function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: '#E8331A',
+            background: '#34160f',
             padding: 'clamp(24px, 4vw, 56px)',
           }}
         >
           <span
             style={{
-              fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily: '"Source Code Pro", monospace',
               fontSize: '10px',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
@@ -263,7 +263,7 @@ export default async function HomePage() {
             <p
               style={{
                 fontFamily:
-                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  '"Cabinet Grotesk", "Source Code Pro", monospace',
                 fontWeight: 800,
                 fontSize: 'clamp(40px, 7vw, 96px)',
                 color: '#F4F2ED',
@@ -271,18 +271,18 @@ export default async function HomePage() {
                 letterSpacing: '-0.04em',
               }}
             >
-              Negroni
+              Dead Poet
             </p>
             <p
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '12px',
                 color: 'rgba(244,242,237,0.5)',
                 marginTop: '8px',
                 letterSpacing: '0.06em',
               }}
             >
-              #E8331A
+              #34160f
             </p>
           </div>
         </div>
@@ -311,7 +311,7 @@ export default async function HomePage() {
             <p
               style={{
                 fontFamily:
-                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  '"Cabinet Grotesk", "Source Code Pro", monospace',
                 fontWeight: 800,
                 fontSize: 'clamp(24px, 4vw, 56px)',
                 letterSpacing: '-0.04em',
@@ -323,7 +323,7 @@ export default async function HomePage() {
             </p>
             <p
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '12px',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
@@ -348,7 +348,7 @@ export default async function HomePage() {
                 href="/impressum"
                 data-hover
                 style={{
-                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontFamily: '"Source Code Pro", monospace',
                   fontSize: '12px',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
@@ -362,7 +362,7 @@ export default async function HomePage() {
                 href="/datenschutz"
                 data-hover
                 style={{
-                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontFamily: '"Source Code Pro", monospace',
                   fontSize: '12px',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
@@ -375,7 +375,7 @@ export default async function HomePage() {
             </div>
             <p
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '11px',
                 color: 'var(--muted)',
               }}
@@ -386,7 +386,7 @@ export default async function HomePage() {
               href="/admin"
               data-hover
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Source Code Pro", monospace',
                 fontSize: '11px',
                 color: 'var(--faint)',
                 textDecoration: 'none',
