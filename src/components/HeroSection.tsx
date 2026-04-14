@@ -395,6 +395,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
 
         {/* Carousel area — title pill sits inside as absolute overlay */}
         <div
+          className="hero-carousel-area"
           style={{
             flex: 1,
             display: 'flex',

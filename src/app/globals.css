@@ -292,7 +292,12 @@ a[href^="mailto"].nav-kontakt:hover {
 @media (max-width: 680px) {
   /* Hero h1 bigger on mobile */
   .hero-h1 {
-    font-size: clamp(44px, 13vw, 80px) !important;
+    font-size: clamp(56px, 15vw, 82px) !important;
+  }
+
+  /* Shift carousel area + name pill down on mobile */
+  .hero-carousel-area {
+    padding-top: clamp(24px, 8vh, 60px) !important;
   }
 
   /* Logo bigger on mobile */
