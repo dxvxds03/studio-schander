@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -16,6 +16,41 @@ interface HeroProject {
 const CARD_W = 260
 const GAP    = 28
 const STRIDE = CARD_W + GAP
+
+const CYCLING_WORDS = ['Schander.', 'David.', 'Studio.', 'Ideen.']
+
+function CyclingWord() {
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx(c => (c + 1) % CYCLING_WORDS.length), 2200)
+    return () => clearInterval(t)
+  }, [])
+
+  return (
+    <span
+      style={{
+        display: 'inline-block',
+        overflow: 'hidden',
+        verticalAlign: 'bottom',
+        lineHeight: 'inherit',
+      }}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={idx}
+          style={{ display: 'block', color: '#0000CC', lineHeight: 'inherit' }}
+          initial={{ y: '105%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '-105%' }}
+          transition={{ duration: 0.48, ease: [0.76, 0, 0.24, 1] }}
+        >
+          {CYCLING_WORDS[idx]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
 
 function SchanderTicker() {
   const chunk = 'SCHANDER — '.repeat(7)
@@ -71,10 +106,10 @@ function CircleScrollButton() {
       onClick={scrollDown}
       data-hover
       style={{
-        width: '68px',
-        height: '68px',
+        width: '90px',
+        height: '90px',
         borderRadius: '50%',
-        border: '2px solid #0000CC',
+        border: '2.5px solid #0000CC',
         background: 'transparent',
         display: 'flex',
         alignItems: 'center',
@@ -84,14 +119,14 @@ function CircleScrollButton() {
         color: '#0000CC',
       }}
       whileHover={{ background: '#0000CC', color: '#F4F2ED', scale: 1.06 }}
-      animate={{ y: [0, 6, 0] }}
+      animate={{ y: [0, 7, 0] }}
       transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
         <path
-          d="M11 3v16M4 12l7 7 7-7"
+          d="M15 4v22M5 17l10 9 10-9"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -314,7 +349,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         {/* Bottom bar */}
         <motion.div
           style={{
-            padding: 'clamp(18px, 2.2vw, 30px) clamp(16px, 2vw, 24px)',
+            padding: 'clamp(14px, 1.8vw, 26px) clamp(16px, 2vw, 24px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -332,14 +367,17 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               fontFamily:
                 '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(36px, 6.5vw, 96px)',
-              letterSpacing: '-0.04em',
+              fontSize: 'clamp(48px, 8.5vw, 130px)',
+              letterSpacing: '-0.045em',
               lineHeight: 1,
-              color: '#191917',
               margin: 0,
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '0.18em',
+              overflow: 'hidden',
             }}
           >
-            Das ist Davids{' '}
+            <CyclingWord />
             <span style={{ color: 'var(--negroni)' }}>Portfolio.</span>
           </h1>
           <CircleScrollButton />
