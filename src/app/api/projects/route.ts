@@ -38,6 +38,7 @@ export async function POST(request: Request) {
       link: body.link ?? null,
       order: body.order ?? 0,
       featured: body.featured ?? false,
+      show_in_carousel: body.showInCarousel ?? true,
     })
     .select()
     .single()

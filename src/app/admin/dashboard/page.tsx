@@ -28,6 +28,7 @@ const emptyForm = {
   link: '',
   order: '0',
   featured: false,
+  showInCarousel: true,
 }
 
 export default function Dashboard() {
@@ -110,6 +111,7 @@ export default function Dashboard() {
       link: form.link || null,
       order: parseInt(form.order) || 0,
       featured: form.featured,
+      showInCarousel: form.showInCarousel,
     }
 
     const url = editingId ? `/api/projects/${editingId}` : '/api/projects'
@@ -158,6 +160,7 @@ export default function Dashboard() {
       link: p.link || '',
       order: String(p.order),
       featured: p.featured,
+      showInCarousel: p.show_in_carousel !== false,
     })
     setExtraImages(p.images ?? [])
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -291,9 +294,15 @@ export default function Dashboard() {
                 <label style={lbl}>Reihenfolge</label>
                 <input style={inp} type="number" value={form.order} onChange={(e) => setForm((p) => ({ ...p, order: e.target.value }))} min="0" />
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '2px' }}>
-                <input type="checkbox" id="featured" checked={form.featured} onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))} style={{ width: '14px', height: '14px', cursor: 'pointer' }} />
-                <label htmlFor="featured" style={{ ...lbl, marginBottom: 0, cursor: 'pointer' }}>Hervorgehoben</label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input type="checkbox" id="featured" checked={form.featured} onChange={(e) => setForm((p) => ({ ...p, featured: e.target.checked }))} style={{ width: '14px', height: '14px', cursor: 'pointer' }} />
+                  <label htmlFor="featured" style={{ ...lbl, marginBottom: 0, cursor: 'pointer' }}>Hervorgehoben</label>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input type="checkbox" id="showInCarousel" checked={form.showInCarousel} onChange={(e) => setForm((p) => ({ ...p, showInCarousel: e.target.checked }))} style={{ width: '14px', height: '14px', cursor: 'pointer' }} />
+                  <label htmlFor="showInCarousel" style={{ ...lbl, marginBottom: 0, cursor: 'pointer' }}>Im Carousel anzeigen</label>
+                </div>
               </div>
             </div>
 

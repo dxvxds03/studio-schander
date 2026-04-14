@@ -11,6 +11,74 @@ interface HeroProject {
   cover_image: string | null
   link: string | null
   tags: string[]
+  show_in_carousel?: boolean
+}
+
+const CIRCLE_TEXT = 'WEITERE PROJEKTE · WEITERE PROJEKTE · WEITERE PROJEKTE · '
+
+function CircularTextButton() {
+  const R = 82
+  const pathD = `M 100,100 m -${R},0 a ${R},${R} 0 1,1 ${R * 2},0 a ${R},${R} 0 1,1 -${R * 2},0`
+
+  return (
+    <a
+      href="/projekte"
+      data-hover
+      className="hero-carousel-card"
+      style={{ flexShrink: 0, display: 'block', textDecoration: 'none', transformOrigin: 'center center' }}
+    >
+      <div style={{ width: '180px', height: '180px', position: 'relative' }}>
+        {/* Rotating text ring */}
+        <motion.svg
+          viewBox="0 0 200 200"
+          style={{ width: '180px', height: '180px', position: 'absolute', inset: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
+        >
+          <defs>
+            <path id="circleTextPath" d={pathD} />
+          </defs>
+          <text
+            style={{
+              fontSize: '10.5px',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              letterSpacing: '0.13em',
+              fill: 'var(--ink)',
+              textTransform: 'uppercase',
+            } as React.CSSProperties}
+          >
+            <textPath href="#circleTextPath" startOffset="0%">
+              {CIRCLE_TEXT}
+            </textPath>
+          </text>
+        </motion.svg>
+
+        {/* Static flower in center */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '110px',
+          height: '110px',
+          borderRadius: '50%',
+          border: '1.5px solid var(--ink)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'var(--cream)',
+        }}>
+          <img
+            src="/flower.png"
+            alt=""
+            draggable={false}
+            style={{ width: '60px', height: '60px', userSelect: 'none' }}
+          />
+        </div>
+      </div>
+    </a>
+  )
 }
 
 const GAP = 36
@@ -153,7 +221,7 @@ function CircleScrollButton() {
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const sectionRef  = useRef<HTMLElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
-  const items = projects.filter(p => p.cover_image)
+  const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
 
   useEffect(() => {
@@ -398,6 +466,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 </a>
               )
             })}
+            <CircularTextButton />
           </div>
         </div>
 
