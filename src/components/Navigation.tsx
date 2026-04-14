@@ -22,9 +22,9 @@ export default function Navigation() {
       >
         <Link href="/" data-hover style={{ display: 'flex', alignItems: 'flex-end', flexShrink: 0 }}>
           <motion.img
-            src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
+            src="/logo_schander.png"
             alt="Studio Schander"
-            style={{ height: '51px', width: 'auto', display: 'block', filter: 'brightness(0)' }}
+            style={{ height: '51px', width: 'auto', display: 'block' }}
             whileHover={{ opacity: 0.55 }}
             transition={{ duration: 0.15 }}
           />
