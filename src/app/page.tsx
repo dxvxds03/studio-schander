@@ -65,7 +65,7 @@ export default async function HomePage() {
       <section
         id="leistungen"
         style={{
-          paddingTop: 'clamp(48px, 7vw, 96px)',
+          paddingTop: 'clamp(96px, 14vw, 180px)',
           paddingBottom: 'clamp(32px, 5vw, 64px)',
           position: 'relative',
           zIndex: 46,
@@ -73,6 +73,22 @@ export default async function HomePage() {
           marginRight: 'clamp(160px, 20vw, 280px)',
         }}
       >
+        <h2
+          style={{
+            fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 400,
+            fontSize: 'clamp(11px, 0.9vw, 13px)',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: 'var(--muted)',
+            padding: '0 clamp(16px, 2vw, 24px)',
+            marginBottom: 'clamp(16px, 2vw, 28px)',
+            margin: '0 0 clamp(16px, 2vw, 28px) 0',
+            paddingLeft: 'clamp(16px, 2vw, 24px)',
+          }}
+        >
+          Was ich mache.
+        </h2>
         {LEISTUNGEN.map((item, i) => (
           <div
             key={item.nr}
@@ -124,6 +140,50 @@ export default async function HomePage() {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* Kontakt */}
+      <section
+        style={{
+          paddingTop: 'clamp(72px, 10vw, 140px)',
+          paddingBottom: 'clamp(72px, 10vw, 140px)',
+          paddingLeft: 'clamp(16px, 2vw, 24px)',
+          paddingRight: 'clamp(176px, 22vw, 304px)',
+          position: 'relative',
+          zIndex: 46,
+          background: 'var(--cream)',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(36px, 7vw, 112px)',
+            letterSpacing: '-0.04em',
+            lineHeight: 0.92,
+            color: 'var(--ink)',
+            margin: '0 0 clamp(32px, 5vw, 64px) 0',
+          }}
+        >
+          Lass uns zusammen<br />Ideen umsetzen.
+        </p>
+        <a
+          href="mailto:hello@davidschander.com"
+          data-hover
+          className="btn-negroni"
+          style={{
+            display: 'inline-block',
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: 'clamp(13px, 1.1vw, 16px)',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            padding: 'clamp(14px, 1.8vw, 22px) clamp(28px, 4vw, 48px)',
+          }}
+        >
+          Kontakt aufnehmen →
+        </a>
       </section>
 
       {/* Brand colors */}

@@ -22,7 +22,7 @@ export default function Navigation() {
       >
         <Link href="/" data-hover style={{ display: 'flex', alignItems: 'flex-end', flexShrink: 0 }}>
           <motion.img
-            src="/logo_schander.png"
+            src="/logo_schander.svg"
             alt="Studio Schander"
             style={{ height: '51px', width: 'auto', display: 'block' }}
             whileHover={{ opacity: 0.55 }}
