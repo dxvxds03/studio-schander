@@ -302,7 +302,7 @@ a[href^="mailto"].nav-kontakt:hover {
 
   /* Name pill closer to carousel on mobile */
   .hero-namepill-wrapper {
-    top: calc(50% - clamp(130px, 18vh, 250px)) !important;
+    top: calc(50% - clamp(140px, 19vh, 250px)) !important;
   }
 
   /* Logo bigger on mobile */
