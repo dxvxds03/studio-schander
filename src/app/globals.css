@@ -91,6 +91,26 @@ a, button, input, textarea, select, [role="button"] {
 
 .projekte-strip::-webkit-scrollbar { display: none; }
 
+/* Hero carousel card hover */
+.hero-carousel-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 2.5px #E8331A, 0 0 48px rgba(232,51,26,0.3);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+.hero-carousel-card:not([data-end]):hover::after {
+  opacity: 1;
+}
+.hero-carousel-card:not([data-end]) img {
+  transition: filter 0.28s ease;
+}
+.hero-carousel-card:not([data-end]):hover img {
+  filter: brightness(1.06) saturate(1.08);
+}
+
 /* Nav CTA */
 .nav-cta-btn {
   color: var(--negroni);

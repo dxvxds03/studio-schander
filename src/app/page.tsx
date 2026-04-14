@@ -179,128 +179,20 @@ export default async function HomePage() {
         </p>
       </section>
 
-      {/* Brand colors */}
-      <section
-        style={{
-          display: 'flex',
-          minHeight: '280px',
-          marginTop: 'clamp(56px, 8vw, 112px)',
-          position: 'relative',
-          zIndex: 46,
-          pointerEvents: 'none',
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            background: '#E8331A',
-            padding: 'clamp(24px, 4vw, 56px)',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: 'rgba(244,242,237,0.45)',
-            }}
-          >
-            01 — Primärfarbe
-          </span>
-          <div>
-            <p
-              style={{
-                fontFamily:
-                  '"Cabinet Grotesk", "Source Code Pro", monospace',
-                fontWeight: 800,
-                fontSize: 'clamp(40px, 7vw, 96px)',
-                color: '#F4F2ED',
-                lineHeight: 1,
-                letterSpacing: '-0.04em',
-              }}
-            >
-              Negroni
-            </p>
-            <p
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: '12px',
-                color: 'rgba(244,242,237,0.5)',
-                marginTop: '8px',
-                letterSpacing: '0.06em',
-              }}
-            >
-              #E8331A
-            </p>
-          </div>
-        </div>
-
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            background: '#34160f',
-            padding: 'clamp(24px, 4vw, 56px)',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: 'rgba(244,242,237,0.45)',
-            }}
-          >
-            02 — Sekundärfarbe
-          </span>
-          <div>
-            <p
-              style={{
-                fontFamily:
-                  '"Cabinet Grotesk", "Source Code Pro", monospace',
-                fontWeight: 800,
-                fontSize: 'clamp(40px, 7vw, 96px)',
-                color: '#F4F2ED',
-                lineHeight: 1,
-                letterSpacing: '-0.04em',
-              }}
-            >
-              Dead Poet
-            </p>
-            <p
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: '12px',
-                color: 'rgba(244,242,237,0.5)',
-                marginTop: '8px',
-                letterSpacing: '0.06em',
-              }}
-            >
-              #34160f
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer
         style={{
-          padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
           pointerEvents: 'none',
+          marginTop: 'clamp(56px, 8vw, 112px)',
         }}
       >
+        {/* White footer content */}
         <div
           style={{
+            padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'flex-end',
@@ -335,6 +227,22 @@ export default async function HomePage() {
             >
               Design & Direction · Bielefeld
             </p>
+            <a
+              href="mailto:mail@studio-schander.de"
+              data-hover
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '12px',
+                letterSpacing: '0.04em',
+                color: 'var(--muted)',
+                textDecoration: 'none',
+                display: 'inline-block',
+                marginTop: '6px',
+                pointerEvents: 'auto',
+              }}
+            >
+              mail@studio-schander.de
+            </a>
           </div>
 
           <div
@@ -356,6 +264,7 @@ export default async function HomePage() {
                   textTransform: 'uppercase',
                   color: 'var(--muted)',
                   textDecoration: 'none',
+                  pointerEvents: 'auto',
                 }}
               >
                 Impressum
@@ -370,6 +279,7 @@ export default async function HomePage() {
                   textTransform: 'uppercase',
                   color: 'var(--muted)',
                   textDecoration: 'none',
+                  pointerEvents: 'auto',
                 }}
               >
                 Datenschutz
@@ -392,10 +302,112 @@ export default async function HomePage() {
                 fontSize: '11px',
                 color: 'var(--faint)',
                 textDecoration: 'none',
+                pointerEvents: 'auto',
               }}
             >
               Admin
             </a>
+          </div>
+        </div>
+
+        {/* Brand colors — flush below white area */}
+        <div style={{ display: 'flex', minHeight: '280px' }}>
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              background: '#E8331A',
+              padding: 'clamp(24px, 4vw, 56px)',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '10px',
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: 'rgba(244,242,237,0.45)',
+              }}
+            >
+              01 — Primärfarbe
+            </span>
+            <div>
+              <p
+                style={{
+                  fontFamily:
+                    '"Cabinet Grotesk", "Source Code Pro", monospace',
+                  fontWeight: 800,
+                  fontSize: 'clamp(40px, 7vw, 96px)',
+                  color: '#F4F2ED',
+                  lineHeight: 1,
+                  letterSpacing: '-0.04em',
+                }}
+              >
+                Negroni
+              </p>
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '12px',
+                  color: 'rgba(244,242,237,0.5)',
+                  marginTop: '8px',
+                  letterSpacing: '0.06em',
+                }}
+              >
+                #E8331A
+              </p>
+            </div>
+          </div>
+
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              background: '#34160f',
+              padding: 'clamp(24px, 4vw, 56px)',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '10px',
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: 'rgba(244,242,237,0.45)',
+              }}
+            >
+              02 — Sekundärfarbe
+            </span>
+            <div>
+              <p
+                style={{
+                  fontFamily:
+                    '"Cabinet Grotesk", "Source Code Pro", monospace',
+                  fontWeight: 800,
+                  fontSize: 'clamp(40px, 7vw, 96px)',
+                  color: '#F4F2ED',
+                  lineHeight: 1,
+                  letterSpacing: '-0.04em',
+                }}
+              >
+                Dead Poet
+              </p>
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '12px',
+                  color: 'rgba(244,242,237,0.5)',
+                  marginTop: '8px',
+                  letterSpacing: '0.06em',
+                }}
+              >
+                #34160f
+              </p>
+            </div>
           </div>
         </div>
       </footer>
