@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -20,20 +20,34 @@ const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
 const CYCLING_WORDS = ['Schander.', 'David.', 'Studio.', 'Ideen.']
 
+const LAYOUT_TRANSITION = { duration: 0.55, ease: [0.76, 0, 0.24, 1] }
+
 function CyclingWord() {
   const [idx, setIdx] = useState(0)
 
   useEffect(() => {
-    const t = setInterval(() => setIdx(c => (c + 1) % CYCLING_WORDS.length), 2200)
+    // ~2× longer display time
+    const t = setInterval(() => setIdx(c => (c + 1) % CYCLING_WORDS.length), 4400)
     return () => clearInterval(t)
   }, [])
 
   return (
-    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', lineHeight: 'inherit' }}>
+    // layout animates the container width as words change → "Portfolio." floats
+    <motion.span
+      layout
+      style={{
+        display: 'inline-block',
+        overflow: 'hidden',
+        verticalAlign: 'bottom',
+        lineHeight: 'inherit',
+        whiteSpace: 'nowrap',
+      }}
+      transition={{ layout: LAYOUT_TRANSITION }}
+    >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={idx}
-          style={{ display: 'block', color: '#0000CC', lineHeight: 'inherit' }}
+          style={{ display: 'block', color: '#0000CC', lineHeight: 'inherit', whiteSpace: 'nowrap' }}
           initial={{ y: '105%' }}
           animate={{ y: 0 }}
           exit={{ y: '-105%' }}
@@ -42,7 +56,7 @@ function CyclingWord() {
           {CYCLING_WORDS[idx]}
         </motion.span>
       </AnimatePresence>
-    </span>
+    </motion.span>
   )
 }
 
@@ -351,23 +365,31 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
         >
-          <h1
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(48px, 8.5vw, 130px)',
-              letterSpacing: '-0.045em',
-              lineHeight: 1,
-              margin: 0,
-              display: 'flex',
-              alignItems: 'baseline',
-              gap: '0.18em',
-              overflow: 'hidden',
-            }}
-          >
-            <CyclingWord />
-            <span style={{ color: 'var(--negroni)' }}>Portfolio.</span>
-          </h1>
+          <LayoutGroup id="headline">
+            <h1
+              style={{
+                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(48px, 8.5vw, 130px)',
+                letterSpacing: '-0.045em',
+                lineHeight: 1,
+                margin: 0,
+                display: 'flex',
+                alignItems: 'baseline',
+                gap: '0.18em',
+              }}
+            >
+              <CyclingWord />
+              {/* layout="position" slides smoothly as CyclingWord resizes */}
+              <motion.span
+                layout="position"
+                style={{ color: 'var(--negroni)', whiteSpace: 'nowrap' }}
+                transition={{ layout: LAYOUT_TRANSITION }}
+              >
+                Portfolio.
+              </motion.span>
+            </h1>
+          </LayoutGroup>
           <CircleScrollButton />
         </motion.div>
       </div>
