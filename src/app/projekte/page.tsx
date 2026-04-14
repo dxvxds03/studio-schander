@@ -16,51 +16,62 @@ export default async function ProjektePage() {
     <main
       style={{
         height: '100dvh',
+        overflow: 'hidden',
+        background: 'var(--ink)',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden',
-        background: 'var(--cream)',
       }}
     >
       <Navigation />
 
-      {/* Heading */}
+      {/* Bordered cream frame */}
       <div
         style={{
           flex: 1,
+          minHeight: 0,
+          margin: `61px clamp(8px, 1vw, 12px) clamp(8px, 1vw, 12px)`,
+          border: '2px solid var(--ink)',
+          background: 'var(--cream)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
-          padding: '0 clamp(20px, 2.5vw, 32px)',
-          paddingBottom: 'clamp(24px, 3vw, 40px)',
+          padding: 'clamp(20px, 2.5vw, 32px)',
+          overflow: 'hidden',
+          position: 'relative',
         }}
       >
         <h1
           style={{
             fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
             fontWeight: 800,
-            fontSize: 'clamp(52px, 10vw, 148px)',
-            letterSpacing: '-0.045em',
-            lineHeight: 0.92,
+            fontSize: 'clamp(56px, 13vw, 200px)',
+            letterSpacing: '-0.05em',
+            lineHeight: 0.88,
             color: 'var(--ink)',
+            textTransform: 'uppercase',
           }}
         >
           Alle<br />Projekte.
         </h1>
       </div>
 
-      {/* Horizontal film strip */}
+      {/* Project filmstrip on ink */}
       <div
+        className="projekte-strip"
         style={{
+          height: 'clamp(145px, 22vh, 195px)',
           display: 'flex',
-          gap: 'clamp(10px, 1.2vw, 16px)',
+          alignItems: 'flex-start',
+          paddingTop: 'clamp(10px, 1.2vh, 16px)',
+          paddingBottom: 'clamp(10px, 1.2vh, 16px)',
+          paddingLeft: 'clamp(16px, 2vw, 24px)',
+          paddingRight: 'clamp(16px, 2vw, 24px)',
+          gap: 'clamp(8px, 1vw, 14px)',
           overflowX: 'auto',
           overflowY: 'hidden',
-          padding: '0 clamp(20px, 2.5vw, 32px) clamp(28px, 3.5vw, 48px)',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-        }}
-        className="projekte-strip"
+        } as React.CSSProperties}
       >
         {all.map((project, i) => {
           const href = project.link ?? `/projects/${project.id}`
@@ -79,15 +90,15 @@ export default async function ProjektePage() {
                 textDecoration: 'none',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '8px',
-                width: 'clamp(120px, 14vw, 200px)',
+                gap: '5px',
+                width: 'clamp(62px, 8vw, 100px)',
               }}
             >
               <div
                 style={{
-                  overflow: 'hidden',
-                  background: 'var(--faint)',
                   aspectRatio: '3/4',
+                  overflow: 'hidden',
+                  background: '#2C2A27',
                 }}
               >
                 {project.cover_image ? (
@@ -103,20 +114,18 @@ export default async function ProjektePage() {
                       display: 'block',
                     }}
                   />
-                ) : (
-                  <div style={{ width: '100%', height: '100%', background: 'var(--faint)' }} />
-                )}
+                ) : null}
               </div>
 
               <div>
                 <p
                   style={{
                     fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                    fontSize: '10px',
+                    fontSize: '9px',
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',
-                    color: 'var(--muted)',
-                    marginBottom: '3px',
+                    color: '#5A5856',
+                    marginBottom: '2px',
                   }}
                 >
                   [{index}]{project.year ? ` ${project.year}` : ''}
@@ -125,9 +134,9 @@ export default async function ProjektePage() {
                   style={{
                     fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                     fontWeight: 800,
-                    fontSize: 'clamp(12px, 1.1vw, 15px)',
-                    letterSpacing: '-0.025em',
-                    color: 'var(--ink)',
+                    fontSize: 'clamp(10px, 1vw, 13px)',
+                    letterSpacing: '-0.02em',
+                    color: 'var(--cream)',
                     lineHeight: 1.1,
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
@@ -137,7 +146,7 @@ export default async function ProjektePage() {
                 >
                   {project.title}
                   {project.link && (
-                    <span style={{ color: 'var(--negroni)', marginLeft: '4px', fontSize: '0.75em' }}>↗</span>
+                    <span style={{ color: 'var(--negroni)', marginLeft: '3px', fontSize: '0.75em' }}>↗</span>
                   )}
                 </p>
               </div>
