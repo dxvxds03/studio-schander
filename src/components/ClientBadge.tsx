@@ -23,7 +23,7 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           fontSize,
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          color: isLight ? '#E8331A' : '#E8331A',
+          color: '#E8331A',
           border: '1px solid #E8331A',
           padding,
           whiteSpace: 'nowrap',
@@ -32,9 +32,9 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
       >
         <svg width="8" height="8" viewBox="0 0 30 30" fill="none" style={{ flexShrink: 0 }}>
           <circle cx="15" cy="15" r="6" fill="#E8331A"/>
-          {[0,45,90,135,180,225,270,315].map((deg, i) => (
+          {[0,45,90,135,180,225,270,315].map((deg) => (
             <ellipse
-              key={i}
+              key={deg}
               cx={15 + 11 * Math.cos((deg * Math.PI) / 180)}
               cy={15 + 11 * Math.sin((deg * Math.PI) / 180)}
               rx="4.5" ry="3"

@@ -184,7 +184,7 @@ export default async function HomePage() {
         </p>
       </section>
 
-      <div style={{ marginTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 46, pointerEvents: 'none' }}>
+      <div style={{ marginTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 46 }}>
         <Footer />
       </div>
     </main>

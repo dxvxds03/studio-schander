@@ -22,8 +22,11 @@ export interface Project {
   tags: string[]
   cover_image: string | null
   images: string[]
+  link: string | null
   order: number
   featured: boolean
+  show_in_carousel: boolean
+  project_type: 'client' | 'schander' | 'personal' | null
   created_at: string
   updated_at: string
 }

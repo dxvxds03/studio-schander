@@ -103,8 +103,9 @@ export default async function ProjektePage() {
                 <div
                   style={{
                     display: 'flex',
-                    alignItems: 'baseline',
-                    gap: '0.45em',
+                    alignItems: 'center',
+                    gap: '0.5em',
+                    flexWrap: 'wrap',
                   }}
                 >
                   <span
@@ -149,30 +150,28 @@ export default async function ProjektePage() {
                       </span>
                     )}
                   </h2>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px', flexWrap: 'wrap' }}>
                   <ClientBadge
-                    projectType={(project as any).project_type ?? null}
+                    projectType={(project.project_type as 'client' | 'schander' | 'personal' | null) ?? null}
                     client={project.client ?? null}
                     variant="dark"
-                    size="sm"
+                    size="md"
                   />
-                  {project.tags && project.tags.length > 0 && (
-                    <p
-                      style={{
-                        fontFamily: '"Source Code Pro", monospace',
-                        fontSize: 'clamp(10px, 0.85vw, 12px)',
-                        letterSpacing: '0.14em',
-                        textTransform: 'uppercase',
-                        color: 'var(--dead-poet)',
-                        margin: 0,
-                      }}
-                    >
-                      {project.tags.join(' · ')}
-                    </p>
-                  )}
                 </div>
+
+                {project.tags && project.tags.length > 0 && (
+                  <p
+                    style={{
+                      fontFamily: '"Source Code Pro", monospace',
+                      fontSize: 'clamp(10px, 0.85vw, 12px)',
+                      letterSpacing: '0.14em',
+                      textTransform: 'uppercase',
+                      color: 'var(--dead-poet)',
+                      margin: '5px 0 0',
+                    }}
+                  >
+                    {project.tags.join(' · ')}
+                  </p>
+                )}
               </div>
 
               {/* Right: year + thumbnail */}
