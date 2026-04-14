@@ -13,16 +13,12 @@ interface HeroProject {
   tags: string[]
 }
 
-// Rotation while stacked behind (gives depth/organic feel)
 const PILE_ROTS  = [5.5, -6.5, 4.0, -5.0, 6.5]
-// Rotation when card is the front card
 const FRONT_ROTS = [-1.5, 2.0, -0.8, 1.8, -2.0]
-// Exit rotation direction
 const EXIT_ROTS  = [-14, 13, -11, 15, -12]
 
 function SchanderTicker() {
-  const text = 'SCHANDER — '
-  const chunk = text.repeat(7)
+  const chunk = 'SCHANDER — '.repeat(7)
   return (
     <div
       style={{
@@ -74,29 +70,27 @@ function CircleScrollButton() {
       onClick={scrollDown}
       data-hover
       style={{
-        width: '54px',
-        height: '54px',
+        width: '68px',
+        height: '68px',
         borderRadius: '50%',
-        border: '2px solid #191917',
+        border: '2px solid #0000CC',
         background: 'transparent',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
         padding: 0,
-        color: '#191917',
+        color: '#0000CC',
       }}
-      whileHover={{ background: '#191917', color: '#F4F2ED', scale: 1.06 }}
-      animate={{ y: [0, 5, 0] }}
-      transition={{
-        y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' },
-      }}
+      whileHover={{ background: '#0000CC', color: '#F4F2ED', scale: 1.06 }}
+      animate={{ y: [0, 6, 0] }}
+      transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
         <path
-          d="M9 3v12M3 10l6 6 6-6"
+          d="M11 3v16M4 12l7 7 7-7"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -117,41 +111,30 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
 
     const ctx = gsap.context(() => {
       const section = sectionRef.current!
-      const cards = gsap.utils.toArray<HTMLElement>('.hero-card', section)
-      const total = cards.length
+      const cards   = gsap.utils.toArray<HTMLElement>('.hero-card', section)
+      const names   = gsap.utils.toArray<HTMLElement>('.hero-proj-name', section)
+      const total   = cards.length
+      const seg     = 1 / total
 
-      // Set initial stacked state
+      // ── Initial stacked state ──────────────────────────────────────
       cards.forEach((card, i) => {
-        const blur = i * 6
         if (i === 0) {
-          gsap.set(card, {
-            rotate: FRONT_ROTS[0],
-            filter: 'blur(0px)',
-            scale: 1,
-            y: 0,
-            zIndex: total,
-          })
+          gsap.set(card, { rotate: FRONT_ROTS[0], filter: 'blur(0px)', scale: 1, y: 0, zIndex: total })
         } else {
           gsap.set(card, {
             scale: 1 - i * 0.05,
             y: i * 18,
             rotate: PILE_ROTS[i % PILE_ROTS.length],
-            filter: `blur(${blur}px)`,
+            filter: `blur(${i * 6}px)`,
             zIndex: total - i,
           })
         }
-        // Meta: only front card shows it initially
-        const meta = card.querySelector<HTMLElement>('.hero-card-meta')
-        if (meta) {
-          gsap.set(meta, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 18 })
-        }
       })
+      names.forEach((name, i) => gsap.set(name, { opacity: i === 0 ? 1 : 0 }))
 
-      // Per-card scroll animations
+      // ── Per-card animations ────────────────────────────────────────
       cards.forEach((card, i) => {
-        const seg = 1 / total
-
-        // EXIT: card i flies out
+        // EXIT
         if (i < total - 1) {
           gsap.to(card, {
             yPercent: -130,
@@ -161,27 +144,22 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             scrollTrigger: {
               trigger: section,
               start: `${i * seg * 100}% top`,
-              end: `${(i + 0.65) * seg * 100}% top`,
+              end:   `${(i + 0.65) * seg * 100}% top`,
               scrub: true,
             },
           })
-          // Meta fades out
-          const meta = card.querySelector<HTMLElement>('.hero-card-meta')
-          if (meta) {
-            gsap.to(meta, {
-              opacity: 0,
-              y: -10,
-              scrollTrigger: {
-                trigger: section,
-                start: `${i * seg * 100}% top`,
-                end: `${(i + 0.3) * seg * 100}% top`,
-                scrub: true,
-              },
-            })
-          }
+          gsap.to(names[i], {
+            opacity: 0,
+            scrollTrigger: {
+              trigger: section,
+              start: `${i * seg * 100}% top`,
+              end:   `${(i + 0.28) * seg * 100}% top`,
+              scrub: true,
+            },
+          })
         }
 
-        // ENTRY: card i comes to front
+        // ENTRY
         if (i > 0) {
           gsap.to(card, {
             scale: 1,
@@ -192,26 +170,33 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             scrollTrigger: {
               trigger: section,
               start: `${(i - 1) * seg * 100}% top`,
-              end: `${i * seg * 100}% top`,
+              end:   `${i * seg * 100}% top`,
               scrub: true,
             },
           })
-          // Meta fades in
-          const meta = card.querySelector<HTMLElement>('.hero-card-meta')
-          if (meta) {
-            gsap.to(meta, {
-              opacity: 1,
-              y: 0,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: section,
-                start: `${(i - 0.45) * seg * 100}% top`,
-                end: `${i * seg * 100}% top`,
-                scrub: true,
-              },
-            })
-          }
+          gsap.to(names[i], {
+            opacity: 1,
+            scrollTrigger: {
+              trigger: section,
+              start: `${(i - 0.38) * seg * 100}% top`,
+              end:   `${i * seg * 100}% top`,
+              scrub: true,
+            },
+          })
         }
+      })
+
+      // ── Snap: always land on a complete card ──────────────────────
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: 'bottom bottom',
+        snap: {
+          snapTo: Array.from({ length: total }, (_, i) => i / total),
+          duration: { min: 0.3, max: 0.7 },
+          ease: 'power2.inOut',
+          delay: 0.05,
+        },
       })
 
       ScrollTrigger.refresh()
@@ -236,13 +221,12 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
-          borderBottom: '2px solid #191917',
         }}
       >
-        {/* SCHANDER ticker background */}
+        {/* SCHANDER ticker */}
         <SchanderTicker />
 
-        {/* Card stack — centered in remaining height */}
+        {/* Card stack area */}
         <div
           style={{
             flex: 1,
@@ -250,22 +234,18 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            paddingTop: '56px', // clear nav
+            paddingTop: '56px',
             zIndex: 1,
           }}
         >
           {items.map((project, i) => {
             const href = project.link ?? `/projects/${project.id}`
             const isExternal = !!project.link
-
             return (
               <div
                 key={project.id}
                 className="hero-card"
-                style={{
-                  position: 'absolute',
-                  transformOrigin: 'center bottom',
-                }}
+                style={{ position: 'absolute', transformOrigin: 'center bottom' }}
               >
                 <a
                   href={href}
@@ -274,11 +254,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   data-hover
                   style={{ display: 'block', textDecoration: 'none' }}
                 >
-                  {/* Fixed height container — same height for all ratios */}
                   <div
                     style={{
-                      height: 'clamp(260px, 36vh, 440px)',
-                      width: 'auto',
+                      height: 'clamp(240px, 34vh, 420px)',
                       overflow: 'hidden',
                       outline: '2px solid #191917',
                       display: 'flex',
@@ -289,84 +267,62 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                       src={project.cover_image!}
                       alt={project.title}
                       draggable={false}
-                      style={{
-                        height: '100%',
-                        width: 'auto',
-                        display: 'block',
-                        flexShrink: 0,
-                      }}
+                      style={{ height: '100%', width: 'auto', display: 'block', flexShrink: 0 }}
                     />
                   </div>
                 </a>
-
-                {/* Meta — only visible when this card is front, solid background for readability */}
-                <div
-                  className="hero-card-meta"
-                  style={{
-                    marginTop: '10px',
-                    paddingTop: '10px',
-                    paddingBottom: '4px',
-                    borderTop: '2px solid #191917',
-                    background: 'var(--cream)',
-                  }}
-                >
-                  <a
-                    href={href}
-                    target={isExternal ? '_blank' : '_self'}
-                    rel={isExternal ? 'noopener noreferrer' : undefined}
-                    data-hover
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <p
-                      style={{
-                        fontFamily:
-                          '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                        fontWeight: 800,
-                        fontSize: 'clamp(16px, 2vw, 26px)',
-                        letterSpacing: '-0.025em',
-                        lineHeight: 1.05,
-                        color: '#191917',
-                        marginBottom: '5px',
-                      }}
-                    >
-                      {project.title}
-                      {isExternal && (
-                        <span
-                          style={{
-                            color: 'var(--negroni)',
-                            marginLeft: '6px',
-                            fontSize: '0.75em',
-                          }}
-                        >
-                          ↗
-                        </span>
-                      )}
-                    </p>
-                  </a>
-                  {project.tags && project.tags.length > 0 && (
-                    <span
-                      style={{
-                        fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                        fontSize: '10px',
-                        letterSpacing: '0.16em',
-                        textTransform: 'uppercase',
-                        color: '#787672',
-                      }}
-                    >
-                      {project.tags.slice(0, 2).join(' / ')}
-                    </span>
-                  )}
-                </div>
               </div>
             )
           })}
         </div>
 
-        {/* Bottom bar — always visible */}
+        {/* Project name row — switches with scroll */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            height: 'clamp(52px, 7vh, 88px)',
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 clamp(16px, 2vw, 24px)',
+            overflow: 'hidden',
+          }}
+        >
+          {items.map((project, i) => (
+            <span
+              key={project.id}
+              className="hero-proj-name"
+              style={{
+                position: 'absolute',
+                left: 'clamp(16px, 2vw, 24px)',
+                right: 'clamp(16px, 2vw, 24px)',
+                fontFamily:
+                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(22px, 3.5vw, 52px)',
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                color: '#0000CC',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {project.title}
+              {project.link && (
+                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>
+                  ↗
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
         <motion.div
           style={{
             borderTop: '2px solid #191917',
-            padding: 'clamp(16px, 2vw, 26px) clamp(16px, 2vw, 24px)',
+            padding: 'clamp(18px, 2.2vw, 30px) clamp(16px, 2vw, 24px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -384,7 +340,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               fontFamily:
                 '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(28px, 5vw, 72px)',
+              fontSize: 'clamp(36px, 6.5vw, 96px)',
               letterSpacing: '-0.04em',
               lineHeight: 1,
               color: '#191917',
