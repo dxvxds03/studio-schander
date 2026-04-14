@@ -187,6 +187,7 @@ export default async function HomePage() {
           marginTop: 'clamp(56px, 8vw, 112px)',
           position: 'relative',
           zIndex: 46,
+          pointerEvents: 'none',
         }}
       >
         <div
@@ -295,6 +296,7 @@ export default async function HomePage() {
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
+          pointerEvents: 'none',
         }}
       >
         <div

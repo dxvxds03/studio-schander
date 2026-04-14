@@ -315,6 +315,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           overflow: 'hidden',
           paddingTop: '61px', // space for fixed nav
           zIndex: 20,
+          pointerEvents: 'none',
         }}
       >
         <SchaderSvgLogo />
