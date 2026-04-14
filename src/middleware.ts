@@ -25,11 +25,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Refresh session — required on every request
-  const { data: { session } } = await supabase.auth.getSession()
+  // getUser() validates the JWT with Supabase and refreshes the session cookie
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (request.nextUrl.pathname.startsWith('/admin/dashboard')) {
-    if (session?.user?.email !== ADMIN_EMAIL) {
+    if (user?.email !== ADMIN_EMAIL) {
       return NextResponse.redirect(new URL('/admin', request.url))
     }
   }
