@@ -69,7 +69,16 @@ function CyclingWord() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={idx}
-          style={{ display: 'block', color: 'var(--ink)', lineHeight: 'inherit', whiteSpace: 'nowrap' }}
+          style={{
+            display: 'block',
+            lineHeight: 'inherit',
+            whiteSpace: 'nowrap',
+            background: 'linear-gradient(to right, var(--ink) 50%, var(--cream) 50%)',
+            backgroundAttachment: 'fixed',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
           initial={{ y: '105%' }}
           animate={{ y: 0 }}
           exit={{ y: '-105%' }}
@@ -422,7 +431,14 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{ color: '#0000CC', whiteSpace: 'nowrap' }}>Portfolio.</span>
+            <span style={{
+              whiteSpace: 'nowrap',
+              background: 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)',
+              backgroundAttachment: 'fixed',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>Portfolio.</span>
           </h1>
           <CircleScrollButton />
         </motion.div>
