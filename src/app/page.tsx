@@ -185,7 +185,7 @@ export default async function HomePage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: '#0000CC',
+            background: '#34160f',
             padding: 'clamp(24px, 4vw, 56px)',
           }}
         >
@@ -223,7 +223,7 @@ export default async function HomePage() {
                 letterSpacing: '0.06em',
               }}
             >
-              #0000CC
+              #34160f
             </p>
           </div>
         </div>

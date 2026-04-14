@@ -151,7 +151,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
                     fontSize: '11px',
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
-                    color: '#0000CC',
+                    color: '#34160f',
                     marginBottom: '6px',
                   }}
                 >

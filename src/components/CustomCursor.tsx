@@ -54,7 +54,7 @@ export default function CustomCursor() {
     }
   }, [mouseX, mouseY, visible])
 
-  const color = isDragging ? '#E8331A' : '#0000CC'
+  const color = isDragging ? '#E8331A' : '#34160f'
 
   return (
     <>

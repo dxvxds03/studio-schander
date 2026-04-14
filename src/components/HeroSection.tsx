@@ -204,7 +204,7 @@ function CircleScrollButton() {
         padding: 0,
         color: 'var(--cream)',
       }}
-      whileHover={{ background: 'var(--cream)', color: '#0000CC', scale: 1.06 }}
+      whileHover={{ background: 'var(--cream)', color: '#34160f', scale: 1.06 }}
       animate={{ y: [0, 7, 0] }}
       transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
