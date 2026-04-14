@@ -13,9 +13,10 @@ interface HeroProject {
   tags: string[]
 }
 
-const CARD_W = 260
-const GAP    = 28
-const STRIDE = CARD_W + GAP
+const GAP = 36
+
+// Organic tilts per card position
+const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
 const CYCLING_WORDS = ['Schander.', 'David.', 'Studio.', 'Ideen.']
 
@@ -28,14 +29,7 @@ function CyclingWord() {
   }, [])
 
   return (
-    <span
-      style={{
-        display: 'inline-block',
-        overflow: 'hidden',
-        verticalAlign: 'bottom',
-        lineHeight: 'inherit',
-      }}
-    >
+    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', lineHeight: 'inherit' }}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={idx}
@@ -55,31 +49,13 @@ function CyclingWord() {
 function SchanderTicker() {
   const chunk = 'SCHANDER — '.repeat(7)
   return (
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        display: 'flex',
-        alignItems: 'center',
-        overflow: 'hidden',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          whiteSpace: 'nowrap',
-          animation: 'schanderTicker 20s linear infinite',
-          willChange: 'transform',
-        }}
-      >
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+      <div style={{ display: 'flex', whiteSpace: 'nowrap', animation: 'schanderTicker 20s linear infinite', willChange: 'transform' }}>
         {[chunk, chunk].map((t, i) => (
           <span
             key={i}
             style={{
-              fontFamily:
-                '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
               fontSize: 'clamp(110px, 16vw, 200px)',
               letterSpacing: '-0.04em',
@@ -123,13 +99,7 @@ function CircleScrollButton() {
       transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
     >
       <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-        <path
-          d="M15 4v22M5 17l10 9 10-9"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M15 4v22M5 17l10 9 10-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </motion.button>
   )
@@ -145,68 +115,102 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
     if (!sectionRef.current || !carouselRef.current || n === 0) return
 
     gsap.registerPlugin(ScrollTrigger)
+    let ctx: gsap.Context | null = null
 
-    const ctx = gsap.context(() => {
-      const section  = sectionRef.current!
-      const carousel = carouselRef.current!
-      const cards    = gsap.utils.toArray<HTMLElement>('.hero-carousel-card', section)
-      const names    = gsap.utils.toArray<HTMLElement>('.hero-proj-name', section)
-      const total    = cards.length
+    const setup = () => {
+      ctx?.revert()
+      if (!sectionRef.current || !carouselRef.current) return
 
-      // Apply glow + scale + name opacity based on fractional center index
-      const applyGlow = (rawIdx: number) => {
-        cards.forEach((card, i) => {
-          const dist = Math.abs(rawIdx - i)
-          const t    = Math.max(0, 1 - dist)
-          gsap.set(card, {
-            scale: 0.88 + 0.12 * t,
-            boxShadow:
-              t > 0.05
+      ctx = gsap.context(() => {
+        const section  = sectionRef.current!
+        const carousel = carouselRef.current!
+        const cards    = gsap.utils.toArray<HTMLElement>('.hero-carousel-card', section)
+        const names    = gsap.utils.toArray<HTMLElement>('.hero-proj-name', section)
+        const total    = cards.length
+        const viewW    = window.innerWidth
+
+        // ── Dynamic padding: center the first card ─────────────────
+        const firstW = cards[0].offsetWidth
+        const lastW  = cards[total - 1].offsetWidth
+        carousel.style.paddingLeft  = `${Math.max(0, viewW / 2 - firstW / 2)}px`
+        carousel.style.paddingRight = `${Math.max(0, viewW / 2 - lastW / 2)}px`
+
+        // Force layout so offsetLeft reflects padding
+        void carousel.getBoundingClientRect()
+
+        // ── Measure translateX needed to center each card ──────────
+        const cardCenters = cards.map(c => c.offsetLeft + c.offsetWidth / 2)
+        // At x=0, first card is centered (cardCenters[0] = viewW/2)
+        // translateX[i] = amount to shift so card i center = viewW/2
+        const txPerCard  = cardCenters.map(cx => viewW / 2 - cx)
+        // txPerCard[0] ≈ 0, txPerCard[last] is negative (move left)
+
+        const totalMove  = Math.abs(txPerCard[total - 1])
+        // Snap fractions: 0 … 1 mapped to each card
+        const snapFracs  = txPerCard.map(dx => Math.abs(dx) / (totalMove || 1))
+
+        // ── Glow + rotation + name opacity ─────────────────────────
+        const applyGlow = (rawIdx: number) => {
+          cards.forEach((card, i) => {
+            const dist    = Math.abs(rawIdx - i)
+            const t       = Math.max(0, 1 - dist)
+            const baseRot = CARD_ROTS[i % CARD_ROTS.length]
+            gsap.set(card, {
+              scale: 0.86 + 0.14 * t,
+              rotate: baseRot * (1 - t * 0.75), // straighten toward center
+              boxShadow: t > 0.04
                 ? `0 0 ${Math.round(t * 90)}px rgba(232,88,26,${(t * 0.58).toFixed(2)}), 0 0 ${Math.round(t * 45)}px rgba(232,88,26,${(t * 0.32).toFixed(2)})`
                 : 'none',
+            })
           })
-        })
-        names.forEach((name, i) => {
-          const dist = Math.abs(rawIdx - i)
-          name.style.opacity = String(Math.max(0, 1 - dist * 2.5).toFixed(3))
-        })
-      }
-
-      // Initial state — card 0 in center with glow
-      applyGlow(0)
-
-      if (total <= 1) return
-
-      const totalMove = (total - 1) * STRIDE
-
-      gsap.fromTo(
-        carousel,
-        { x: 0 },
-        {
-          x: -totalMove,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            snap: {
-              snapTo: 1 / (total - 1),
-              duration: { min: 0.3, max: 0.7 },
-              ease: 'power2.inOut',
-              delay: 0.05,
-            },
-            onUpdate(self) {
-              applyGlow(self.progress * (total - 1))
-            },
-          },
+          names.forEach((name, i) => {
+            const dist = Math.abs(rawIdx - i)
+            name.style.opacity = Math.max(0, 1 - dist * 2.5).toFixed(3)
+          })
         }
+
+        applyGlow(0) // initial state
+
+        if (total <= 1) return
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.7,
+          snap: {
+            snapTo: snapFracs,
+            duration: { min: 0.18, max: 0.45 },
+            ease: 'power3.inOut',
+            delay: 0.06,
+          },
+          onUpdate(self) {
+            const rawIdx = self.progress * (total - 1)
+            // Interpolate carousel translateX between measured positions
+            const i0 = Math.min(Math.floor(rawIdx), total - 2)
+            const i1 = i0 + 1
+            const frac = rawIdx - i0
+            const tx = txPerCard[i0] + frac * (txPerCard[i1] - txPerCard[i0])
+            gsap.set(carousel, { x: tx })
+            applyGlow(rawIdx)
+          },
+        })
+
+        ScrollTrigger.refresh()
+      }, sectionRef)
+    }
+
+    // Wait for all images to load before measuring
+    const imgs = Array.from(carouselRef.current.querySelectorAll<HTMLImageElement>('img'))
+    Promise.all(
+      imgs.map(img =>
+        img.complete
+          ? Promise.resolve()
+          : new Promise<void>(res => { img.onload = () => res(); img.onerror = () => res() })
       )
+    ).then(setup)
 
-      ScrollTrigger.refresh()
-    }, sectionRef)
-
-    return () => ctx.revert()
+    return () => ctx?.revert()
   }, [n])
 
   if (n === 0) return null
@@ -227,10 +231,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           overflow: 'hidden',
         }}
       >
-        {/* SCHANDER ticker */}
         <SchanderTicker />
 
-        {/* Carousel area — images on top of ticker */}
+        {/* Carousel area */}
         <div
           style={{
             flex: 1,
@@ -240,10 +243,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             overflow: 'hidden',
             position: 'relative',
             zIndex: 1,
-            WebkitMaskImage:
-              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-            maskImage:
-              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+            // Fade edges to show depth
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
           }}
         >
           <div
@@ -252,9 +254,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               display: 'flex',
               gap: `${GAP}px`,
               flexShrink: 0,
-              // First card centered: offset = 50vw - half card width
-              paddingLeft: `calc(50vw - ${CARD_W / 2}px)`,
-              paddingRight: `calc(50vw - ${CARD_W / 2}px)`,
+              alignItems: 'center',
+              // paddingLeft/Right set dynamically in JS after image load
             }}
           >
             {items.map((project) => {
@@ -271,31 +272,22 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   className="hero-carousel-card"
                   style={{
                     flexShrink: 0,
-                    width: `${CARD_W}px`,
                     display: 'block',
                     textDecoration: 'none',
                     transformOrigin: 'center center',
                   }}
                 >
-                  <div
+                  <img
+                    src={project.cover_image!}
+                    alt={project.title}
+                    draggable={false}
                     style={{
-                      width: '100%',
-                      height: 'clamp(210px, 30vh, 380px)',
-                      overflow: 'hidden',
+                      height: 'clamp(200px, 28vh, 360px)',
+                      width: 'auto',
+                      display: 'block',
+                      maxWidth: '480px',
                     }}
-                  >
-                    <img
-                      src={project.cover_image!}
-                      alt={project.title}
-                      draggable={false}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        display: 'block',
-                      }}
-                    />
-                  </div>
+                  />
                 </a>
               )
             })}
@@ -322,8 +314,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 position: 'absolute',
                 left: 'clamp(16px, 2vw, 24px)',
                 right: 'clamp(16px, 2vw, 24px)',
-                fontFamily:
-                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
                 fontSize: 'clamp(22px, 3.5vw, 52px)',
                 letterSpacing: '-0.04em',
@@ -338,9 +329,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             >
               {project.title}
               {project.link && (
-                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>
-                  ↗
-                </span>
+                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>↗</span>
               )}
             </span>
           ))}
@@ -364,8 +353,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         >
           <h1
             style={{
-              fontFamily:
-                '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
               fontSize: 'clamp(48px, 8.5vw, 130px)',
               letterSpacing: '-0.045em',
