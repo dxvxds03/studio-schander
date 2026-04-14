@@ -207,27 +207,18 @@ export default async function ProjektePage() {
                 )}
 
                 {project.cover_image && (
-                  <div
+                  <img
+                    src={project.cover_image}
+                    alt={project.title}
+                    draggable={false}
                     style={{
-                      width: 'clamp(44px, 5.5vw, 72px)',
-                      aspectRatio: '3/4',
-                      overflow: 'hidden',
+                      height: 'clamp(64px, 9vw, 130px)',
+                      width: 'auto',
+                      display: 'block',
                       flexShrink: 0,
+                      transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     }}
-                  >
-                    <img
-                      src={project.cover_image}
-                      alt={project.title}
-                      draggable={false}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        display: 'block',
-                        transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                      }}
-                    />
-                  </div>
+                  />
                 )}
               </div>
             </a>

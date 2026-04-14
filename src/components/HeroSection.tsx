@@ -83,7 +83,7 @@ const GAP = 36
 // Organic tilts per card position
 const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
-const CYCLING_WORDS = ['Marken.', 'Schander.', 'David.', 'Studio.', 'Ideen.']
+const CYCLING_WORDS = ['Marken.', 'Schander.', 'David.', 'Studio.', 'Ideen.', 'Design.']
 
 function CyclingWord() {
   const [idx, setIdx] = useState(0)
