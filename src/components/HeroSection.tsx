@@ -401,7 +401,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                     textDecoration: 'none',
                     transformOrigin: 'center center',
                     position: 'relative',
+                    pointerEvents: 'auto',
                   }}
+                  onMouseEnter={e => e.currentTarget.classList.add('is-hovered')}
+                  onMouseLeave={e => e.currentTarget.classList.remove('is-hovered')}
                 >
                   <img
                     src={project.cover_image!}
@@ -414,6 +417,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                       maxWidth: '480px',
                     }}
                   />
+                  <div className="card-hover-ring" />
                 </a>
               )
             })}
