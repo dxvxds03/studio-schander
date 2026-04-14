@@ -68,15 +68,13 @@ export default async function ProjektePage() {
                       src={project.cover_image}
                       alt={project.title}
                       draggable={false}
+                      className="img-hover"
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
                         display: 'block',
-                        transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                       }}
-                      onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'scale(1.04)' }}
-                      onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'scale(1)' }}
                     />
                   ) : (
                     <div style={{ width: '100%', height: '100%', background: 'var(--faint)' }} />
