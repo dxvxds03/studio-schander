@@ -249,7 +249,7 @@ export default function Dashboard() {
               </button>
               {form.coverImage && (
                 <button type="button" onClick={() => setForm((p) => ({ ...p, coverImage: '' }))}
-                  style={{ marginLeft: '8px', background: 'none', border: 'none', color: '#E8581A', fontSize: '12px', cursor: 'pointer' }}>
+                  style={{ marginLeft: '8px', background: 'none', border: 'none', color: '#E8331A', fontSize: '12px', cursor: 'pointer' }}>
                   Entfernen
                 </button>
               )}
@@ -268,7 +268,7 @@ export default function Dashboard() {
                         onClick={() => removeExtraImage(idx)}
                         style={{
                           position: 'absolute', top: '2px', right: '2px',
-                          background: '#E8581A', color: '#fff', border: 'none',
+                          background: '#E8331A', color: '#fff', border: 'none',
                           width: '18px', height: '18px', fontSize: '10px',
                           cursor: 'pointer', lineHeight: '18px', textAlign: 'center',
                         }}
@@ -298,7 +298,7 @@ export default function Dashboard() {
             </div>
 
             {msg && (
-              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes('fehler') || msg.includes('Fehler') ? '#E8581A' : '#191917' }}>
+              <p style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '12px', letterSpacing: '0.05em', color: msg.includes('fehler') || msg.includes('Fehler') ? '#E8331A' : '#191917' }}>
                 {msg}
               </p>
             )}
@@ -353,7 +353,7 @@ export default function Dashboard() {
                       Edit
                     </button>
                     <button onClick={() => handleDelete(p.id, p.title)}
-                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8581A', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
                       ✕
                     </button>
                   </div>

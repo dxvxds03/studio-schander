@@ -186,7 +186,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
                   >
                     {project.tags.slice(0, 2).join(' / ')}
                     {isExternal && (
-                      <span style={{ color: '#E8581A', marginLeft: '6px' }}>↗</span>
+                      <span style={{ color: '#E8331A', marginLeft: '6px' }}>↗</span>
                     )}
                   </span>
                 )}

@@ -55,7 +55,7 @@ export default function AdminLogin() {
             style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontSize: '14px', color: '#191917' }}
           />
 
-          {error && <p className="label" style={{ color: '#E8581A' }}>{error}</p>}
+          {error && <p className="label" style={{ color: '#E8331A' }}>{error}</p>}
 
           <button
             type="submit"

@@ -29,7 +29,7 @@ function Letter({ char, index }: { char: string; index: number }) {
         opacity: 1,
         y: OFFSETS[index].y,
         rotate: OFFSETS[index].rotate,
-        color: dragging ? '#E8581A' : '#191917',
+        color: dragging ? '#E8331A' : '#191917',
       }}
       transition={{
         opacity: { duration: 0.5, delay: 0.3 + index * 0.08 },
