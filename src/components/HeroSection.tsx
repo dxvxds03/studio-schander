@@ -275,11 +275,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           style={{
             position: 'relative',
             zIndex: 2,
-            height: 'clamp(44px, 6vh, 72px)',
+            height: 'clamp(40px, 5vh, 60px)',
             display: 'flex',
             alignItems: 'center',
-            padding: '0 clamp(20px, 2.5vw, 32px)',
-            overflow: 'hidden',
+            justifyContent: 'center',
           }}
         >
           {items.map((project) => (
@@ -288,17 +287,18 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               className="hero-proj-name"
               style={{
                 position: 'absolute',
-                left: 'clamp(20px, 2.5vw, 32px)',
-                right: 'clamp(20px, 2.5vw, 32px)',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(22px, 3.5vw, 52px)',
-                letterSpacing: '-0.04em',
+                fontSize: 'clamp(12px, 1.3vw, 16px)',
+                letterSpacing: '0.01em',
                 lineHeight: 1,
-                color: 'var(--ink)',
+                color: 'var(--cream)',
+                background: 'var(--ink)',
+                borderRadius: '100px',
+                padding: '7px 18px',
                 whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
                 pointerEvents: 'none',
                 userSelect: 'none',
                 transition: 'opacity 0.3s ease',
@@ -306,7 +306,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             >
               {project.title}
               {project.link && (
-                <span style={{ color: 'var(--negroni)', marginLeft: '10px', fontSize: '0.65em' }}>↗</span>
+                <span style={{ color: 'var(--negroni)', marginLeft: '8px' }}>↗</span>
               )}
             </span>
           ))}
