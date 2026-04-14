@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import ProjectCarousel from '@/components/ProjectCarousel'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
@@ -22,29 +23,9 @@ export default async function ProjectPage({ params }: { params: { id: string } }
     <main style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Navigation />
 
-      {/* Hero image */}
-      {project.cover_image && (
-        <div
-          className="project-hero-img"
-          style={{
-            marginTop: '61px',
-            width: '100%',
-            overflow: 'hidden',
-            maxHeight: '75vh',
-          }}
-        >
-          <img
-            src={project.cover_image}
-            alt={project.title}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-              maxHeight: '75vh',
-            }}
-          />
-        </div>
+      {/* Image carousel */}
+      {allImages.length > 0 && (
+        <ProjectCarousel images={allImages} title={project.title} />
       )}
 
       {/* Title + meta */}
@@ -240,33 +221,6 @@ export default async function ProjectPage({ params }: { params: { id: string } }
         </div>
       </section>
 
-      {/* Additional images */}
-      {allImages.length > 1 && (
-        <section
-          style={{
-            padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))',
-            gap: 'clamp(12px, 1.5vw, 20px)',
-          }}
-        >
-          {allImages.slice(1).map((src, i) => (
-            <div key={i} style={{ overflow: 'hidden' }}>
-              <img
-                src={src}
-                alt={`${project.title} — ${i + 2}`}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block',
-                  transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                }}
-                className="img-hover"
-              />
-            </div>
-          ))}
-        </section>
-      )}
 
       <Footer />
     </main>
