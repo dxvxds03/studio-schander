@@ -216,9 +216,9 @@ function CircleScrollButton() {
 }
 
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
-  const sectionRef   = useRef<HTMLElement>(null)
-  const carouselRef  = useRef<HTMLDivElement>(null)
-  const portfolioRef = useRef<HTMLSpanElement>(null)
+  const sectionRef      = useRef<HTMLElement>(null)
+  const carouselRef     = useRef<HTMLDivElement>(null)
+  const heroCompleteRef = useRef(false)
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
   const [showStickyHeader, setShowStickyHeader] = useState(false)
@@ -323,39 +323,20 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               : 0
             if (negroniEl) gsap.set(negroniEl, { xPercent: exitFrac * 100 })
 
-            // Portfolio. → plain ink once negroni starts leaving
-            const pEl = portfolioRef.current
-            if (pEl) {
-              if (exitFrac > 0) {
-                pEl.style.background = 'none'
-                pEl.style.backgroundAttachment = 'auto'
-                pEl.style.setProperty('-webkit-background-clip', 'unset')
-                pEl.style.backgroundClip = 'unset'
-                pEl.style.setProperty('-webkit-text-fill-color', 'var(--ink)')
-              } else {
-                pEl.style.background = 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)'
-                pEl.style.backgroundAttachment = 'fixed'
-                pEl.style.setProperty('-webkit-background-clip', 'text')
-                pEl.style.backgroundClip = 'text'
-                pEl.style.setProperty('-webkit-text-fill-color', 'transparent')
-              }
-            }
-
             // Nav CTA: cream while negroni visible, negroni when gone
             if (exitFrac >= 1) {
               document.body.classList.remove('negroni-hero-active')
             } else {
               document.body.classList.add('negroni-hero-active')
             }
-          },
-        })
 
-        // Detect when hero is fully scrolled past → show sticky heading
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'bottom top',
-          onEnter: () => setShowStickyHeader(true),
-          onLeaveBack: () => setShowStickyHeader(false),
+            // Sticky header: show early so word appears to "stick"
+            const stickyShow = self.progress > 0.90
+            if (stickyShow !== heroCompleteRef.current) {
+              heroCompleteRef.current = stickyShow
+              setShowStickyHeader(stickyShow)
+            }
+          },
         })
 
         ScrollTrigger.refresh()
@@ -544,7 +525,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span ref={portfolioRef} style={{
+            <span style={{
               whiteSpace: 'nowrap',
               background: 'linear-gradient(to right, var(--negroni) 50%, var(--cream) 50%)',
               backgroundAttachment: 'fixed',
