@@ -207,6 +207,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
 
         applyGlow(0) // initial state
 
+        const negroniEl = section.querySelector<HTMLElement>('.hero-negroni-half')
+
         if (total <= 1) return
 
         ScrollTrigger.create({
@@ -229,6 +231,12 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             const tx = txPerCard[i0] + frac * (txPerCard[i1] - txPerCard[i0])
             gsap.set(carousel, { x: tx })
             applyGlow(rawIdx)
+
+            // Negroni half: slides out to the right in the last 30% of scroll
+            if (negroniEl) {
+              const exitFrac = Math.max(0, Math.min(1, (self.progress - 0.7) / 0.3))
+              gsap.set(negroniEl, { xPercent: exitFrac * 100 })
+            }
           },
         })
 
@@ -270,17 +278,20 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
       >
         <SchanderTicker />
 
-        {/* Blue right half — full viewport height, behind everything */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: '50%',
-          background: 'var(--negroni)',
-          zIndex: 0,
-          pointerEvents: 'none',
-        }} />
+        {/* Negroni right half — full viewport height, behind everything */}
+        <div
+          className="hero-negroni-half"
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: '50%',
+            background: 'var(--negroni)',
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        />
 
         {/* Carousel area — title pill sits inside as absolute overlay */}
         <div

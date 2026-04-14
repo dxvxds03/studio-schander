@@ -20,7 +20,7 @@ export default function LoadingScreen() {
             position: 'fixed',
             inset: 0,
             zIndex: 9999,
-            background: '#0000CC',
+            background: '#E8331A',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
