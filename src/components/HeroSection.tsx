@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -20,30 +20,52 @@ const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
 const CYCLING_WORDS = ['Schander.', 'David.', 'Studio.', 'Ideen.']
 
-const LAYOUT_TRANSITION = { duration: 0.55, ease: [0.76, 0, 0.24, 1] }
-
 function CyclingWord() {
   const [idx, setIdx] = useState(0)
+  const measureRef = useRef<HTMLSpanElement>(null)
+  const motionW    = useMotionValue(0)
+  // Spring drives the container width → "Portfolio." floats smoothly
+  const springW    = useSpring(motionW, { stiffness: 260, damping: 34 })
 
   useEffect(() => {
-    // ~2× longer display time
     const t = setInterval(() => setIdx(c => (c + 1) % CYCLING_WORDS.length), 4400)
     return () => clearInterval(t)
   }, [])
 
+  // Measure the invisible span synchronously after every word change
+  useLayoutEffect(() => {
+    if (measureRef.current) motionW.set(measureRef.current.offsetWidth)
+  }, [idx, motionW])
+
   return (
-    // layout animates the container width as words change → "Portfolio." floats
     <motion.span
-      layout
       style={{
         display: 'inline-block',
         overflow: 'hidden',
         verticalAlign: 'bottom',
         lineHeight: 'inherit',
-        whiteSpace: 'nowrap',
+        width: springW,
       }}
-      transition={{ layout: LAYOUT_TRANSITION }}
     >
+      {/* Hidden clone — measures the current word's natural pixel width */}
+      <span
+        ref={measureRef}
+        aria-hidden
+        style={{
+          position: 'absolute',
+          visibility: 'hidden',
+          pointerEvents: 'none',
+          whiteSpace: 'nowrap',
+          fontFamily: 'inherit',
+          fontWeight: 'inherit',
+          fontSize: 'inherit',
+          letterSpacing: 'inherit',
+          lineHeight: 'inherit',
+        }}
+      >
+        {CYCLING_WORDS[idx]}
+      </span>
+
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={idx}
@@ -365,31 +387,22 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.7 }}
         >
-          <LayoutGroup id="headline">
-            <h1
-              style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(48px, 8.5vw, 130px)',
-                letterSpacing: '-0.045em',
-                lineHeight: 1,
-                margin: 0,
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: '0.18em',
-              }}
-            >
-              <CyclingWord />
-              {/* layout="position" slides smoothly as CyclingWord resizes */}
-              <motion.span
-                layout="position"
-                style={{ color: 'var(--negroni)', whiteSpace: 'nowrap' }}
-                transition={{ layout: LAYOUT_TRANSITION }}
-              >
-                Portfolio.
-              </motion.span>
-            </h1>
-          </LayoutGroup>
+          <h1
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(48px, 8.5vw, 130px)',
+              letterSpacing: '-0.045em',
+              lineHeight: 1,
+              margin: 0,
+              display: 'flex',
+              alignItems: 'baseline',
+              gap: '0.18em',
+            }}
+          >
+            <CyclingWord />
+            <span style={{ color: 'var(--negroni)', whiteSpace: 'nowrap' }}>Portfolio.</span>
+          </h1>
           <CircleScrollButton />
         </motion.div>
       </div>
