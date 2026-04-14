@@ -14,16 +14,16 @@ export default function Navigation() {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           justifyContent: 'space-between',
-          padding: '10px 20px 10px 16px',
+          padding: '0 20px 10px 16px',
         }}
       >
-        <Link href="/" data-hover style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <Link href="/" data-hover style={{ display: 'flex', alignItems: 'flex-end', flexShrink: 0 }}>
           <motion.img
             src="https://fdiaoljpthlnytgedxnt.supabase.co/storage/v1/object/public/project-images/logo_schander_dead_poet.png"
             alt="Studio Schander"
-            style={{ height: '34px', width: 'auto', display: 'block' }}
+            style={{ height: '51px', width: 'auto', display: 'block' }}
             whileHover={{ opacity: 0.55 }}
             transition={{ duration: 0.15 }}
           />
@@ -44,6 +44,7 @@ export default function Navigation() {
             padding: '5px 12px',
             lineHeight: 1,
             transition: 'background 0.15s ease, color 0.15s ease',
+            whiteSpace: 'nowrap',
           }}
           onMouseEnter={e => {
             e.currentTarget.style.background = '#191917'
@@ -54,7 +55,7 @@ export default function Navigation() {
             e.currentTarget.style.color = '#191917'
           }}
         >
-          Kontakt
+          ich habe eine idee →
         </Link>
       </div>
     </motion.nav>
