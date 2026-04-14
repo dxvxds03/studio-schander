@@ -298,9 +298,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 : 'none',
             })
           })
+          const activeIdx = Math.round(rawIdx)
           names.forEach((name, i) => {
-            const dist = Math.abs(rawIdx - i)
-            name.style.opacity = Math.max(0, 1 - dist * 2.5).toFixed(3)
+            name.style.opacity = i === activeIdx ? '1' : '0'
           })
         }
 
