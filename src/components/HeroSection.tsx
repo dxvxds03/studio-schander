@@ -13,9 +13,9 @@ interface HeroProject {
   tags: string[]
 }
 
-const PILE_ROTS  = [5.5, -6.5, 4.0, -5.0, 6.5]
-const FRONT_ROTS = [-1.5, 2.0, -0.8, 1.8, -2.0]
-const EXIT_ROTS  = [-14, 13, -11, 15, -12]
+const CARD_W = 260
+const GAP    = 28
+const STRIDE = CARD_W + GAP
 
 function SchanderTicker() {
   const chunk = 'SCHANDER — '.repeat(7)
@@ -43,7 +43,8 @@ function SchanderTicker() {
           <span
             key={i}
             style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+              fontFamily:
+                '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 800,
               fontSize: 'clamp(110px, 16vw, 200px)',
               letterSpacing: '-0.04em',
@@ -100,104 +101,72 @@ function CircleScrollButton() {
 }
 
 export default function HeroSection({ projects }: { projects: HeroProject[] }) {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef  = useRef<HTMLElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const items = projects.filter(p => p.cover_image)
   const n = items.length
 
   useEffect(() => {
-    if (!sectionRef.current || n === 0) return
+    if (!sectionRef.current || !carouselRef.current || n === 0) return
 
     gsap.registerPlugin(ScrollTrigger)
 
     const ctx = gsap.context(() => {
-      const section = sectionRef.current!
-      const cards   = gsap.utils.toArray<HTMLElement>('.hero-card', section)
-      const names   = gsap.utils.toArray<HTMLElement>('.hero-proj-name', section)
-      const total   = cards.length
-      const seg     = 1 / total
+      const section  = sectionRef.current!
+      const carousel = carouselRef.current!
+      const cards    = gsap.utils.toArray<HTMLElement>('.hero-carousel-card', section)
+      const names    = gsap.utils.toArray<HTMLElement>('.hero-proj-name', section)
+      const total    = cards.length
 
-      // ── Initial stacked state ──────────────────────────────────────
-      cards.forEach((card, i) => {
-        if (i === 0) {
-          gsap.set(card, { rotate: FRONT_ROTS[0], filter: 'blur(0px)', scale: 1, y: 0, zIndex: total })
-        } else {
+      // Apply glow + scale + name opacity based on fractional center index
+      const applyGlow = (rawIdx: number) => {
+        cards.forEach((card, i) => {
+          const dist = Math.abs(rawIdx - i)
+          const t    = Math.max(0, 1 - dist)
           gsap.set(card, {
-            scale: 1 - i * 0.05,
-            y: i * 18,
-            rotate: PILE_ROTS[i % PILE_ROTS.length],
-            filter: `blur(${i * 6}px)`,
-            zIndex: total - i,
+            scale: 0.88 + 0.12 * t,
+            boxShadow:
+              t > 0.05
+                ? `0 0 ${Math.round(t * 90)}px rgba(232,88,26,${(t * 0.58).toFixed(2)}), 0 0 ${Math.round(t * 45)}px rgba(232,88,26,${(t * 0.32).toFixed(2)})`
+                : 'none',
           })
-        }
-      })
-      names.forEach((name, i) => gsap.set(name, { opacity: i === 0 ? 1 : 0 }))
+        })
+        names.forEach((name, i) => {
+          const dist = Math.abs(rawIdx - i)
+          name.style.opacity = String(Math.max(0, 1 - dist * 2.5).toFixed(3))
+        })
+      }
 
-      // ── Per-card animations ────────────────────────────────────────
-      cards.forEach((card, i) => {
-        // EXIT
-        if (i < total - 1) {
-          gsap.to(card, {
-            yPercent: -130,
-            opacity: 0,
-            rotate: EXIT_ROTS[i % EXIT_ROTS.length],
-            ease: 'power2.inOut',
-            scrollTrigger: {
-              trigger: section,
-              start: `${i * seg * 100}% top`,
-              end:   `${(i + 0.65) * seg * 100}% top`,
-              scrub: true,
-            },
-          })
-          gsap.to(names[i], {
-            opacity: 0,
-            scrollTrigger: {
-              trigger: section,
-              start: `${i * seg * 100}% top`,
-              end:   `${(i + 0.28) * seg * 100}% top`,
-              scrub: true,
-            },
-          })
-        }
+      // Initial state — card 0 in center with glow
+      applyGlow(0)
 
-        // ENTRY
-        if (i > 0) {
-          gsap.to(card, {
-            scale: 1,
-            y: 0,
-            rotate: FRONT_ROTS[i % FRONT_ROTS.length],
-            filter: 'blur(0px)',
-            ease: 'power2.inOut',
-            scrollTrigger: {
-              trigger: section,
-              start: `${(i - 1) * seg * 100}% top`,
-              end:   `${i * seg * 100}% top`,
-              scrub: true,
-            },
-          })
-          gsap.to(names[i], {
-            opacity: 1,
-            scrollTrigger: {
-              trigger: section,
-              start: `${(i - 0.38) * seg * 100}% top`,
-              end:   `${i * seg * 100}% top`,
-              scrub: true,
-            },
-          })
-        }
-      })
+      if (total <= 1) return
 
-      // ── Snap: always land on a complete card ──────────────────────
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        snap: {
-          snapTo: Array.from({ length: total }, (_, i) => i / total),
-          duration: { min: 0.3, max: 0.7 },
-          ease: 'power2.inOut',
-          delay: 0.05,
-        },
-      })
+      const totalMove = (total - 1) * STRIDE
+
+      gsap.fromTo(
+        carousel,
+        { x: 0 },
+        {
+          x: -totalMove,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+            snap: {
+              snapTo: 1 / (total - 1),
+              duration: { min: 0.3, max: 0.7 },
+              ease: 'power2.inOut',
+              delay: 0.05,
+            },
+            onUpdate(self) {
+              applyGlow(self.progress * (total - 1))
+            },
+          },
+        }
+      )
 
       ScrollTrigger.refresh()
     }, sectionRef)
@@ -210,7 +179,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   return (
     <section
       ref={sectionRef}
-      style={{ height: `calc(${n + 1} * 100vh)`, position: 'relative' }}
+      style={{ height: `calc(${n} * 100vh)`, position: 'relative' }}
     >
       {/* Sticky viewport */}
       <div
@@ -226,57 +195,79 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         {/* SCHANDER ticker */}
         <SchanderTicker />
 
-        {/* Card stack area */}
+        {/* Carousel area — images on top of ticker */}
         <div
           style={{
             flex: 1,
-            position: 'relative',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             paddingTop: '56px',
+            overflow: 'hidden',
+            position: 'relative',
             zIndex: 1,
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
+            maskImage:
+              'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
           }}
         >
-          {items.map((project, i) => {
-            const href = project.link ?? `/projects/${project.id}`
-            const isExternal = !!project.link
-            return (
-              <div
-                key={project.id}
-                className="hero-card"
-                style={{ position: 'absolute', transformOrigin: 'center bottom' }}
-              >
+          <div
+            ref={carouselRef}
+            style={{
+              display: 'flex',
+              gap: `${GAP}px`,
+              flexShrink: 0,
+              // First card centered: offset = 50vw - half card width
+              paddingLeft: `calc(50vw - ${CARD_W / 2}px)`,
+              paddingRight: `calc(50vw - ${CARD_W / 2}px)`,
+            }}
+          >
+            {items.map((project) => {
+              const href       = project.link ?? `/projects/${project.id}`
+              const isExternal = !!project.link
+
+              return (
                 <a
+                  key={project.id}
                   href={href}
                   target={isExternal ? '_blank' : '_self'}
                   rel={isExternal ? 'noopener noreferrer' : undefined}
                   data-hover
-                  style={{ display: 'block', textDecoration: 'none' }}
+                  className="hero-carousel-card"
+                  style={{
+                    flexShrink: 0,
+                    width: `${CARD_W}px`,
+                    display: 'block',
+                    textDecoration: 'none',
+                    transformOrigin: 'center center',
+                  }}
                 >
                   <div
                     style={{
-                      height: 'clamp(240px, 34vh, 420px)',
+                      width: '100%',
+                      height: 'clamp(210px, 30vh, 380px)',
                       overflow: 'hidden',
-                      outline: '2px solid #191917',
-                      display: 'flex',
-                      alignItems: 'center',
                     }}
                   >
                     <img
                       src={project.cover_image!}
                       alt={project.title}
                       draggable={false}
-                      style={{ height: '100%', width: 'auto', display: 'block', flexShrink: 0 }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                      }}
                     />
                   </div>
                 </a>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
 
-        {/* Project name row — switches with scroll */}
+        {/* Active project name */}
         <div
           style={{
             position: 'relative',
@@ -288,7 +279,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             overflow: 'hidden',
           }}
         >
-          {items.map((project, i) => (
+          {items.map((project) => (
             <span
               key={project.id}
               className="hero-proj-name"
@@ -306,6 +297,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                pointerEvents: 'none',
+                userSelect: 'none',
               }}
             >
               {project.title}
@@ -321,7 +314,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         {/* Bottom bar */}
         <motion.div
           style={{
-            borderTop: '2px solid #191917',
             padding: 'clamp(18px, 2.2vw, 30px) clamp(16px, 2vw, 24px)',
             display: 'flex',
             alignItems: 'center',
@@ -333,7 +325,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.7 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
         >
           <h1
             style={{
@@ -350,7 +342,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             Das ist Davids{' '}
             <span style={{ color: 'var(--negroni)' }}>Portfolio.</span>
           </h1>
-
           <CircleScrollButton />
         </motion.div>
       </div>

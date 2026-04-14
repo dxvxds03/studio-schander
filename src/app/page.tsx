@@ -42,15 +42,11 @@ export default async function HomePage() {
       <HeroSection projects={all} />
 
       {/* Leistungen */}
-      <section id="leistungen">
-        {/* Section header */}
+      <section id="leistungen" style={{ paddingTop: 'clamp(56px, 8vw, 112px)' }}>
         <div
           style={{
-            borderBottom: '2px solid #191917',
-            padding: 'clamp(20px, 2.5vw, 32px) clamp(16px, 2vw, 24px)',
-            display: 'flex',
-            alignItems: 'baseline',
-            gap: '16px',
+            padding: '0 clamp(16px, 2vw, 24px)',
+            marginBottom: 'clamp(32px, 5vw, 64px)',
           }}
         >
           <h2
@@ -69,64 +65,71 @@ export default async function HomePage() {
           </h2>
         </div>
 
-        {/* Service rows */}
-        {LEISTUNGEN.map((item, i) => (
-          <div
-            key={item.nr}
-            style={{
-              borderBottom: '2px solid #191917',
-              padding: 'clamp(28px, 3.5vw, 48px) clamp(16px, 2vw, 24px)',
-              display: 'grid',
-              gridTemplateColumns: 'auto 1fr 2fr',
-              gap: 'clamp(24px, 4vw, 72px)',
-              alignItems: 'start',
-            }}
-          >
-            <span
+        <div style={{ padding: '0 clamp(16px, 2vw, 24px)' }}>
+          {LEISTUNGEN.map((item) => (
+            <div
+              key={item.nr}
               style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontSize: '11px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: 'var(--negroni)',
-                paddingTop: '6px',
-                userSelect: 'none',
+                paddingTop: 'clamp(28px, 3.5vw, 48px)',
+                paddingBottom: 'clamp(28px, 3.5vw, 48px)',
+                display: 'grid',
+                gridTemplateColumns: 'auto 1fr 2fr',
+                gap: 'clamp(24px, 4vw, 72px)',
+                alignItems: 'start',
               }}
             >
-              {item.nr}
-            </span>
-            <p
-              style={{
-                fontFamily:
-                  '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(22px, 3vw, 40px)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.05,
-                color: '#191917',
-                margin: 0,
-              }}
-            >
-              {item.name}
-            </p>
-            <p
-              style={{
-                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                fontSize: 'clamp(14px, 1.1vw, 16px)',
-                lineHeight: 1.65,
-                color: '#787672',
-                margin: 0,
-                paddingTop: '4px',
-              }}
-            >
-              {item.text}
-            </p>
-          </div>
-        ))}
+              <span
+                style={{
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  color: 'var(--negroni)',
+                  paddingTop: '6px',
+                  userSelect: 'none',
+                }}
+              >
+                {item.nr}
+              </span>
+              <p
+                style={{
+                  fontFamily:
+                    '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontWeight: 800,
+                  fontSize: 'clamp(22px, 3vw, 40px)',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.05,
+                  color: '#191917',
+                  margin: 0,
+                }}
+              >
+                {item.name}
+              </p>
+              <p
+                style={{
+                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                  fontSize: 'clamp(14px, 1.1vw, 16px)',
+                  lineHeight: 1.65,
+                  color: '#787672',
+                  margin: 0,
+                  paddingTop: '4px',
+                }}
+              >
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Brand colors */}
-      <section style={{ display: 'flex', minHeight: '280px' }}>
+      <section
+        style={{
+          display: 'flex',
+          minHeight: '280px',
+          marginTop: 'clamp(56px, 8vw, 112px)',
+        }}
+      >
         <div
           style={{
             flex: 1,
@@ -135,7 +138,6 @@ export default async function HomePage() {
             justifyContent: 'space-between',
             background: '#E8581A',
             padding: 'clamp(24px, 4vw, 56px)',
-            borderRight: '2px solid #191917',
           }}
         >
           <span
@@ -230,7 +232,6 @@ export default async function HomePage() {
       {/* Footer */}
       <footer
         style={{
-          borderTop: '2px solid #191917',
           padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
         }}
       >
