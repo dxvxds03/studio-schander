@@ -6,24 +6,44 @@ export const revalidate = 0
 
 const LEISTUNGEN = [
   {
-    nr: '01',
-    name: 'Design & Konzept',
-    text: 'Markenidentitäten, visuelle Systeme, Gestaltungskonzepte — von der Idee bis zur Umsetzung.',
+    nr: '1',
+    name: 'Ideen umsetzen',
+    lines: [
+      'Vom ersten Gedanken bis zum fertigen Produkt.',
+      'Ich nehme was in meinem Kopf entsteht – und baue es.',
+    ],
   },
   {
-    nr: '02',
-    name: 'Fotografie',
-    text: 'Editorial, Gastronomie, Produkt. Bilder die eine Stimmung transportieren, nicht nur dokumentieren.',
-  },
-  {
-    nr: '03',
+    nr: '2',
     name: 'Webentwicklung',
-    text: 'Individuelle Websites mit Next.js. Schnell, sauber, ohne Template-Kompromisse.',
+    lines: [
+      'Websites und Web-Apps die funktionieren und gut aussehen.',
+      'HTML, CSS, JavaScript. Eigene Projekte, Kundenprojekte, beides.',
+    ],
   },
   {
-    nr: '04',
-    name: 'Editorial Design',
-    text: 'Print-Publikationen, Layouts, Typografie. Lernmaterialien, Magazine, Bücher.',
+    nr: '3',
+    name: 'Design & Branding',
+    lines: [
+      'Visuelle Identitäten, Editorial Design, Magazingestaltung.',
+      'Dinge die man ansieht und sofort weiß worum es geht.',
+    ],
+  },
+  {
+    nr: '4',
+    name: 'Konzeption',
+    lines: [
+      'Bevor irgendetwas gebaut wird, muss es gedacht werden.',
+      'Struktur, Strategie, Content – auch das ist Handwerk.',
+    ],
+  },
+  {
+    nr: '5',
+    name: 'KI-Integration',
+    lines: [
+      'Ich arbeite täglich mit KI-Tools und setze sie sinnvoll ein.',
+      'Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
+    ],
   },
 ]
 
@@ -42,84 +62,68 @@ export default async function HomePage() {
       <HeroSection projects={all} />
 
       {/* Leistungen */}
-      <section id="leistungen" style={{ paddingTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 46, background: 'var(--cream)' }}>
-        <div
-          style={{
-            padding: '0 clamp(16px, 2vw, 24px)',
-            marginBottom: 'clamp(32px, 5vw, 64px)',
-          }}
-        >
-          <h2
+      <section
+        id="leistungen"
+        style={{
+          paddingTop: 'clamp(48px, 7vw, 96px)',
+          paddingBottom: 'clamp(32px, 5vw, 64px)',
+          position: 'relative',
+          zIndex: 46,
+          background: 'var(--cream)',
+          marginRight: 'clamp(160px, 20vw, 280px)',
+        }}
+      >
+        {LEISTUNGEN.map((item, i) => (
+          <div
+            key={item.nr}
             style={{
-              fontFamily:
-                '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(28px, 4vw, 56px)',
-              letterSpacing: '-0.04em',
-              lineHeight: 1,
-              color: 'var(--ink)',
-              margin: 0,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              gap: 'clamp(16px, 3vw, 40px)',
+              padding: `clamp(14px, 1.8vw, 24px) clamp(16px, 2vw, 24px)`,
+              borderTop: '1px solid var(--faint)',
             }}
           >
-            Was ich mache.
-          </h2>
-        </div>
-
-        <div style={{ padding: '0 clamp(16px, 2vw, 24px)' }}>
-          {LEISTUNGEN.map((item) => (
-            <div
-              key={item.nr}
+            <h3
               style={{
-                paddingTop: 'clamp(28px, 3.5vw, 48px)',
-                paddingBottom: 'clamp(28px, 3.5vw, 48px)',
-                display: 'grid',
-                gridTemplateColumns: 'auto 1fr 2fr',
-                gap: 'clamp(24px, 4vw, 72px)',
-                alignItems: 'start',
+                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(26px, 5vw, 76px)',
+                letterSpacing: '-0.04em',
+                lineHeight: 0.92,
+                color: 'var(--negroni)',
+                textTransform: 'uppercase',
+                margin: 0,
+                flex: 1,
               }}
             >
-              <span
-                style={{
-                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                  fontSize: '11px',
-                  letterSpacing: '0.18em',
-                  textTransform: 'uppercase',
-                  color: 'var(--negroni)',
-                  paddingTop: '6px',
-                  userSelect: 'none',
-                }}
-              >
-                {item.nr}
-              </span>
-              <p
-                style={{
-                  fontFamily:
-                    '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-                  fontWeight: 800,
-                  fontSize: 'clamp(22px, 3vw, 40px)',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.05,
-                  color: 'var(--ink)',
-                  margin: 0,
-                }}
-              >
-                {item.name}
-              </p>
-              <p
-                style={{
-                  fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-                  fontSize: 'clamp(14px, 1.1vw, 16px)',
-                  lineHeight: 1.65,
-                  color: 'var(--muted)',
-                  margin: 0,
-                  paddingTop: '4px',
-                }}
-              >
-                {item.text}
-              </p>
+              ({item.nr}) {item.name}
+            </h3>
+            <div
+              style={{
+                flexShrink: 0,
+                width: 'clamp(130px, 20%, 240px)',
+                textAlign: 'right',
+              }}
+            >
+              {item.lines.map((line, j) => (
+                <p
+                  key={j}
+                  style={{
+                    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                    fontSize: 'clamp(10px, 0.82vw, 12px)',
+                    lineHeight: 1.6,
+                    color: 'var(--muted)',
+                    margin: 0,
+                  }}
+                >
+                  {line}
+                </p>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Brand colors */}
