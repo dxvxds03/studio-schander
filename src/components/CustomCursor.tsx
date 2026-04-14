@@ -60,7 +60,7 @@ export default function CustomCursor() {
     <>
       {/* Dot — motion.div IS the dot; margin centers it on the cursor */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
           x: dotX,
           y: dotY,
@@ -69,7 +69,7 @@ export default function CustomCursor() {
           height: `${DOT}px`,
           marginLeft: `${-DOT / 2}px`,
           marginTop: `${-DOT / 2}px`,
-          background: 'white',
+          background: '#E8331A',
           borderRadius: '50%',
         }}
         animate={{ scale: isDragging ? 1.5 : 1 }}
