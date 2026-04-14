@@ -265,6 +265,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
+          paddingTop: '61px', // space for fixed nav
         }}
       >
         <SchanderTicker />
@@ -279,7 +280,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             alignItems: 'center',
             padding: '0 clamp(20px, 2.5vw, 32px)',
             overflow: 'hidden',
-            paddingTop: '56px',
           }}
         >
           {items.map((project) => (
@@ -290,7 +290,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 position: 'absolute',
                 left: 'clamp(20px, 2.5vw, 32px)',
                 right: 'clamp(20px, 2.5vw, 32px)',
-                top: '56px',
                 fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontWeight: 800,
                 fontSize: 'clamp(22px, 3.5vw, 52px)',
@@ -302,6 +301,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 textOverflow: 'ellipsis',
                 pointerEvents: 'none',
                 userSelect: 'none',
+                transition: 'opacity 0.3s ease',
               }}
             >
               {project.title}

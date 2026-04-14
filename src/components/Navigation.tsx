@@ -16,7 +16,7 @@ export default function Navigation() {
           display: 'flex',
           alignItems: 'flex-end',
           justifyContent: 'space-between',
-          padding: '0 20px 10px 16px',
+          padding: '0 clamp(20px, 2.5vw, 32px) 10px clamp(20px, 2.5vw, 32px)',
         }}
       >
         <Link href="/" data-hover style={{ display: 'flex', alignItems: 'flex-end', flexShrink: 0 }}>
