@@ -38,21 +38,21 @@ export default function Navigation() {
             fontSize: '13px',
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
-            color: '#191917',
+            color: 'var(--ink)',
             textDecoration: 'none',
-            border: '2px solid #191917',
+            border: '2px solid var(--ink)',
             padding: '8px 18px',
             lineHeight: 1,
             transition: 'background 0.15s ease, color 0.15s ease',
             whiteSpace: 'nowrap',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.background = '#191917'
-            e.currentTarget.style.color = '#F4F2ED'
+            e.currentTarget.style.background = 'var(--ink)'
+            e.currentTarget.style.color = 'var(--cream)'
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = 'transparent'
-            e.currentTarget.style.color = '#191917'
+            e.currentTarget.style.color = 'var(--ink)'
           }}
         >
           ich habe eine idee →

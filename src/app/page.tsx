@@ -57,7 +57,7 @@ export default async function HomePage() {
               fontSize: 'clamp(28px, 4vw, 56px)',
               letterSpacing: '-0.04em',
               lineHeight: 1,
-              color: '#191917',
+              color: 'var(--ink)',
               margin: 0,
             }}
           >
@@ -99,7 +99,7 @@ export default async function HomePage() {
                   fontSize: 'clamp(22px, 3vw, 40px)',
                   letterSpacing: '-0.03em',
                   lineHeight: 1.05,
-                  color: '#191917',
+                  color: 'var(--ink)',
                   margin: 0,
                 }}
               >
@@ -110,7 +110,7 @@ export default async function HomePage() {
                   fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                   fontSize: 'clamp(14px, 1.1vw, 16px)',
                   lineHeight: 1.65,
-                  color: '#787672',
+                  color: 'var(--muted)',
                   margin: 0,
                   paddingTop: '4px',
                 }}
@@ -254,7 +254,7 @@ export default async function HomePage() {
                 fontSize: 'clamp(24px, 4vw, 56px)',
                 letterSpacing: '-0.04em',
                 lineHeight: 1,
-                color: '#191917',
+                color: 'var(--ink)',
               }}
             >
               Studio Schander
@@ -265,7 +265,7 @@ export default async function HomePage() {
                 fontSize: '12px',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
-                color: '#787672',
+                color: 'var(--muted)',
                 marginTop: '8px',
               }}
             >
@@ -290,7 +290,7 @@ export default async function HomePage() {
                   fontSize: '12px',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: '#787672',
+                  color: 'var(--muted)',
                   textDecoration: 'none',
                 }}
               >
@@ -304,7 +304,7 @@ export default async function HomePage() {
                   fontSize: '12px',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: '#787672',
+                  color: 'var(--muted)',
                   textDecoration: 'none',
                 }}
               >
@@ -315,7 +315,7 @@ export default async function HomePage() {
               style={{
                 fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontSize: '11px',
-                color: '#787672',
+                color: 'var(--muted)',
               }}
             >
               © {new Date().getFullYear()} David Schander
@@ -326,7 +326,7 @@ export default async function HomePage() {
               style={{
                 fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
                 fontSize: '11px',
-                color: '#D8D5CF',
+                color: 'var(--faint)',
                 textDecoration: 'none',
               }}
             >

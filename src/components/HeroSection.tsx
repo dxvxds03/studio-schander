@@ -97,7 +97,7 @@ function SchanderTicker() {
               letterSpacing: '-0.04em',
               lineHeight: 0.9,
               color: 'transparent',
-              WebkitTextStroke: '1.5px #D8D5CF',
+              WebkitTextStroke: '1.5px #2A2927',
               userSelect: 'none',
             }}
           >
@@ -296,7 +296,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 fontSize: 'clamp(22px, 3.5vw, 52px)',
                 letterSpacing: '-0.04em',
                 lineHeight: 1,
-                color: '#191917',
+                color: 'var(--ink)',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',

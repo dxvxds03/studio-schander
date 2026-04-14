@@ -6,10 +6,10 @@
 :root {
   --negroni: #E8581A;
   --dead-poet: #0000CC;
-  --cream: #F4F2ED;
-  --ink: #191917;
-  --muted: #787672;
-  --faint: #E8E5DF;
+  --cream: #111110;
+  --ink: #EDE9E2;
+  --muted: #9A9690;
+  --faint: #272624;
 }
 
 * {
@@ -90,6 +90,6 @@ a, button, input, textarea, select, [role="button"] {
 
 /* Brutalist contact button in nav */
 a[href^="mailto"].nav-kontakt:hover {
-  background: #191917;
+  background: var(--ink);
   color: var(--cream);
 }
