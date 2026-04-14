@@ -15,7 +15,7 @@ export default function Navigation() {
       <div
         style={{
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           justifyContent: 'space-between',
           padding: 'clamp(10px, 2.5vh, 18px) clamp(16px, 2.5vw, 32px) 10px',
         }}

@@ -410,7 +410,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           <div
             style={{
               position: 'absolute',
-              bottom: 'calc(50% + clamp(120px, 17vh, 216px) + 10px)',
+              top: 'clamp(16px, 7vh, 64px)',
               left: 0,
               right: 0,
               display: 'flex',
