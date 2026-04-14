@@ -41,7 +41,7 @@ export default function Sidebar() {
         bottom: 0,
         width: 'clamp(160px, 20vw, 280px)',
         background: 'var(--negroni)',
-        zIndex: 10,
+        zIndex: 47,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end',
