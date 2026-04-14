@@ -359,6 +359,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           flexDirection: 'column',
           overflow: 'hidden',
           paddingTop: '61px', // space for fixed nav
+          zIndex: 20,
         }}
       >
         <SchanderTicker />

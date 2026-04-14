@@ -42,7 +42,7 @@ export default async function HomePage() {
       <HeroSection projects={all} />
 
       {/* Leistungen */}
-      <section id="leistungen" style={{ paddingTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 50, background: 'var(--cream)' }}>
+      <section id="leistungen" style={{ paddingTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 46, background: 'var(--cream)' }}>
         <div
           style={{
             padding: '0 clamp(16px, 2vw, 24px)',
@@ -129,7 +129,7 @@ export default async function HomePage() {
           minHeight: '280px',
           marginTop: 'clamp(56px, 8vw, 112px)',
           position: 'relative',
-          zIndex: 50,
+          zIndex: 46,
         }}
       >
         <div
@@ -236,7 +236,7 @@ export default async function HomePage() {
         style={{
           padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
           position: 'relative',
-          zIndex: 50,
+          zIndex: 46,
           background: 'var(--cream)',
         }}
       >
