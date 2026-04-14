@@ -64,7 +64,7 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           lineHeight: 1,
         }}
       >
-        Persönlich
+        Konzeptarbeit
       </span>
     )
   }
@@ -79,9 +79,13 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           fontSize,
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          color: isLight ? 'rgba(244,242,237,0.55)' : 'var(--muted)',
+          color: isLight ? '#F4F2ED' : '#191917',
+          background: isLight ? 'rgba(244,242,237,0.15)' : 'rgba(232,88,26,0.08)',
+          border: `1.5px solid ${isLight ? 'rgba(244,242,237,0.6)' : '#E8581A'}`,
+          padding,
           whiteSpace: 'nowrap',
           lineHeight: 1,
+          fontWeight: 700,
         }}
       >
         {client}

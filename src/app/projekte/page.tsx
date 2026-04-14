@@ -79,7 +79,6 @@ export default async function ProjektePage() {
         {all.map((project, i) => {
           const href = project.link ?? `/projects/${project.id}`
           const isExternal = !!project.link
-          const index = String(i + 1).padStart(2, '0')
 
           return (
             <a
@@ -98,58 +97,40 @@ export default async function ProjektePage() {
                 borderBottom: '1px solid var(--faint)',
               }}
             >
-              {/* Left: index + title + tags */}
+              {/* Left: title + badge */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div
+                <h2
+                  className="projekte-title"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5em',
-                    flexWrap: 'wrap',
+                    fontFamily:
+                      '"Cabinet Grotesk", "Source Code Pro", monospace',
+                    fontWeight: 800,
+                    fontSize: 'clamp(22px, 4vw, 64px)',
+                    letterSpacing: '-0.04em',
+                    lineHeight: 0.92,
+                    color: 'var(--ink)',
+                    textTransform: 'uppercase',
+                    margin: 0,
+                    transition: 'color 0.18s ease',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
                   }}
                 >
-                  <span
-                    style={{
-                      fontFamily: '"Source Code Pro", monospace',
-                      fontSize: 'clamp(10px, 0.85vw, 13px)',
-                      letterSpacing: '0.1em',
-                      color: 'var(--muted)',
-                      flexShrink: 0,
-                    }}
-                  >
-                    ({index})
-                  </span>
-                  <h2
-                    className="projekte-title"
-                    style={{
-                      fontFamily:
-                        '"Cabinet Grotesk", "Source Code Pro", monospace',
-                      fontWeight: 800,
-                      fontSize: 'clamp(22px, 4vw, 64px)',
-                      letterSpacing: '-0.04em',
-                      lineHeight: 0.92,
-                      color: 'var(--ink)',
-                      textTransform: 'uppercase',
-                      margin: 0,
-                      transition: 'color 0.18s ease',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {project.title}
-                    {isExternal && (
-                      <span
-                        style={{
-                          color: 'var(--dead-poet)',
-                          fontSize: '0.55em',
-                          marginLeft: '0.2em',
-                        }}
-                      >
-                        ↗
-                      </span>
-                    )}
-                  </h2>
+                  {project.title}
+                  {isExternal && (
+                    <span
+                      style={{
+                        color: 'var(--dead-poet)',
+                        fontSize: '0.55em',
+                        marginLeft: '0.2em',
+                      }}
+                    >
+                      ↗
+                    </span>
+                  )}
+                </h2>
+                <div style={{ marginTop: '6px' }}>
                   <ClientBadge
                     projectType={(project.project_type as 'client' | 'schander' | 'personal' | null) ?? null}
                     client={project.client ?? null}
@@ -157,24 +138,9 @@ export default async function ProjektePage() {
                     size="md"
                   />
                 </div>
-
-                {project.tags && project.tags.length > 0 && (
-                  <p
-                    style={{
-                      fontFamily: '"Source Code Pro", monospace',
-                      fontSize: 'clamp(10px, 0.85vw, 12px)',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      color: 'var(--dead-poet)',
-                      margin: '5px 0 0',
-                    }}
-                  >
-                    {project.tags.join(' · ')}
-                  </p>
-                )}
               </div>
 
-              {/* Right: year + thumbnail */}
+              {/* Right: thumbnail */}
               <div
                 style={{
                   display: 'flex',
@@ -183,20 +149,6 @@ export default async function ProjektePage() {
                   flexShrink: 0,
                 }}
               >
-                {project.year && (
-                  <p
-                    style={{
-                      fontFamily: '"Source Code Pro", monospace',
-                      fontSize: 'clamp(11px, 0.85vw, 13px)',
-                      letterSpacing: '0.06em',
-                      color: 'var(--muted)',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {project.year}
-                  </p>
-                )}
-
                 {project.cover_image && (
                   <img
                     src={project.cover_image}
