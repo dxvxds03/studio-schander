@@ -474,8 +474,8 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             zIndex: 10,
           }}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.7 }}
+          animate={{ opacity: showStickyHeader ? 0 : 1 }}
+          transition={{ delay: showStickyHeader ? 0 : 0.5, duration: 0.32, ease: [0.76, 0, 0.24, 1] }}
         >
           <h1
             style={{

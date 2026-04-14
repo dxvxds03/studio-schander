@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 export default function Sidebar() {
   const pathname = usePathname()
-  if (pathname.startsWith('/admin')) return null
+  if (pathname !== '/') return null
 
   const isHome = pathname === '/'
   const scrollDown = () =>
