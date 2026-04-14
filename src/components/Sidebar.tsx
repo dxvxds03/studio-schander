@@ -7,6 +7,7 @@ export default function Sidebar() {
   const pathname = usePathname()
   if (pathname.startsWith('/admin')) return null
 
+  const isHome = pathname === '/'
   const scrollDown = () =>
     document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
 
@@ -19,7 +20,7 @@ export default function Sidebar() {
         bottom: 0,
         width: 'clamp(160px, 20vw, 280px)',
         background: 'var(--negroni)',
-        zIndex: 45,
+        zIndex: 49,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end',
@@ -60,37 +61,39 @@ export default function Sidebar() {
         Alle Projekte →
       </a>
 
-      <motion.button
-        onClick={scrollDown}
-        data-hover
-        style={{
-          width: '72px',
-          height: '72px',
-          borderRadius: '50%',
-          border: '2px solid var(--cream)',
-          background: 'transparent',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-          padding: 0,
-          color: 'var(--cream)',
-          cursor: 'none',
-        }}
-        whileHover={{ background: 'var(--cream)', color: 'var(--negroni)', scale: 1.06 }}
-        animate={{ y: [0, 7, 0] }}
-        transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
-      >
-        <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
-          <path
-            d="M15 4v22M5 17l10 9 10-9"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </motion.button>
+      {isHome && (
+        <motion.button
+          onClick={scrollDown}
+          data-hover
+          style={{
+            width: '72px',
+            height: '72px',
+            borderRadius: '50%',
+            border: '2px solid var(--cream)',
+            background: 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            padding: 0,
+            color: 'var(--cream)',
+            cursor: 'none',
+          }}
+          whileHover={{ background: 'var(--cream)', color: 'var(--negroni)', scale: 1.06 }}
+          animate={{ y: [0, 7, 0] }}
+          transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
+        >
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none">
+            <path
+              d="M15 4v22M5 17l10 9 10-9"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </motion.button>
+      )}
     </div>
   )
 }

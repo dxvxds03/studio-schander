@@ -503,7 +503,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           position: 'fixed',
           top: 0,
           left: 0,
-          right: 0,
+          right: 'clamp(160px, 20vw, 280px)',
           zIndex: 48,
           background: 'var(--cream)',
           paddingTop: '61px',

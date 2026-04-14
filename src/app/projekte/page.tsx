@@ -29,7 +29,7 @@ export default async function ProjektePage() {
         style={{
           flex: 1,
           minHeight: 0,
-          margin: `61px clamp(20px, 2.5vw, 36px) clamp(14px, 1.8vw, 24px)`,
+          margin: `61px clamp(160px, 20vw, 280px) clamp(14px, 1.8vw, 24px) clamp(20px, 2.5vw, 36px)`,
           background: 'var(--cream)',
           display: 'flex',
           flexDirection: 'column',
@@ -64,7 +64,7 @@ export default async function ProjektePage() {
           paddingTop: 'clamp(10px, 1.2vh, 16px)',
           paddingBottom: 'clamp(10px, 1.2vh, 16px)',
           paddingLeft: 'clamp(20px, 2.5vw, 36px)',
-          paddingRight: 'clamp(20px, 2.5vw, 36px)',
+          paddingRight: 'clamp(160px, 20vw, 280px)',
           gap: 'clamp(8px, 1vw, 14px)',
           overflowX: 'auto',
           overflowY: 'hidden',

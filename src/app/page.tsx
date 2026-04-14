@@ -232,7 +232,7 @@ export default async function HomePage() {
       {/* Footer */}
       <footer
         style={{
-          padding: 'clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)',
+          padding: `clamp(28px, 4vw, 56px) clamp(160px, 20vw, 280px) clamp(28px, 4vw, 56px) clamp(16px, 2vw, 24px)`,
         }}
       >
         <div
