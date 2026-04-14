@@ -267,3 +267,32 @@ a[href^="mailto"].nav-kontakt:hover {
 .projekte-row:hover .projekte-title {
   color: var(--dead-poet) !important;
 }
+
+/* ── Hero sticky viewport: use small viewport height to avoid address-bar overlap */
+.hero-sticky {
+  height: 100svh;
+}
+
+/* ── Tablet + Mobile (≤ 1024px): hero fixes ─────────────────── */
+@media (max-width: 1024px) {
+  /* "Alle Projekte" link visible on mobile/tablet (sidebar is hidden) */
+  .nav-projekte-mobile { display: inline-block !important; }
+
+  /* Slightly tighter bottom bar padding so h1 stays visible */
+  .hero-bottom-bar {
+    padding-top: clamp(8px, 1.5vw, 16px) !important;
+    padding-bottom: clamp(8px, 1.5vw, 16px) !important;
+  }
+
+  /* Hero h1 larger on tablet so it's readable */
+  .hero-h1 {
+    font-size: clamp(40px, 7vw, 100px) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  /* Hero h1 bigger on mobile than before */
+  .hero-h1 {
+    font-size: clamp(42px, 13vw, 80px) !important;
+  }
+}

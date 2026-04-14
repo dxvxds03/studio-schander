@@ -32,6 +32,29 @@ export default function Navigation() {
         </Link>
 
         <Link
+          href="/projekte"
+          data-hover
+          className="nav-projekte-mobile"
+          style={{
+            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+            fontWeight: 800,
+            fontSize: '13px',
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            color: 'var(--dead-poet)',
+            border: '2px solid var(--dead-poet)',
+            padding: '8px 18px',
+            lineHeight: 1,
+            whiteSpace: 'nowrap',
+            background: 'transparent',
+            display: 'none',
+          }}
+        >
+          Alle Projekte →
+        </Link>
+
+        <Link
           href="mailto:hello@davidschander.com"
           data-hover
           className="nav-cta-btn"
