@@ -33,7 +33,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
       <section
         className="project-detail-grid"
         style={{
-          padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) 0',
+          padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) clamp(64px, 10vw, 120px)',
           display: 'grid',
           gridTemplateColumns: '1fr auto',
           gap: 'clamp(24px, 4vw, 64px)',
@@ -216,7 +216,6 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           )}
         </div>
       </section>
-
 
       <Footer />
     </main>

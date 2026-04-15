@@ -74,6 +74,7 @@ export default async function ProjektePage() {
         style={{
           paddingLeft: 'clamp(16px, 2vw, 24px)',
           paddingRight: 'clamp(16px, 2vw, 24px)',
+          paddingBottom: 'clamp(64px, 10vw, 120px)',
         }}
       >
         {all.map((project, i) => {
