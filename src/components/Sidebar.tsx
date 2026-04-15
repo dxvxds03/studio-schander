@@ -41,7 +41,7 @@ export default function Sidebar() {
         top: '61px',
         bottom: 0,
         width: 'clamp(160px, 20vw, 280px)',
-        background: 'var(--negroni)',
+        background: 'var(--cream)',
         zIndex: 10,
         display: 'flex',
         flexDirection: 'column',
@@ -59,9 +59,9 @@ export default function Sidebar() {
           fontSize: '13px',
           letterSpacing: '0.04em',
           textTransform: 'uppercase',
-          color: 'var(--cream)',
+          color: 'var(--negroni)',
           textDecoration: 'none',
-          border: '2px solid var(--cream)',
+          border: '2px solid var(--negroni)',
           padding: '8px 18px',
           lineHeight: 1,
           whiteSpace: 'nowrap',
@@ -71,13 +71,13 @@ export default function Sidebar() {
         }}
         onMouseEnter={e => {
           const el = e.currentTarget as HTMLAnchorElement
-          el.style.background = 'var(--cream)'
-          el.style.color = 'var(--negroni)'
+          el.style.background = 'var(--negroni)'
+          el.style.color = 'var(--cream)'
         }}
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLAnchorElement
           el.style.background = 'transparent'
-          el.style.color = 'var(--cream)'
+          el.style.color = 'var(--negroni)'
         }}
       >
         Alle Projekte →
@@ -91,19 +91,19 @@ export default function Sidebar() {
           width: '72px',
           height: '72px',
           borderRadius: '50%',
-          border: '2px solid var(--cream)',
+          border: '2px solid var(--negroni)',
           background: 'transparent',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
           padding: 0,
-          color: 'var(--cream)',
+          color: 'var(--negroni)',
           cursor: 'none',
         }}
         initial={{ opacity: 0, scale: 0.7 }}
         animate={{ opacity: 1, scale: 1, y: scrolledOut ? [0, -7, 0] : [0, 7, 0] }}
-        whileHover={{ background: 'var(--cream)', color: 'var(--negroni)', scale: 1.06 }}
+        whileHover={{ background: 'var(--negroni)', color: 'var(--cream)', scale: 1.06 }}
         transition={{
           opacity: { duration: 0.2 },
           scale: { type: 'spring', stiffness: 300, damping: 25 },
