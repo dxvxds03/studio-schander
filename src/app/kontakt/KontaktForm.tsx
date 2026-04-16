@@ -56,12 +56,12 @@ export default function KontaktForm() {
 
   const lbl: React.CSSProperties = {
     fontFamily: '"Source Code Pro", monospace',
-    fontSize: '10px',
-    letterSpacing: '0.22em',
+    fontSize: '13px',
+    letterSpacing: '0.1em',
     textTransform: 'uppercase',
-    color: 'var(--muted)',
+    color: 'var(--ink)',
     display: 'block',
-    marginBottom: '8px',
+    marginBottom: '10px',
   }
 
   return (

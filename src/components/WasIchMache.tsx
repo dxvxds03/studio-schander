@@ -103,11 +103,12 @@ export default function WasIchMache() {
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(68px, 11vw, 152px)',
-              letterSpacing: '-0.04em',
-              lineHeight: 0.92,
+              fontSize: 'clamp(36px, 7.5vw, 108px)',
+              letterSpacing: '-0.035em',
+              lineHeight: 1,
               margin: 0,
               color: 'var(--ink)',
+              textTransform: 'uppercase',
             }}
           >
             Was ich Mache<span style={{ color: ORANGE }}>.</span>

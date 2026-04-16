@@ -34,7 +34,7 @@ export default function Navigation() {
 
         <div className="nav-ctas">
           <Link href="/projekte" data-hover className="nav-btn nav-btn-arbeiten" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-            <Arrow direction="left" size={16} /> Arbeiten
+            Arbeiten <Arrow direction="left" size={16} />
           </Link>
           <Link href="/kontakt" data-hover className="nav-btn nav-btn-kontakt" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
             Kontakt <Arrow direction="right" size={16} />

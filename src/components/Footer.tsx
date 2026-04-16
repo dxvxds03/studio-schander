@@ -7,10 +7,109 @@ export default function Footer() {
         background: 'var(--cream)',
       }}
     >
+      {/* Brand colors — top */}
+      <div className="footer-colors" style={{ display: 'flex', minHeight: '280px' }}>
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            background: '#E8331A',
+            padding: 'clamp(24px, 4vw, 56px)',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: '10px',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'rgba(244,242,237,0.45)',
+            }}
+          >
+            01 — Primärfarbe
+          </span>
+          <div>
+            <p
+              style={{
+                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                fontWeight: 800,
+                fontSize: 'clamp(40px, 7vw, 96px)',
+                color: '#F4F2ED',
+                lineHeight: 1,
+                letterSpacing: '-0.04em',
+              }}
+            >
+              Negroni
+            </p>
+            <p
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '12px',
+                color: 'rgba(244,242,237,0.5)',
+                marginTop: '8px',
+                letterSpacing: '0.06em',
+              }}
+            >
+              #E8331A
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            background: '#34160f',
+            padding: 'clamp(24px, 4vw, 56px)',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: '10px',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'rgba(244,242,237,0.45)',
+            }}
+          >
+            02 — Sekundärfarbe
+          </span>
+          <div>
+            <p
+              style={{
+                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                fontWeight: 800,
+                fontSize: 'clamp(40px, 7vw, 96px)',
+                color: '#F4F2ED',
+                lineHeight: 1,
+                letterSpacing: '-0.04em',
+              }}
+            >
+              Dead Poet
+            </p>
+            <p
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '12px',
+                color: 'rgba(244,242,237,0.5)',
+                marginTop: '8px',
+                letterSpacing: '0.06em',
+              }}
+            >
+              #34160f
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Separator */}
       <div style={{ borderTop: '1px solid var(--faint)' }} />
 
-      {/* White footer content */}
+      {/* Footer content — bottom */}
       <div
         className="footer-inner"
         style={{
@@ -144,104 +243,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Brand colors */}
-      <div className="footer-colors" style={{ display: 'flex', minHeight: '280px' }}>
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            background: '#E8331A',
-            padding: 'clamp(24px, 4vw, 56px)',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: 'rgba(244,242,237,0.45)',
-            }}
-          >
-            01 — Primärfarbe
-          </span>
-          <div>
-            <p
-              style={{
-                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-                fontWeight: 800,
-                fontSize: 'clamp(40px, 7vw, 96px)',
-                color: '#F4F2ED',
-                lineHeight: 1,
-                letterSpacing: '-0.04em',
-              }}
-            >
-              Negroni
-            </p>
-            <p
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: '12px',
-                color: 'rgba(244,242,237,0.5)',
-                marginTop: '8px',
-                letterSpacing: '0.06em',
-              }}
-            >
-              #E8331A
-            </p>
-          </div>
-        </div>
-
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            background: '#34160f',
-            padding: 'clamp(24px, 4vw, 56px)',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: 'rgba(244,242,237,0.45)',
-            }}
-          >
-            02 — Sekundärfarbe
-          </span>
-          <div>
-            <p
-              style={{
-                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-                fontWeight: 800,
-                fontSize: 'clamp(40px, 7vw, 96px)',
-                color: '#F4F2ED',
-                lineHeight: 1,
-                letterSpacing: '-0.04em',
-              }}
-            >
-              Dead Poet
-            </p>
-            <p
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: '12px',
-                color: 'rgba(244,242,237,0.5)',
-                marginTop: '8px',
-                letterSpacing: '0.06em',
-              }}
-            >
-              #34160f
-            </p>
-          </div>
-        </div>
-      </div>
     </footer>
   )
 }

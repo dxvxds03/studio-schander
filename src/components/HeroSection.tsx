@@ -553,45 +553,33 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             onClick={() =>
               document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
             }
+            aria-label="Zu Was ich mache scrollen"
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '6px',
+              width: 'clamp(56px, 7vw, 84px)',
+              height: 'clamp(56px, 7vw, 84px)',
+              borderRadius: '50%',
+              border: '1.5px solid var(--ink)',
               background: 'none',
-              border: '1px solid var(--faint)',
-              padding: 'clamp(10px, 1.2vw, 16px) clamp(14px, 1.8vw, 24px)',
               cursor: 'pointer',
               color: 'var(--ink)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               flexShrink: 0,
-              transition: 'background 0.18s ease, color 0.18s ease, border-color 0.18s ease',
+              transition: 'background 0.18s ease, color 0.18s ease',
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLButtonElement
               el.style.background = 'var(--ink)'
               el.style.color = 'var(--cream)'
-              el.style.borderColor = 'var(--ink)'
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLButtonElement
               el.style.background = 'none'
               el.style.color = 'var(--ink)'
-              el.style.borderColor = 'var(--faint)'
             }}
-            aria-label="Zu Was ich mache scrollen"
           >
-            <span
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                lineHeight: 1,
-              }}
-            >
-              Was ich mache
-            </span>
-            <Arrow direction="down" size={16} />
+            <Arrow direction="down" size={24} />
           </button>
         </motion.div>
 

@@ -163,12 +163,12 @@ export default async function ProjektePage() {
                       fontSize: 'clamp(15px, 1.8vw, 28px)',
                       letterSpacing: '-0.02em',
                       lineHeight: 1.3,
-                      color: 'var(--dead-poet)',
+                      color: 'var(--ink)',
                       marginTop: 'clamp(6px, 0.7vw, 12px)',
                       maxWidth: '36ch',
                     }}
                   >
-                    <span style={{ fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em' }}>"</span>
+                    <span style={{ fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em', color: 'var(--ink)' }}>"</span>
                     {project.quote}
                   </p>
                 )}
