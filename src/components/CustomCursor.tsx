@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import FlowerIcon from './FlowerIcon'
 
@@ -8,6 +9,7 @@ const SIZE = 30
 const DOT  = 5
 
 export default function CustomCursor() {
+  const pathname = usePathname()
   const [visible, setVisible]       = useState(false)
   const [isHovering, setIsHovering] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -86,7 +88,7 @@ export default function CustomCursor() {
     }
   }, [mouseX, mouseY])
 
-  if (!hasPointer) return null
+  if (!hasPointer || pathname.startsWith('/admin')) return null
 
   const color = isDragging ? '#34160f' : '#E8331A'
 
