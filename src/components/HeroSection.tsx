@@ -6,6 +6,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlowerIcon from './FlowerIcon'
 import ClientBadge from './ClientBadge'
+import Arrow from './Arrow'
 
 interface HeroProject {
   slug: string
@@ -519,6 +520,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             padding: 'clamp(14px, 1.8vw, 26px) clamp(20px, 2.5vw, 32px)',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'space-between',
             background: 'transparent',
             position: 'relative',
             zIndex: 10,
@@ -544,6 +546,53 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             <CyclingWord />
             <span style={{ whiteSpace: 'nowrap', color: '#E8331A' }}>Portfolio.</span>
           </h1>
+
+          {/* Scroll-down button → #leistungen */}
+          <button
+            data-hover
+            onClick={() =>
+              document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
+            }
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '6px',
+              background: 'none',
+              border: '1px solid var(--faint)',
+              padding: 'clamp(10px, 1.2vw, 16px) clamp(14px, 1.8vw, 24px)',
+              cursor: 'pointer',
+              color: 'var(--ink)',
+              flexShrink: 0,
+              transition: 'background 0.18s ease, color 0.18s ease, border-color 0.18s ease',
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLButtonElement
+              el.style.background = 'var(--ink)'
+              el.style.color = 'var(--cream)'
+              el.style.borderColor = 'var(--ink)'
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLButtonElement
+              el.style.background = 'none'
+              el.style.color = 'var(--ink)'
+              el.style.borderColor = 'var(--faint)'
+            }}
+            aria-label="Zu Was ich mache scrollen"
+          >
+            <span
+              style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '10px',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                lineHeight: 1,
+              }}
+            >
+              Was ich mache
+            </span>
+            <Arrow direction="down" size={16} />
+          </button>
         </motion.div>
 
       </div>
