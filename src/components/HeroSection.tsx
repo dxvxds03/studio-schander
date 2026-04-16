@@ -550,9 +550,13 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           {/* Scroll-down button → #leistungen */}
           <button
             data-hover
-            onClick={() =>
-              document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
-            }
+            onClick={() => {
+              const el = document.getElementById('leistungen')
+              if (!el) return
+              const nav = document.querySelector('nav')
+              const offset = nav ? nav.offsetHeight + 12 : 80
+              window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'smooth' })
+            }}
             aria-label="Zu Was ich mache scrollen"
             className="hero-scroll-btn"
             style={{
