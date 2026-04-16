@@ -273,77 +273,119 @@ export default function WasIchMache() {
       </section>
 
       {/* Closing CTA */}
-      <motion.section
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6, ease: [0.22, 0, 0, 1] }}
+      <section
         style={{
-          paddingTop: 'clamp(64px, 9vw, 120px)',
+          paddingTop: 'clamp(80px, 12vw, 160px)',
           paddingBottom: 'clamp(64px, 9vw, 120px)',
-          paddingLeft: px,
-          paddingRight: px,
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
+          overflow: 'hidden',
         }}
       >
-        <p
+        {/* Big typographic question */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(20px, 3vw, 40px)' }}
+        >
+          <h2
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(52px, 9.5vw, 136px)',
+              letterSpacing: '-0.04em',
+              lineHeight: 0.92,
+              textTransform: 'uppercase',
+              color: 'var(--ink)',
+              margin: '0 0 clamp(16px, 2vw, 28px)',
+            }}
+          >
+            Du weißt<br />
+            noch nicht<span style={{ color: 'var(--dead-poet)' }}>?</span>
+          </h2>
+          <p
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: 'clamp(12px, 1.1vw, 15px)',
+              letterSpacing: '0.12em',
+              lineHeight: 1.7,
+              color: 'var(--muted)',
+              margin: 0,
+              maxWidth: '42ch',
+            }}
+          >
+            Das ist meistens der beste Startpunkt —<br />
+            kein fertiger Brief nötig.
+          </p>
+        </motion.div>
+
+        {/* Arrow cluster → flows toward button */}
+        <motion.div
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 0, 0, 1] }}
           style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(28px, 5vw, 72px)',
-            letterSpacing: '-0.035em',
-            lineHeight: 1.05,
-            color: 'var(--ink)',
-            margin: '0 0 clamp(8px, 1vw, 16px)',
+            padding: `0 ${px}`,
+            display: 'flex',
+            gap: '6px',
+            alignItems: 'center',
+            marginBottom: 'clamp(20px, 2.5vw, 36px)',
+            color: 'var(--dead-poet)',
           }}
         >
-          Du weißt noch nicht genau was du brauchst?
-        </p>
-        <p
-          style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(28px, 5vw, 72px)',
-            letterSpacing: '-0.035em',
-            lineHeight: 1.05,
-            color: 'var(--muted)',
-            margin: '0 0 clamp(32px, 4vw, 56px)',
-          }}
+          <Arrow direction="right" size={28} />
+          <Arrow direction="right" size={28} />
+          <Arrow direction="right" size={28} />
+        </motion.div>
+
+        {/* Full-width CTA button */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.55, delay: 0.25, ease: [0.22, 0, 0, 1] }}
+          style={{ padding: `0 ${px}` }}
         >
-          Das ist meistens der beste Startpunkt.
-        </p>
-        <Link
-          href="/kontakt"
-          data-hover
-          style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(13px, 1.3vw, 17px)',
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            color: 'var(--ink)',
-            border: '2px solid var(--ink)',
-            padding: '14px 40px',
-            display: 'inline-block',
-            transition: 'background 0.18s ease, color 0.18s ease',
-          }}
-          onMouseEnter={e => {
-            const el = e.currentTarget as HTMLAnchorElement
-            el.style.background = 'var(--ink)'
-            el.style.color = 'var(--cream)'
-          }}
-          onMouseLeave={e => {
-            const el = e.currentTarget as HTMLAnchorElement
-            el.style.background = 'transparent'
-            el.style.color = 'var(--ink)'
-          }}
-        >
-          Schreib mir
-        </Link>
-      </motion.section>
+          <Link
+            href="/kontakt"
+            data-hover
+            className="schreib-mir-btn"
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(28px, 5vw, 72px)',
+              letterSpacing: '-0.03em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              color: 'var(--ink)',
+              border: '2px solid var(--ink)',
+              padding: 'clamp(16px, 2.5vw, 36px) clamp(20px, 3vw, 48px)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 'clamp(20px, 4vw, 60px)',
+              transition: 'background 0.22s ease, color 0.22s ease',
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.background = 'var(--ink)'
+              el.style.color = 'var(--cream)'
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLAnchorElement
+              el.style.background = 'transparent'
+              el.style.color = 'var(--ink)'
+            }}
+          >
+            Schreib mir
+            <Arrow direction="right" size={48} />
+          </Link>
+        </motion.div>
+      </section>
     </>
   )
 }
