@@ -80,37 +80,52 @@ export default function WasIchMache() {
       <section
         id="leistungen"
         style={{
-          paddingTop: 'clamp(96px, 14vw, 180px)',
+          paddingTop: 'clamp(80px, 12vw, 160px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
         }}
       >
-        {/* Section headline */}
-        <p
-          style={{
-            fontFamily: '"Source Code Pro", monospace',
-            fontSize: '10px',
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
-            color: 'var(--muted)',
-            padding: `0 ${px}`,
-            margin: '0 0 clamp(20px, 3vw, 40px)',
-          }}
+        {/* Section headline — typographic statement */}
+        <motion.div
+          initial={{ opacity: 0, y: 48 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(48px, 7vw, 96px)' }}
         >
-          Was ich mache.
-        </p>
+          <h2
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(68px, 11vw, 152px)',
+              letterSpacing: '-0.04em',
+              lineHeight: 0.92,
+              textTransform: 'uppercase',
+              margin: 0,
+            }}
+          >
+            <span style={{ color: 'var(--muted)', display: 'block' }}>Was ich</span>
+            <span style={{ color: 'var(--ink)', display: 'block' }}>
+              Mache<span style={{ color: 'var(--dead-poet)' }}>.</span>
+            </span>
+          </h2>
+        </motion.div>
 
         {/* Accordion */}
         <div>
-          {ITEMS.map((item) => {
+          {ITEMS.map((item, i) => {
             const isActive = activeKey === item.key
             const isHovered = hoveredKey === item.key
             const highlight = isActive || isHovered
 
             return (
-              <div
+              <motion.div
                 key={item.key}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0, 0, 1] }}
                 onClick={() => toggle(item.key)}
                 onMouseEnter={() => setHoveredKey(item.key)}
                 onMouseLeave={() => setHoveredKey(null)}
@@ -248,7 +263,7 @@ export default function WasIchMache() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             )
           })}
 
@@ -258,7 +273,11 @@ export default function WasIchMache() {
       </section>
 
       {/* Closing CTA */}
-      <section
+      <motion.section
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6, ease: [0.22, 0, 0, 1] }}
         style={{
           paddingTop: 'clamp(64px, 9vw, 120px)',
           paddingBottom: 'clamp(64px, 9vw, 120px)',
@@ -324,7 +343,7 @@ export default function WasIchMache() {
         >
           Schreib mir
         </Link>
-      </section>
+      </motion.section>
     </>
   )
 }
