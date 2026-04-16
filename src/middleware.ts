@@ -2,6 +2,20 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // --- Under Construction Mode ---
+  // Set UNDER_CONSTRUCTION=true in Netlify environment variables to activate.
+  // Set to false or remove the variable to deactivate. Trigger a redeploy after changing.
+  const isUnderConstruction = process.env.UNDER_CONSTRUCTION === 'true'
+  const isUnderConstructionPage = pathname === '/under-construction'
+  const isAdminRoute = pathname.startsWith('/admin')
+
+  if (isUnderConstruction && !isUnderConstructionPage && !isAdminRoute) {
+    return NextResponse.rewrite(new URL('/under-construction', request.url))
+  }
+
+  // --- Supabase Auth (existing) ---
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -23,10 +37,9 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // getUser() validates the JWT with Supabase and refreshes the session cookie
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (request.nextUrl.pathname.startsWith('/admin/dashboard')) {
+  if (pathname.startsWith('/admin/dashboard')) {
     if (!user) {
       return NextResponse.redirect(new URL('/admin', request.url))
     }
@@ -36,5 +49,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/((?!_next|favicon.ico|.*\..*).*)'],
 }
