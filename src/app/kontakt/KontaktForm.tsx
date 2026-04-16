@@ -120,7 +120,7 @@ export default function KontaktForm() {
           name="kontakt"
           method="POST"
           data-netlify="true"
-          netlify-honeypot="bot-field"
+          data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
           style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
         >

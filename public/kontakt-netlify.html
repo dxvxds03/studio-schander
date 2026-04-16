@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <body>
-  <!-- Static form for Netlify Forms detection at build time -->
-  <form name="kontakt" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <!-- Static form for Netlify Forms build-time detection.
+       Field names must match exactly what KontaktForm.tsx submits. -->
+  <form name="kontakt" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
     <input type="hidden" name="form-name" value="kontakt" />
-    <input name="bot-field" />
-    <input name="name" type="text" />
-    <input name="email" type="email" />
-    <input name="projektart" type="radio" />
-    <textarea name="nachricht"></textarea>
+    <label>Bot-Feld <input name="bot-field" /></label>
+    <label>Name <input name="name" type="text" /></label>
+    <label>E-Mail <input name="email" type="email" /></label>
+    <label>Projektart <input name="projektart" type="text" /></label>
+    <label>Nachricht <textarea name="nachricht"></textarea></label>
   </form>
 </body>
 </html>
