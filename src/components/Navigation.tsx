@@ -33,7 +33,7 @@ export default function Navigation() {
 
         {/* Desktop: single CTA button */}
         <Link
-          href="mailto:mail@studio-schander.de"
+          href="/kontakt"
           data-hover
           className="nav-cta-btn nav-cta-desktop"
           style={{
@@ -86,7 +86,7 @@ export default function Navigation() {
             Alle Projekte →
           </Link>
           <Link
-            href="mailto:mail@studio-schander.de"
+            href="/kontakt"
             data-hover
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
