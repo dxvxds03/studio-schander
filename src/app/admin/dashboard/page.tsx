@@ -21,6 +21,15 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
+interface Submission {
+  id: number
+  name: string
+  email: string
+  projektart: string | null
+  nachricht: string
+  created_at: string
+}
+
 interface Project {
   id: number
   title: string
@@ -164,7 +173,10 @@ function SortableProjectRow({
 // ── Main dashboard ──────────────────────────────────────────────────────────
 export default function Dashboard() {
   const router = useRouter()
+  const [activeTab, setActiveTab] = useState<'projekte' | 'anfragen'>('projekte')
   const [projects, setProjects] = useState<Project[]>([])
+  const [submissions, setSubmissions] = useState<Submission[]>([])
+  const [expandedId, setExpandedId] = useState<number | null>(null)
   const [form, setForm] = useState(emptyForm)
   const [extraImages, setExtraImages] = useState<string[]>([])
   const [editingId, setEditingId] = useState<number | null>(null)
@@ -177,6 +189,7 @@ export default function Dashboard() {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
   useEffect(() => { fetchProjects() }, [])
+  useEffect(() => { if (activeTab === 'anfragen') fetchSubmissions() }, [activeTab])
 
   const fetchProjects = async () => {
     const res = await fetch('/api/projects')
@@ -331,6 +344,22 @@ export default function Dashboard() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const fetchSubmissions = async () => {
+    const client = getSupabaseBrowserClient()
+    const { data } = await client
+      .from('kontakt_submissions')
+      .select('*')
+      .order('created_at', { ascending: false })
+    if (data) setSubmissions(data)
+  }
+
+  const deleteSubmission = async (id: number, name: string) => {
+    if (!confirm(`Anfrage von "${name}" wirklich löschen?`)) return
+    const client = getSupabaseBrowserClient()
+    const { error } = await client.from('kontakt_submissions').delete().eq('id', id)
+    if (!error) setSubmissions((prev) => prev.filter((s) => s.id !== id))
+  }
+
   const handleLogout = async () => {
     const supabase = getSupabaseBrowserClient()
     await supabase.auth.signOut()
@@ -356,13 +385,102 @@ export default function Dashboard() {
         <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: '#191917' }}>
           Studio Schander
         </p>
-        <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '2px' }}>
+            {(['projekte', 'anfragen'] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                style={{
+                  fontFamily: '"Source Code Pro", monospace', fontSize: '10px',
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
+                  padding: '6px 14px', cursor: 'pointer', border: 'none',
+                  background: activeTab === tab ? '#191917' : 'transparent',
+                  color: activeTab === tab ? '#F4F2ED' : '#787672',
+                  transition: 'all 0.15s',
+                }}
+              >
+                {tab === 'projekte' ? `Projekte (${projects.length})` : `Anfragen${submissions.length ? ` (${submissions.length})` : ''}`}
+              </button>
+            ))}
+          </div>
           <a href="/" target="_blank" style={{ ...lbl, marginBottom: 0, textDecoration: 'none' }}>Website ↗</a>
           <button onClick={handleLogout} style={{ ...lbl, marginBottom: 0, background: 'none', border: 'none', cursor: 'pointer' }}>Abmelden</button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 'calc(100vh - 65px)' }}>
+      {activeTab === 'anfragen' && (
+        <div style={{ padding: '40px 32px', maxWidth: '900px' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '28px' }}>
+            <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em' }}>
+              Anfragen
+            </p>
+            <span style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#787672' }}>
+              ({submissions.length})
+            </span>
+          </div>
+
+          {submissions.length === 0 ? (
+            <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#787672' }}>
+              Noch keine Anfragen vorhanden.
+            </p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+              {submissions.map((s) => {
+                const date = new Date(s.created_at)
+                const dateStr = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+                const timeStr = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+                const isExpanded = expandedId === s.id
+                const isLong = s.nachricht.length > 180
+
+                return (
+                  <div key={s.id} style={{ padding: '20px 0', borderBottom: '1px solid #E8E5DF' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                          <span style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917', fontWeight: 600 }}>
+                            {s.name}
+                          </span>
+                          <a href={`mailto:${s.email}`} style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '12px', color: '#E8581A', textDecoration: 'none' }}>
+                            {s.email}
+                          </a>
+                          {s.projektart && (
+                            <span style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', padding: '2px 8px', border: '1px solid #E8E5DF', color: '#787672' }}>
+                              {s.projektart}
+                            </span>
+                          )}
+                          <span style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', color: '#C8C5BF', letterSpacing: '0.05em' }}>
+                            {dateStr} · {timeStr}
+                          </span>
+                        </div>
+                        <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '13px', color: '#4A4845', lineHeight: 1.7, margin: 0, whiteSpace: 'pre-wrap' }}>
+                          {isLong && !isExpanded ? s.nachricht.slice(0, 180) + '…' : s.nachricht}
+                        </p>
+                        {isLong && (
+                          <button
+                            onClick={() => setExpandedId(isExpanded ? null : s.id)}
+                            style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: 'none', padding: '6px 0 0', cursor: 'pointer', color: '#787672' }}
+                          >
+                            {isExpanded ? 'Weniger' : 'Mehr lesen'}
+                          </button>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => deleteSubmission(s.id, s.name)}
+                        style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: 'none', cursor: 'pointer', color: '#E8331A', flexShrink: 0, padding: '2px 0' }}
+                      >
+                        ✕ Löschen
+                      </button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div style={{ display: activeTab === 'projekte' ? 'grid' : 'none', gridTemplateColumns: '1fr 1fr', minHeight: 'calc(100vh - 65px)' }}>
         {/* Form */}
         <div style={{ padding: '40px 32px', borderRight: '1px solid #E8E5DF' }}>
           <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em', marginBottom: '28px' }}>

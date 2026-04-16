@@ -45,6 +45,34 @@ insert into storage.buckets (id, name, public)
 values ('project-images', 'project-images', true)
 on conflict (id) do nothing;
 
+-- -------------------------------------------------------
+-- Kontakt submissions (contact form)
+-- -------------------------------------------------------
+create table if not exists kontakt_submissions (
+  id bigserial primary key,
+  name text not null,
+  email text not null,
+  projektart text,
+  nachricht text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table kontakt_submissions enable row level security;
+
+-- Anyone can submit (public contact form)
+create policy "public_insert" on kontakt_submissions
+  for insert to anon
+  with check (true);
+
+-- Only authenticated admins can read submissions
+create policy "admin_select" on kontakt_submissions
+  for select using (auth.role() = 'authenticated');
+
+-- Only authenticated admins can delete submissions
+create policy "admin_delete" on kontakt_submissions
+  for delete using (auth.role() = 'authenticated');
+
+-- -------------------------------------------------------
 -- Storage policies
 create policy "Public read images"
   on storage.objects for select

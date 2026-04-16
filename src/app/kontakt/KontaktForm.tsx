@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { supabase } from '@/lib/supabase'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -22,22 +23,18 @@ export default function KontaktForm() {
     setStatus('sending')
 
     const data = new FormData(e.currentTarget)
-    const body = new URLSearchParams()
-    data.forEach((v, k) => body.append(k, v.toString()))
 
     try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+      const { error } = await supabase.from('kontakt_submissions').insert({
+        name: data.get('name') as string,
+        email: data.get('email') as string,
+        projektart: data.get('projektart') as string | null,
+        nachricht: data.get('nachricht') as string,
       })
-      if (res.ok) {
-        setStatus('success')
-        formRef.current?.reset()
-        setType('')
-      } else {
-        setStatus('error')
-      }
+      if (error) throw error
+      setStatus('success')
+      formRef.current?.reset()
+      setType('')
     } catch {
       setStatus('error')
     }
@@ -114,22 +111,11 @@ export default function KontaktForm() {
           </p>
         </div>
       ) : (
-        /* Netlify Forms: data-netlify + hidden form-name required */
         <form
           ref={formRef}
-          name="kontakt"
-          method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
           style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
         >
-          {/* Required by Netlify for AJAX submissions */}
-          <input type="hidden" name="form-name" value="kontakt" />
-          {/* Honeypot */}
-          <p style={{ display: 'none' }}>
-            <label>Nicht ausfüllen: <input name="bot-field" /></label>
-          </p>
 
           {/* Name + E-Mail row */}
           <div
