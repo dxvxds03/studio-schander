@@ -97,16 +97,14 @@ export default function WasIchMache() {
           <h2
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 800,
               fontSize: 'clamp(68px, 11vw, 152px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.92,
-              textTransform: 'uppercase',
               margin: 0,
             }}
           >
-            <span style={{ color: 'var(--muted)', display: 'block' }}>Was ich</span>
-            <span style={{ color: 'var(--ink)', display: 'block' }}>
+            <span style={{ fontWeight: 400, color: 'var(--muted)', display: 'block' }}>Was ich</span>
+            <span style={{ fontWeight: 800, color: 'var(--ink)', display: 'block' }}>
               Mache<span style={{ color: 'var(--dead-poet)' }}>.</span>
             </span>
           </h2>
@@ -294,17 +292,33 @@ export default function WasIchMache() {
           <h2
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(52px, 9.5vw, 136px)',
-              letterSpacing: '-0.04em',
-              lineHeight: 0.92,
-              textTransform: 'uppercase',
-              color: 'var(--ink)',
+              letterSpacing: '-0.03em',
               margin: '0 0 clamp(16px, 2vw, 28px)',
             }}
           >
-            Du weißt<br />
-            noch nicht<span style={{ color: 'var(--dead-poet)' }}>?</span>
+            <span
+              style={{
+                display: 'block',
+                fontWeight: 400,
+                fontSize: 'clamp(20px, 3vw, 44px)',
+                color: 'var(--muted)',
+                lineHeight: 1.3,
+                marginBottom: '0.15em',
+              }}
+            >
+              Du weißt noch nicht genau
+            </span>
+            <span
+              style={{
+                display: 'block',
+                fontWeight: 800,
+                fontSize: 'clamp(52px, 9.5vw, 136px)',
+                color: 'var(--ink)',
+                lineHeight: 0.9,
+              }}
+            >
+              was du brauchst<span style={{ color: 'var(--dead-poet)' }}>?</span>
+            </span>
           </h2>
           <p
             style={{
