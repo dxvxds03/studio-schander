@@ -22,6 +22,7 @@
 html {
   background-color: var(--cream);
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -178,7 +179,13 @@ a[href^="mailto"].nav-kontakt:hover {
   }
   .projekte-row img {
     height: clamp(120px, 35vw, 180px) !important;
-    width: auto !important;
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+  .projekte-title {
+    white-space: normal !important;
+    font-size: clamp(28px, 8vw, 48px) !important;
+    line-height: 0.9 !important;
   }
 
   /* Project detail: single column */
@@ -202,6 +209,9 @@ a[href^="mailto"].nav-kontakt:hover {
   }
   .footer-links {
     align-items: flex-start !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
   }
 
   /* Footer color blocks: shorter */
@@ -216,7 +226,6 @@ a[href^="mailto"].nav-kontakt:hover {
     align-items: flex-start !important;
     gap: 0 !important;
     line-height: 0.9 !important;
-    font-size: clamp(36px, 12vw, 80px) !important;
   }
 
   /* Hero carousel card image: smaller */
@@ -290,9 +299,9 @@ a[href^="mailto"].nav-kontakt:hover {
 }
 
 @media (max-width: 680px) {
-  /* Hero h1 bigger on mobile */
+  /* Hero h1: scale with viewport, min avoids "Portfolio." overflow at 375px */
   .hero-h1 {
-    font-size: clamp(64px, 17vw, 90px) !important;
+    font-size: clamp(44px, 14vw, 90px) !important;
   }
 
   /* Shift carousel area + name pill down on mobile */

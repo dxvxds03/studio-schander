@@ -42,7 +42,7 @@ export default async function ProjektePage() {
             style={{
               fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
               fontWeight: 800,
-              fontSize: 'clamp(56px, 10vw, 160px)',
+              fontSize: 'clamp(40px, 12vw, 160px)',
               letterSpacing: '-0.045em',
               lineHeight: 0.88,
               color: 'var(--ink)',
