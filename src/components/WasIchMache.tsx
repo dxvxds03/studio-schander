@@ -67,9 +67,8 @@ const ITEMS = [
   },
 ]
 
-const px = 'clamp(16px, 2vw, 24px)'
+const px = 'clamp(24px, 4vw, 64px)'
 
-// Dark section colors
 const DARK_BG = '#34160F'
 const CREAM = '#F4F2ED'
 const ORANGE = '#E8331A'
@@ -82,23 +81,23 @@ export default function WasIchMache() {
 
   return (
     <>
-      {/* ── Dark section: heading + accordion ────────────────────── */}
+      {/* ── Section: heading (cream) + accordion (dark) ─────────── */}
       <section
         id="leistungen"
         style={{
           paddingTop: 'clamp(80px, 12vw, 160px)',
           position: 'relative',
           zIndex: 46,
-          background: DARK_BG,
+          background: 'var(--cream)',
         }}
       >
-        {/* Section headline */}
+        {/* Heading — cream background */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(48px, 7vw, 96px)' }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(24px, 3vw, 40px)' }}
         >
           <h2
             style={{
@@ -108,15 +107,15 @@ export default function WasIchMache() {
               letterSpacing: '-0.04em',
               lineHeight: 0.92,
               margin: 0,
-              color: CREAM,
+              color: 'var(--ink)',
             }}
           >
             Was ich Mache<span style={{ color: ORANGE }}>.</span>
           </h2>
         </motion.div>
 
-        {/* Accordion */}
-        <div>
+        {/* Accordion — dark background */}
+        <div style={{ background: DARK_BG }}>
           {ITEMS.map((item, i) => {
             const isActive = activeKey === item.key
             const isHovered = hoveredKey === item.key
@@ -133,7 +132,7 @@ export default function WasIchMache() {
                 onMouseEnter={() => setHoveredKey(item.key)}
                 onMouseLeave={() => setHoveredKey(null)}
                 style={{
-                  borderTop: `1px solid rgba(244,242,237,0.1)`,
+                  borderTop: '1px solid rgba(244,242,237,0.1)',
                   cursor: 'pointer',
                 }}
               >
@@ -158,7 +157,7 @@ export default function WasIchMache() {
                       margin: 0,
                       transition: 'color 0.2s ease, text-shadow 0.2s ease',
                       textShadow: isHovered && !isActive
-                        ? `0 0 40px rgba(232,51,26,0.5), 0 0 80px rgba(232,51,26,0.2)`
+                        ? '0 0 40px rgba(232,51,26,0.5), 0 0 80px rgba(232,51,26,0.2)'
                         : 'none',
                     }}
                   >
@@ -202,7 +201,6 @@ export default function WasIchMache() {
                           maxWidth: '820px',
                         }}
                       >
-                        {/* Text */}
                         <div>
                           {item.lines.map((line, j) => (
                             <p
@@ -220,7 +218,6 @@ export default function WasIchMache() {
                           ))}
                         </div>
 
-                        {/* Badges */}
                         {item.badges.length > 0 && (
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                             {item.badges.map(b => (
@@ -242,7 +239,6 @@ export default function WasIchMache() {
                           </div>
                         )}
 
-                        {/* CTA */}
                         <Link
                           href={item.cta.href}
                           data-hover
@@ -268,7 +264,6 @@ export default function WasIchMache() {
             )
           })}
 
-          {/* Last border */}
           <div style={{ borderTop: '1px solid rgba(244,242,237,0.1)' }} />
         </div>
       </section>
@@ -281,7 +276,6 @@ export default function WasIchMache() {
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
-          overflow: 'hidden',
         }}
       >
         {/* Text block */}
@@ -290,30 +284,30 @@ export default function WasIchMache() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(32px, 5vw, 64px)' }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(40px, 6vw, 80px)' }}
         >
           <p
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(26px, 4vw, 56px)',
+              fontSize: 'clamp(32px, 5vw, 72px)',
               letterSpacing: '-0.03em',
-              lineHeight: 1.1,
+              lineHeight: 1.05,
               color: 'var(--ink)',
-              margin: '0 0 0.4em',
+              margin: '0 0 0.35em',
             }}
           >
             Du weißt noch nicht genau
             <br />
-            was du brauchst<span style={{ color: 'var(--dead-poet)' }}>?</span>
+            was du brauchst<span style={{ color: ORANGE }}>?</span>
           </p>
           <p
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 400,
-              fontSize: 'clamp(26px, 4vw, 56px)',
+              fontSize: 'clamp(32px, 5vw, 72px)',
               letterSpacing: '-0.03em',
-              lineHeight: 1.1,
+              lineHeight: 1.05,
               color: 'var(--muted)',
               margin: 0,
             }}
@@ -324,64 +318,46 @@ export default function WasIchMache() {
           </p>
         </motion.div>
 
-        {/* Arrows + button on the same line */}
+        {/* Pulsing orange CTA button */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.55, delay: 0.2, ease: [0.22, 0, 0, 1] }}
-          style={{
-            padding: `0 ${px}`,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'clamp(12px, 2vw, 24px)',
-          }}
+          style={{ padding: `0 ${px}` }}
         >
-          {/* Arrow cluster pointing into the button */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '4px',
-              color: 'var(--dead-poet)',
-              flexShrink: 0,
-            }}
-          >
-            <Arrow direction="right" size={28} />
-            <Arrow direction="right" size={28} />
-            <Arrow direction="right" size={28} />
-          </div>
-
-          {/* Full-width CTA button */}
           <Link
             href="/kontakt"
             data-hover
             className="schreib-mir-btn"
             style={{
-              flex: 1,
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
               fontSize: 'clamp(28px, 5vw, 72px)',
               letterSpacing: '-0.03em',
               textTransform: 'uppercase',
               textDecoration: 'none',
-              color: 'var(--ink)',
-              border: '2px solid var(--ink)',
+              color: CREAM,
+              background: ORANGE,
+              border: `2px solid ${ORANGE}`,
               padding: 'clamp(16px, 2.5vw, 36px) clamp(20px, 3vw, 48px)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               gap: 'clamp(20px, 4vw, 60px)',
-              transition: 'background 0.22s ease, color 0.22s ease',
+              transition: 'background 0.22s ease, color 0.22s ease, border-color 0.22s ease',
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = 'var(--ink)'
-              el.style.color = 'var(--cream)'
+              el.style.background = '#34160F'
+              el.style.borderColor = '#34160F'
+              el.style.color = CREAM
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = 'transparent'
-              el.style.color = 'var(--ink)'
+              el.style.background = ORANGE
+              el.style.borderColor = ORANGE
+              el.style.color = CREAM
             }}
           >
             Schreib mir

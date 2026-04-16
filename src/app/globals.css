@@ -116,7 +116,15 @@ body {
   filter: brightness(1.08) saturate(1.1);
 }
 
-/* Was ich mache accordion */
+/* Was ich mache — pulsing CTA button */
+@keyframes pulseOrange {
+  0%   { box-shadow: 0 0 0 0 rgba(232,51,26,0.45); }
+  65%  { box-shadow: 0 0 0 22px rgba(232,51,26,0); }
+  100% { box-shadow: 0 0 0 0 rgba(232,51,26,0); }
+}
+.schreib-mir-btn {
+  animation: pulseOrange 2.4s ease-out infinite;
+}
 
 /* Nav buttons */
 .nav-ctas {
