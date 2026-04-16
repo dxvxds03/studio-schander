@@ -4,6 +4,22 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/lib/supabase'
 import { compressImage } from '@/lib/compress-image'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  arrayMove,
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 interface Project {
   id: number
@@ -35,6 +51,117 @@ const emptyForm = {
   projectType: 'client' as 'client' | 'schander' | 'personal',
 }
 
+// ── Sortable image thumbnail ────────────────────────────────────────────────
+function SortableImage({ url, index, onRemove }: { url: string; index: number; onRemove: (i: number) => void }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: url })
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        position: 'relative',
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+        cursor: 'grab',
+      }}
+      {...attributes}
+      {...listeners}
+    >
+      <img src={url} alt="" style={{ width: '64px', height: '64px', objectFit: 'cover', display: 'block' }} />
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); onRemove(index) }}
+        onPointerDown={(e) => e.stopPropagation()}
+        style={{
+          position: 'absolute', top: '2px', right: '2px',
+          background: '#E8331A', color: '#fff', border: 'none',
+          width: '18px', height: '18px', fontSize: '10px',
+          cursor: 'pointer', lineHeight: '18px', textAlign: 'center',
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  )
+}
+
+// ── Sortable project row ────────────────────────────────────────────────────
+function SortableProjectRow({
+  project,
+  isEditing,
+  onEdit,
+  onDelete,
+}: {
+  project: Project
+  isEditing: boolean
+  onEdit: (p: Project) => void
+  onDelete: (id: number, title: string) => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: project.id })
+
+  const lbl: React.CSSProperties = {
+    fontFamily: '"Source Code Pro", monospace', fontSize: '10px',
+    letterSpacing: '0.2em', textTransform: 'uppercase', color: '#787672',
+    display: 'block', marginBottom: '6px',
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        display: 'flex', alignItems: 'center', gap: '12px',
+        padding: '12px 0', borderBottom: '1px solid #E8E5DF',
+        background: isEditing ? 'rgba(232,88,26,0.05)' : 'transparent',
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.4 : 1,
+      }}
+    >
+      {/* Drag handle */}
+      <div
+        {...attributes}
+        {...listeners}
+        style={{ cursor: 'grab', padding: '4px 2px', flexShrink: 0, color: '#C8C5BF', lineHeight: 1 }}
+        title="Ziehen zum Sortieren"
+      >
+        <svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor">
+          <circle cx="4" cy="3" r="1.5" /><circle cx="8" cy="3" r="1.5" />
+          <circle cx="4" cy="8" r="1.5" /><circle cx="8" cy="8" r="1.5" />
+          <circle cx="4" cy="13" r="1.5" /><circle cx="8" cy="13" r="1.5" />
+        </svg>
+      </div>
+
+      {project.cover_image && (
+        <img src={project.cover_image} alt="" style={{ width: '44px', height: '44px', objectFit: 'cover', flexShrink: 0 }} />
+      )}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {project.title}
+        </p>
+        <p style={{ ...lbl, marginBottom: 0 }}>
+          {project.year}{project.year && project.client ? ' — ' : ''}{project.client}
+          {(project.images?.length ?? 0) > 0 && ` · ${project.images.length + 1} Bilder`}
+        </p>
+      </div>
+      <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+        <button
+          onClick={() => onEdit(project)}
+          style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid #E8E5DF', padding: '5px 10px', cursor: 'pointer', color: '#191917', fontFamily: '"Source Code Pro", monospace' }}
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => onDelete(project.id, project.title)}
+          style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Source Code Pro", monospace' }}
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ── Main dashboard ──────────────────────────────────────────────────────────
 export default function Dashboard() {
   const router = useRouter()
   const [projects, setProjects] = useState<Project[]>([])
@@ -46,6 +173,8 @@ export default function Dashboard() {
   const [msg, setMsg] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
   const multiFileRef = useRef<HTMLInputElement>(null)
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
   useEffect(() => { fetchProjects() }, [])
 
@@ -99,6 +228,34 @@ export default function Dashboard() {
 
   const removeExtraImage = (idx: number) => {
     setExtraImages((prev) => prev.filter((_, i) => i !== idx))
+  }
+
+  const handleImageDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    setExtraImages((prev) => {
+      const oldIndex = prev.indexOf(active.id as string)
+      const newIndex = prev.indexOf(over.id as string)
+      return arrayMove(prev, oldIndex, newIndex)
+    })
+  }
+
+  const handleProjectDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+
+    const oldIndex = projects.findIndex((p) => p.id === active.id)
+    const newIndex = projects.findIndex((p) => p.id === over.id)
+    const reordered = arrayMove(projects, oldIndex, newIndex)
+
+    setProjects(reordered)
+
+    const orders = reordered.map((p, i) => ({ id: p.id, order: i }))
+    await fetch('/api/projects/reorder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orders }),
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -287,29 +444,24 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* Additional images */}
+            {/* Additional images — sortable */}
             <div>
               <label style={lbl}>Weitere Bilder (Hover-Galerie)</label>
               {extraImages.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '10px' }}>
-                  {extraImages.map((url, idx) => (
-                    <div key={idx} style={{ position: 'relative' }}>
-                      <img src={url} alt="" style={{ width: '64px', height: '64px', objectFit: 'cover', display: 'block' }} />
-                      <button
-                        type="button"
-                        onClick={() => removeExtraImage(idx)}
-                        style={{
-                          position: 'absolute', top: '2px', right: '2px',
-                          background: '#E8331A', color: '#fff', border: 'none',
-                          width: '18px', height: '18px', fontSize: '10px',
-                          cursor: 'pointer', lineHeight: '18px', textAlign: 'center',
-                        }}
-                      >
-                        ✕
-                      </button>
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleImageDragEnd}>
+                  <SortableContext items={extraImages} strategy={rectSortingStrategy}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '10px' }}>
+                      {extraImages.map((url, idx) => (
+                        <SortableImage key={url} url={url} index={idx} onRemove={removeExtraImage} />
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </SortableContext>
+                </DndContext>
+              )}
+              {extraImages.length > 0 && (
+                <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', color: '#C8C5BF', marginBottom: '8px', letterSpacing: '0.05em' }}>
+                  Ziehen zum Sortieren
+                </p>
               )}
               <input ref={multiFileRef} type="file" accept="image/*" multiple onChange={handleMultiFileChange} style={{ display: 'none' }} />
               <button type="button" onClick={() => multiFileRef.current?.click()} disabled={uploading}
@@ -356,7 +508,7 @@ export default function Dashboard() {
           </form>
         </div>
 
-        {/* Projects list */}
+        {/* Projects list — sortable */}
         <div style={{ padding: '40px 32px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '28px' }}>
             <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em' }}>
@@ -370,34 +522,21 @@ export default function Dashboard() {
               Noch keine Projekte vorhanden.
             </p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
-              {projects.map((p) => (
-                <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0', borderBottom: '1px solid #E8E5DF', background: editingId === p.id ? 'rgba(232,88,26,0.05)' : 'transparent' }}>
-                  {p.cover_image && (
-                    <img src={p.cover_image} alt="" style={{ width: '44px', height: '44px', objectFit: 'cover', flexShrink: 0 }} />
-                  )}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {p.title}
-                    </p>
-                    <p style={{ ...lbl, marginBottom: 0 }}>
-                      {p.year}{p.year && p.client ? ' — ' : ''}{p.client}
-                      {(p.images?.length ?? 0) > 0 && ` · ${p.images.length + 1} Bilder`}
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
-                    <button onClick={() => handleEdit(p)}
-                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid #E8E5DF', padding: '5px 10px', cursor: 'pointer', color: '#191917', fontFamily: '"Source Code Pro", monospace' }}>
-                      Edit
-                    </button>
-                    <button onClick={() => handleDelete(p.id, p.title)}
-                      style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Source Code Pro", monospace' }}>
-                      ✕
-                    </button>
-                  </div>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleProjectDragEnd}>
+              <SortableContext items={projects.map((p) => p.id)} strategy={verticalListSortingStrategy}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                  {projects.map((p) => (
+                    <SortableProjectRow
+                      key={p.id}
+                      project={p}
+                      isEditing={editingId === p.id}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                    />
+                  ))}
                 </div>
-              ))}
-            </div>
+              </SortableContext>
+            </DndContext>
           )}
         </div>
       </div>
