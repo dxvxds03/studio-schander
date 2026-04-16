@@ -1,8 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const ADMIN_EMAIL = 'davidschander03@icloud.com'
-
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
 
@@ -29,7 +27,7 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (request.nextUrl.pathname.startsWith('/admin/dashboard')) {
-    if (user?.email !== ADMIN_EMAIL) {
+    if (!user) {
       return NextResponse.redirect(new URL('/admin', request.url))
     }
   }

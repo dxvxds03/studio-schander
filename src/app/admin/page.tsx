@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/lib/supabase'
 
 export default function AdminLogin() {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -16,13 +17,10 @@ export default function AdminLogin() {
     setError('')
 
     const supabase = getSupabaseBrowserClient()
-    const { error } = await supabase.auth.signInWithPassword({
-      email: 'davidschander03@icloud.com',
-      password,
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
-      setError('Falsches Passwort.')
+      setError('Falsche E-Mail oder Passwort.')
       setLoading(false)
     } else {
       router.push('/admin/dashboard')
@@ -40,17 +38,28 @@ export default function AdminLogin() {
           >
             Admin
           </p>
-          <p className="label label-bracket mt-2">davidschander03@icloud.com</p>
+          <p className="label label-bracket mt-2">Studio Schander</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+          <input
+            type="email"
+            placeholder="E-Mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoFocus
+            autoComplete="email"
+            className="w-full border border-faint bg-transparent px-4 py-3 outline-none focus:border-ink transition-colors"
+            style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917' }}
+          />
           <input
             type="password"
             placeholder="Passwort"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            autoFocus
+            autoComplete="current-password"
             className="w-full border border-faint bg-transparent px-4 py-3 outline-none focus:border-ink transition-colors"
             style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917' }}
           />

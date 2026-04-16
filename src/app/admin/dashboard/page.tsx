@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/lib/supabase'
+import { compressImage } from '@/lib/compress-image'
 
 interface Project {
   id: number
@@ -58,8 +59,9 @@ export default function Dashboard() {
     if (!file) return
     setUploading(true)
     try {
+      const compressed = await compressImage(file)
       const fd = new FormData()
-      fd.append('file', file)
+      fd.append('file', compressed)
       const res = await fetch('/api/upload', { method: 'POST', body: fd })
       if (!res.ok) throw new Error()
       const { url } = await res.json()
@@ -78,8 +80,9 @@ export default function Dashboard() {
     try {
       const urls: string[] = []
       for (const file of files) {
+        const compressed = await compressImage(file)
         const fd = new FormData()
-        fd.append('file', file)
+        fd.append('file', compressed)
         const res = await fetch('/api/upload', { method: 'POST', body: fd })
         if (!res.ok) throw new Error()
         const { url } = await res.json()
@@ -193,8 +196,8 @@ export default function Dashboard() {
     <main style={{ background: '#F4F2ED', minHeight: '100vh', cursor: 'default' }}>
       {/* Header */}
       <div style={{ borderBottom: '1px solid #E8E5DF', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '13px', fontWeight: 600, color: '#191917' }}>
-          Studio Schander — Admin
+        <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontSize: '15px', fontWeight: 800, letterSpacing: '-0.02em', color: '#191917' }}>
+          Studio Schander
         </p>
         <div style={{ display: 'flex', gap: '20px' }}>
           <a href="/" target="_blank" style={{ ...lbl, marginBottom: 0, textDecoration: 'none' }}>Website ↗</a>
@@ -205,7 +208,7 @@ export default function Dashboard() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 'calc(100vh - 65px)' }}>
         {/* Form */}
         <div style={{ padding: '40px 32px', borderRight: '1px solid #E8E5DF' }}>
-          <p style={{ fontFamily: 'var(--font-playfair), "Playfair Display", Georgia, serif', fontStyle: 'italic', fontSize: '26px', color: '#191917', letterSpacing: '-0.01em', marginBottom: '28px' }}>
+          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em', marginBottom: '28px' }}>
             {editingId ? 'Projekt bearbeiten' : 'Neues Projekt'}
           </p>
 
@@ -356,7 +359,7 @@ export default function Dashboard() {
         {/* Projects list */}
         <div style={{ padding: '40px 32px' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '28px' }}>
-            <p style={{ fontFamily: 'var(--font-playfair), "Playfair Display", Georgia, serif', fontStyle: 'italic', fontSize: '26px', color: '#191917', letterSpacing: '-0.01em' }}>
+            <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em' }}>
               Projekte
             </p>
             <span style={{ ...lbl, marginBottom: 0 }}>({projects.length})</span>
