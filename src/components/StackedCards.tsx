@@ -96,7 +96,7 @@ export default function StackedCards({ projects }: { projects: Project[] }) {
         }}
       >
         {items.map((project, i) => {
-          const href = project.link ?? `/projects/${project.slug}`
+          const href = project.link ?? `/projekte/${project.slug}`
           const isExternal = !!project.link
 
           return (

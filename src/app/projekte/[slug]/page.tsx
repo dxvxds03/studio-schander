@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ProjectPinboard from '@/components/ProjectPinboard'
@@ -6,6 +7,45 @@ import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const { data: project } = await supabase
+    .from('projects')
+    .select('title, description, cover_image, year, client, tags')
+    .eq('slug', params.slug)
+    .single()
+
+  if (!project) return {}
+
+  // title uses the root layout template: "Projektname — Studio Schander"
+  const pageTitle = project.title
+  const description = project.description
+    ?? `${project.title}${project.year ? ` (${project.year})` : ''}${project.client ? ` · ${project.client}` : ''} — Ausgewählte Arbeit von Studio Schander.`
+
+  const ogImages = project.cover_image
+    ? [{ url: project.cover_image, width: 1200, height: 630, alt: project.title }]
+    : [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Studio Schander' }]
+
+  return {
+    title: pageTitle,
+    description,
+    openGraph: {
+      title: `${pageTitle} — Studio Schander`,
+      description,
+      images: ogImages,
+      type: 'article',
+      url: `https://studio-schander.de/projekte/${params.slug}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${pageTitle} — Studio Schander`,
+      description,
+      images: [ogImages[0].url],
+    },
+  }
+}
 
 export default async function ProjectPage({ params }: { params: { slug: string } }) {
   const { data: project } = await supabase

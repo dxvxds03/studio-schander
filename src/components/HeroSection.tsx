@@ -471,7 +471,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             {items.map((project) => {
-              const href       = project.link ?? `/projects/${project.slug}`
+              const href       = project.link ?? `/projekte/${project.slug}`
               const isExternal = !!project.link
 
               return (

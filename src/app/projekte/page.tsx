@@ -1,9 +1,24 @@
+import type { Metadata } from 'next'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
 
 export const revalidate = 0
+
+export const metadata: Metadata = {
+  title: 'Projekte',
+  description: 'Alle Arbeiten von Studio Schander — Branding, Webentwicklung, Editorial Design & Konzeption.',
+  openGraph: {
+    title: 'Projekte — Studio Schander',
+    description: 'Alle Arbeiten von Studio Schander — Branding, Webentwicklung, Editorial Design & Konzeption.',
+    url: 'https://studio-schander.de/projekte',
+  },
+  twitter: {
+    title: 'Projekte — Studio Schander',
+    description: 'Alle Arbeiten von Studio Schander — Branding, Webentwicklung, Editorial Design & Konzeption.',
+  },
+}
 
 export default async function ProjektePage() {
   const { data: projects } = await supabase
@@ -78,7 +93,7 @@ export default async function ProjektePage() {
         }}
       >
         {all.map((project, i) => {
-          const href = project.link ?? `/projects/${project.slug}`
+          const href = project.link ?? `/projekte/${project.slug}`
           const isExternal = !!project.link
 
           return (

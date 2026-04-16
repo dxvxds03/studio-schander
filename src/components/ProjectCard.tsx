@@ -39,7 +39,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
   }
 
   return (
-    <Link href={`/projects/${project.slug}`} data-hover>
+    <Link href={`/projekte/${project.slug}`} data-hover>
       <motion.article
         className="group relative overflow-hidden bg-faint"
         initial={{ rotate: rot }}
