@@ -116,20 +116,42 @@ body {
   filter: brightness(1.08) saturate(1.1);
 }
 
-/* Nav CTA */
-.nav-cta-btn {
-  color: var(--negroni);
+/* Nav buttons */
+.nav-ctas {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: flex-start;
+}
+.nav-btn {
+  font-family: "Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 1.3vw, 17px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid;
+  padding: 8px 18px;
+  line-height: 1;
+  white-space: nowrap;
+  background: transparent;
   transition: background 0.18s ease, color 0.18s ease;
 }
-.nav-cta-btn:hover {
-  background: var(--negroni) !important;
+.nav-btn-arbeiten {
+  color: var(--dead-poet);
+  border-color: var(--dead-poet);
+}
+.nav-btn-arbeiten:hover {
+  background: var(--dead-poet) !important;
   color: var(--cream) !important;
 }
-
-/* Brutalist contact button in nav */
-a[href^="mailto"].nav-kontakt:hover {
-  background: var(--ink);
-  color: var(--cream);
+.nav-btn-kontakt {
+  color: var(--negroni);
+  border-color: var(--negroni);
+}
+.nav-btn-kontakt:hover {
+  background: var(--negroni) !important;
+  color: var(--cream) !important;
 }
 
 /* Inline Kontakt word — glow + sliding underline */
@@ -156,11 +178,9 @@ a[href^="mailto"].nav-kontakt:hover {
 /* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 680px) {
 
-  /* Sidebar hidden */
-  .sidebar-root { display: none !important; }
-
-  /* Sections: remove sidebar margin */
-  .sidebar-aware { margin-right: 0 !important; }
+  /* Nav buttons: stack vertically on small screens */
+  .nav-ctas { flex-direction: column !important; gap: 8px !important; }
+  .nav-btn { font-size: 12px !important; padding: 7px 14px !important; }
 
   /* Leistungen rows: stack vertically */
   .leistungen-row {
@@ -281,11 +301,7 @@ a[href^="mailto"].nav-kontakt:hover {
 
 /* ── Tablet + Mobile (≤ 1024px): hero + nav fixes ───────────── */
 @media (max-width: 1024px) {
-  /* Show mobile nav buttons group, hide desktop CTA */
-  .nav-mobile-btns { display: flex !important; }
-  .nav-cta-desktop { display: none !important; }
-
-  /* Project carousel: nav is taller on mobile (two stacked buttons ≈ 86px) */
+  /* Project carousel: nav is taller on mobile */
   .project-carousel-wrap { margin-top: 88px !important; }
 
   /* Slightly tighter bottom bar padding so h1 stays visible */

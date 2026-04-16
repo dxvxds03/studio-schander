@@ -31,80 +31,12 @@ export default function Navigation() {
           />
         </Link>
 
-        {/* Desktop: single CTA button */}
-        <Link
-          href="/kontakt"
-          data-hover
-          className="nav-cta-btn nav-cta-desktop"
-          style={{
-            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-            fontWeight: 800,
-            fontSize: '13px',
-            letterSpacing: '0.04em',
-            textTransform: 'uppercase',
-            textDecoration: 'none',
-            color: '#E8581A',
-            border: '2px solid #E8581A',
-            padding: '8px 18px',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            background: 'transparent',
-          }}
-        >
-          ich habe eine idee →
-        </Link>
-
-        {/* Mobile: two stacked buttons */}
-        <div
-          className="nav-mobile-btns"
-          style={{
-            display: 'none',
-            flexDirection: 'column',
-            gap: '8px',
-            alignItems: 'stretch',
-          }}
-        >
-          <Link
-            href="/projekte"
-            data-hover
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: '11px',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              color: 'var(--dead-poet)',
-              border: '2px solid var(--dead-poet)',
-              padding: '7px 14px',
-              lineHeight: 1,
-              whiteSpace: 'nowrap',
-              background: 'transparent',
-              textAlign: 'center',
-            }}
-          >
-            Alle Projekte →
+        <div className="nav-ctas">
+          <Link href="/projekte" data-hover className="nav-btn nav-btn-arbeiten">
+            ← Arbeiten
           </Link>
-          <Link
-            href="/kontakt"
-            data-hover
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              fontSize: '11px',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              color: '#E8581A',
-              border: '2px solid #E8581A',
-              padding: '7px 14px',
-              lineHeight: 1,
-              whiteSpace: 'nowrap',
-              background: 'transparent',
-              textAlign: 'center',
-            }}
-          >
-            Ich habe eine Idee →
+          <Link href="/kontakt" data-hover className="nav-btn nav-btn-kontakt">
+            Kontakt →
           </Link>
         </div>
       </div>

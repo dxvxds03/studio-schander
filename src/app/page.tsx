@@ -61,14 +61,12 @@ export default async function HomePage() {
       {/* Leistungen */}
       <section
         id="leistungen"
-        className="sidebar-aware"
         style={{
           paddingTop: 'clamp(96px, 14vw, 180px)',
           paddingBottom: 'clamp(32px, 5vw, 64px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
-          marginRight: 'clamp(160px, 20vw, 280px)',
         }}
       >
         <h2
@@ -143,13 +141,11 @@ export default async function HomePage() {
 
       {/* Kontakt */}
       <section
-        className="sidebar-aware"
         style={{
           paddingTop: 'clamp(72px, 10vw, 140px)',
           paddingBottom: 'clamp(72px, 10vw, 140px)',
           paddingLeft: 'clamp(16px, 2vw, 24px)',
           paddingRight: 'clamp(16px, 2vw, 24px)',
-          marginRight: 'clamp(160px, 20vw, 280px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
