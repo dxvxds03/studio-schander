@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import ProjectPinboard from '@/components/ProjectPinboard'
 import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
+import Arrow from '@/components/Arrow'
 
 export const revalidate = 0
 
@@ -100,7 +101,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               padding: '8px 0',
             }}
           >
-            ← Alle Projekte
+            <Arrow direction="left" size={14} /> Alle Projekte
           </a>
 
           <h1

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
+import Arrow from '@/components/Arrow'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
@@ -228,7 +229,7 @@ export default function KontaktForm() {
                 transition: 'background 0.18s ease',
               }}
             >
-              {status === 'sending' ? 'Wird gesendet…' : 'Abschicken →'}
+              {status === 'sending' ? 'Wird gesendet…' : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>Abschicken <Arrow direction="right" size={14} /></span>}
             </button>
           </div>
         </form>

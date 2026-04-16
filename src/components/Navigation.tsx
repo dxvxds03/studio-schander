@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import Arrow from './Arrow'
 
 export default function Navigation() {
   return (
@@ -32,11 +33,11 @@ export default function Navigation() {
         </Link>
 
         <div className="nav-ctas">
-          <Link href="/projekte" data-hover className="nav-btn nav-btn-arbeiten">
-            ← Arbeiten
+          <Link href="/projekte" data-hover className="nav-btn nav-btn-arbeiten" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <Arrow direction="left" size={16} /> Arbeiten
           </Link>
-          <Link href="/kontakt" data-hover className="nav-btn nav-btn-kontakt">
-            Kontakt →
+          <Link href="/kontakt" data-hover className="nav-btn nav-btn-kontakt" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            Kontakt <Arrow direction="right" size={16} />
           </Link>
         </div>
       </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import Arrow from './Arrow'
 
 const ITEMS = [
   {
@@ -13,7 +14,7 @@ const ITEMS = [
       'ein Gefühl, eine Richtung, ein "das müsste es eigentlich geben".',
       'Ich nehme genau diesen Punkt und baue daraus etwas Echtes.',
     ],
-    cta: { label: 'Erzähl mir davon →', href: '/kontakt' },
+    cta: { label: 'Erzähl mir davon', href: '/kontakt' },
     badges: [] as string[],
   },
   {
@@ -25,7 +26,7 @@ const ITEMS = [
       'nicht nur beim Launch, sondern auch wenn es komplizierter wird.',
       'HTML, CSS, JavaScript. Mit echtem Backend wenn nötig.',
     ],
-    cta: { label: 'Projekte ansehen →', href: '/projekte' },
+    cta: { label: 'Projekte ansehen', href: '/projekte' },
     badges: ['Serving with David', 'Lernwald'],
   },
   {
@@ -37,7 +38,7 @@ const ITEMS = [
       'ohne dass irgendjemand etwas erklären muss.',
       'Editorial Design, Magazingestaltung, Markensysteme.',
     ],
-    cta: { label: 'Meine Marken ansehen →', href: '/projekte' },
+    cta: { label: 'Meine Marken ansehen', href: '/projekte' },
     badges: ['Schander Marken'],
   },
   {
@@ -49,7 +50,7 @@ const ITEMS = [
       'Struktur, Inhalt, Strategie. Das ist kein Schritt den man überspringt –',
       'das ist der wichtigste.',
     ],
-    cta: { label: 'Lass uns das herausfinden →', href: '/kontakt' },
+    cta: { label: 'Lass uns das herausfinden', href: '/kontakt' },
     badges: [] as string[],
   },
   {
@@ -61,7 +62,7 @@ const ITEMS = [
       'und wo sie im Weg stehen.',
       'Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
     ],
-    cta: { label: 'Mehr erfahren →', href: '/kontakt' },
+    cta: { label: 'Mehr erfahren', href: '/kontakt' },
     badges: [] as string[],
   },
 ]
@@ -253,10 +254,12 @@ export default function WasIchMache() {
                             letterSpacing: '-0.02em',
                             color: 'var(--dead-poet)',
                             textDecoration: 'none',
-                            display: 'inline-block',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '10px',
                           }}
                         >
-                          {item.cta.label}
+                          {item.cta.label} <Arrow direction="right" size={20} />
                         </Link>
                       </div>
                     </motion.div>

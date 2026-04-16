@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation'
 import Link from 'next/link'
+import Arrow from '@/components/Arrow'
 
 export default function ImpressumPage() {
   return (
@@ -104,7 +105,7 @@ export default function ImpressumPage() {
               textDecoration: 'none',
             }}
           >
-            ← Zurück
+            <Arrow direction="left" size={14} /> Zurück
           </Link>
         </div>
       </section>
