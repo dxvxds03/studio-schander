@@ -35,12 +35,13 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         style={{
           padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) clamp(64px, 10vw, 120px)',
           display: 'grid',
-          gridTemplateColumns: '1fr auto',
+          gridTemplateColumns: '1fr minmax(min-content, min(340px, 38%))',
           gap: 'clamp(24px, 4vw, 64px)',
           alignItems: 'flex-start',
         }}
       >
-        <div>
+        {/* Left: title + description */}
+        <div style={{ minWidth: 0 }}>
           {/* Back link */}
           <a
             href="/projekte"
@@ -52,8 +53,11 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               textTransform: 'uppercase',
               color: 'var(--muted)',
               textDecoration: 'none',
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
               marginBottom: 'clamp(20px, 3vw, 40px)',
+              padding: '8px 0',
             }}
           >
             ← Alle Projekte
@@ -65,11 +69,15 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               fontWeight: 800,
               fontSize: 'clamp(40px, 8vw, 120px)',
               letterSpacing: '-0.045em',
-              lineHeight: 0.9,
+              lineHeight: 0.92,
               color: 'var(--ink)',
               textTransform: 'uppercase',
               margin: 0,
+              overflowWrap: 'break-word',
+              wordBreak: 'break-word',
+              hyphens: 'auto',
             }}
+            lang="de"
           >
             {project.title}
           </h1>
@@ -155,7 +163,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           )}
 
           {tags.length > 0 && (
-            <div>
+            <div style={{ maxWidth: '100%' }}>
               <p
                 style={{
                   fontFamily: '"Source Code Pro", monospace',
@@ -175,6 +183,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                   flexWrap: 'wrap',
                   justifyContent: 'flex-end',
                   gap: '6px',
+                  maxWidth: '100%',
                 }}
               >
                 {tags.map((tag) => (
@@ -187,7 +196,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                       textTransform: 'uppercase',
                       color: 'var(--dead-poet)',
                       border: '1px solid var(--dead-poet)',
-                      padding: '3px 8px',
+                      padding: '4px 8px',
+                      lineHeight: 1.4,
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {tag}

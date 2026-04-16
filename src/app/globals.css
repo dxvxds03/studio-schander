@@ -22,7 +22,6 @@
 html {
   background-color: var(--cream);
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -31,7 +30,10 @@ body {
   font-family: 'Source Code Pro', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* overflow-x: clip statt hidden — verhindert horizontalen Scroll
+     ohne einen neuen Scroll-Container zu erstellen (hält position:sticky
+     und GSAP ScrollTrigger intakt) */
+  overflow-x: clip;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -283,6 +285,9 @@ a[href^="mailto"].nav-kontakt:hover {
   .nav-mobile-btns { display: flex !important; }
   .nav-cta-desktop { display: none !important; }
 
+  /* Project carousel: nav is taller on mobile (two stacked buttons ≈ 86px) */
+  .project-carousel-wrap { margin-top: 88px !important; }
+
   /* Slightly tighter bottom bar padding so h1 stays visible */
   .hero-bottom-bar {
     padding-top: clamp(6px, 1.2vw, 14px) !important;
@@ -316,4 +321,13 @@ a[href^="mailto"].nav-kontakt:hover {
 
   /* Logo bigger on mobile */
   .nav-logo { height: clamp(40px, 11vw, 54px) !important; }
+
+  /* Project carousel: reduce side padding so landscape images aren't tiny */
+  .project-carousel-img-area {
+    padding-left: clamp(52px, 9vw, 120px) !important;
+    padding-right: clamp(52px, 9vw, 120px) !important;
+  }
+
+  /* Counter: shift down a bit so it never merges with nav buttons */
+  .project-carousel-counter { top: 20px !important; }
 }

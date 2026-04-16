@@ -23,6 +23,7 @@ export default function ProjectCarousel({ images, title }: { images: string[]; t
 
   return (
     <div
+      className="project-carousel-wrap"
       style={{
         marginTop: '61px',
         background: 'var(--cream)',
@@ -36,6 +37,7 @@ export default function ProjectCarousel({ images, title }: { images: string[]; t
     >
       {/* Image */}
       <div
+        className="project-carousel-img-area"
         style={{
           width: '100%',
           display: 'flex',
@@ -183,6 +185,7 @@ export default function ProjectCarousel({ images, title }: { images: string[]; t
 
           {/* Counter */}
           <div
+            className="project-carousel-counter"
             style={{
               position: 'absolute',
               top: 'clamp(12px, 2vw, 20px)',
