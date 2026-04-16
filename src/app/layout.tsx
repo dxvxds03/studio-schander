@@ -6,12 +6,14 @@ import Sidebar from '@/components/Sidebar'
 
 const SITE_URL = 'https://studio-schander.de'
 
+const DESCRIPTION = 'Studio Schander — Branding, Webentwicklung & Editorial Design aus Bielefeld. Konzeption und Gestaltung für Projekte, die man ansieht und sofort versteht.'
+
 export const metadata: Metadata = {
   title: {
-    default: 'Studio Schander — Design & Direction',
+    default: 'Studio Schander — Branding, Design & Webentwicklung',
     template: '%s — Studio Schander',
   },
-  description: 'Ausgewählte Arbeiten von David Schander. Branding, Webentwicklung, Editorial Design & Konzeption aus Bielefeld.',
+  description: DESCRIPTION,
   metadataBase: new URL(SITE_URL),
   icons: {
     icon: '/favicon.png',
@@ -22,8 +24,8 @@ export const metadata: Metadata = {
     locale: 'de_DE',
     url: SITE_URL,
     siteName: 'Studio Schander',
-    title: 'Studio Schander — Design & Direction',
-    description: 'Ausgewählte Arbeiten von David Schander. Branding, Webentwicklung, Editorial Design & Konzeption aus Bielefeld.',
+    title: 'Studio Schander — Branding, Design & Webentwicklung',
+    description: DESCRIPTION,
     images: [
       {
         url: '/og-image.png',
@@ -35,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Studio Schander — Design & Direction',
-    description: 'Ausgewählte Arbeiten von David Schander. Branding, Webentwicklung, Editorial Design & Konzeption aus Bielefeld.',
+    title: 'Studio Schander — Branding, Design & Webentwicklung',
+    description: DESCRIPTION,
     images: ['/og-image.png'],
   },
 }
