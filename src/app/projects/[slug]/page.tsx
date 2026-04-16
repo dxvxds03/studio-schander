@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import ProjectCarousel from '@/components/ProjectCarousel'
+import ProjectPinboard from '@/components/ProjectPinboard'
 import ClientBadge from '@/components/ClientBadge'
 import { supabase } from '@/lib/supabase'
 
@@ -24,9 +24,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
     <main style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       <Navigation />
 
-      {/* Image carousel */}
+      {/* Pinboard */}
       {allImages.length > 0 && (
-        <ProjectCarousel images={allImages} title={project.title} />
+        <ProjectPinboard images={allImages} title={project.title} />
       )}
 
       {/* Title + meta */}
