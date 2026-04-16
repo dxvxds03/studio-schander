@@ -116,6 +116,9 @@ body {
   filter: brightness(1.08) saturate(1.1);
 }
 
+/* Was ich mache accordion */
+.wim-toggle { display: none; }
+
 /* Nav buttons */
 .nav-ctas {
   display: flex;
@@ -182,16 +185,8 @@ body {
   .nav-ctas { flex-direction: column !important; gap: 8px !important; }
   .nav-btn { font-size: 12px !important; padding: 7px 14px !important; }
 
-  /* Leistungen rows: stack vertically */
-  .leistungen-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-  }
-  .leistungen-desc {
-    width: 100% !important;
-    text-align: left !important;
-  }
+  /* Was ich mache: show toggle indicator on touch */
+  .wim-toggle { display: inline !important; }
 
   /* Projekte list: stack rows */
   .projekte-row {
