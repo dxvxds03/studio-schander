@@ -164,19 +164,23 @@ body {
   transition: background 0.18s ease, color 0.18s ease;
 }
 .nav-btn-arbeiten {
-  color: var(--dead-poet);
+  background: var(--dead-poet);
+  color: var(--cream);
   border-color: var(--dead-poet);
 }
 .nav-btn-arbeiten:hover {
-  background: var(--dead-poet) !important;
+  background: var(--negroni) !important;
+  border-color: var(--negroni) !important;
   color: var(--cream) !important;
 }
 .nav-btn-kontakt {
-  color: var(--negroni);
+  background: var(--negroni);
+  color: var(--cream);
   border-color: var(--negroni);
 }
 .nav-btn-kontakt:hover {
-  background: var(--negroni) !important;
+  background: var(--ink) !important;
+  border-color: var(--ink) !important;
   color: var(--cream) !important;
 }
 
