@@ -554,6 +554,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               document.getElementById('leistungen')?.scrollIntoView({ behavior: 'smooth' })
             }
             aria-label="Zu Was ich mache scrollen"
+            className="hero-scroll-btn"
             style={{
               width: 'clamp(56px, 7vw, 84px)',
               height: 'clamp(56px, 7vw, 84px)',
@@ -566,6 +567,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
+              pointerEvents: 'auto',
               transition: 'background 0.18s ease, color 0.18s ease',
             }}
             onMouseEnter={e => {

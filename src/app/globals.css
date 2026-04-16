@@ -116,14 +116,16 @@ body {
   filter: brightness(1.08) saturate(1.1);
 }
 
-/* Was ich mache — pulsing CTA button */
-@keyframes pulseOrange {
-  0%   { box-shadow: 0 0 0 0 rgba(232,51,26,0.45); }
-  65%  { box-shadow: 0 0 0 22px rgba(232,51,26,0); }
-  100% { box-shadow: 0 0 0 0 rgba(232,51,26,0); }
+/* Pulsing scale — Schreib mir + hero scroll button */
+@keyframes pulseScale {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.04); }
 }
 .schreib-mir-btn {
-  animation: pulseOrange 2.4s ease-out infinite;
+  animation: pulseScale 2.4s ease-in-out infinite;
+}
+.hero-scroll-btn {
+  animation: pulseScale 2.4s ease-in-out infinite;
 }
 
 /* Nav buttons */

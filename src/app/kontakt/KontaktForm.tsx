@@ -67,7 +67,7 @@ export default function KontaktForm() {
   return (
     <section
       style={{
-        paddingTop: 'clamp(96px, 14vw, 160px)',
+        paddingTop: 'clamp(130px, 14vw, 160px)',
         paddingBottom: 'clamp(72px, 10vw, 140px)',
         paddingLeft: 'clamp(16px, 2vw, 24px)',
         paddingRight: 'clamp(16px, 2vw, 24px)',

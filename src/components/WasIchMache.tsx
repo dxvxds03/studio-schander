@@ -89,6 +89,7 @@ export default function WasIchMache() {
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
+          borderTop: '1px solid var(--faint)',
         }}
       >
         {/* Heading — cream background */}
