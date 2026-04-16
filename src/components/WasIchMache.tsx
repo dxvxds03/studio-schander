@@ -69,6 +69,11 @@ const ITEMS = [
 
 const px = 'clamp(16px, 2vw, 24px)'
 
+// Dark section colors
+const DARK_BG = '#34160F'
+const CREAM = '#F4F2ED'
+const ORANGE = '#E8331A'
+
 export default function WasIchMache() {
   const [activeKey, setActiveKey] = useState<string | null>(null)
   const [hoveredKey, setHoveredKey] = useState<string | null>(null)
@@ -77,16 +82,17 @@ export default function WasIchMache() {
 
   return (
     <>
+      {/* ── Dark section: heading + accordion ────────────────────── */}
       <section
         id="leistungen"
         style={{
           paddingTop: 'clamp(80px, 12vw, 160px)',
           position: 'relative',
           zIndex: 46,
-          background: 'var(--cream)',
+          background: DARK_BG,
         }}
       >
-        {/* Section headline — typographic statement */}
+        {/* Section headline */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,16 +103,15 @@ export default function WasIchMache() {
           <h2
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 800,
               fontSize: 'clamp(68px, 11vw, 152px)',
               letterSpacing: '-0.04em',
               lineHeight: 0.92,
               margin: 0,
+              color: CREAM,
             }}
           >
-            <span style={{ fontWeight: 400, color: 'var(--muted)', display: 'block' }}>Was ich</span>
-            <span style={{ fontWeight: 800, color: 'var(--ink)', display: 'block' }}>
-              Mache<span style={{ color: 'var(--dead-poet)' }}>.</span>
-            </span>
+            Was ich Mache<span style={{ color: ORANGE }}>.</span>
           </h2>
         </motion.div>
 
@@ -128,9 +133,8 @@ export default function WasIchMache() {
                 onMouseEnter={() => setHoveredKey(item.key)}
                 onMouseLeave={() => setHoveredKey(null)}
                 style={{
-                  borderTop: '1px solid var(--faint)',
+                  borderTop: `1px solid rgba(244,242,237,0.1)`,
                   cursor: 'pointer',
-                  transition: 'background 0.2s ease',
                 }}
               >
                 {/* Title row */}
@@ -150,24 +154,23 @@ export default function WasIchMache() {
                       letterSpacing: '-0.035em',
                       lineHeight: 1,
                       textTransform: 'uppercase',
-                      color: highlight ? 'var(--dead-poet)' : 'var(--ink)',
+                      color: highlight ? ORANGE : CREAM,
                       margin: 0,
                       transition: 'color 0.2s ease, text-shadow 0.2s ease',
                       textShadow: isHovered && !isActive
-                        ? '0 0 40px rgba(232,51,26,0.35), 0 0 80px rgba(232,51,26,0.15)'
+                        ? `0 0 40px rgba(232,51,26,0.5), 0 0 80px rgba(232,51,26,0.2)`
                         : 'none',
                     }}
                   >
                     {item.title}
                   </h3>
 
-                  {/* Toggle indicator — always visible */}
                   <span
                     style={{
                       fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
                       fontWeight: 800,
                       fontSize: 'clamp(24px, 4vw, 40px)',
-                      color: highlight ? 'var(--dead-poet)' : 'var(--muted)',
+                      color: highlight ? ORANGE : 'rgba(244,242,237,0.35)',
                       lineHeight: 1,
                       flexShrink: 0,
                       marginLeft: '16px',
@@ -208,7 +211,7 @@ export default function WasIchMache() {
                                 fontFamily: '"Source Code Pro", monospace',
                                 fontSize: 'clamp(13px, 1.2vw, 17px)',
                                 lineHeight: 1.75,
-                                color: 'var(--ink)',
+                                color: 'rgba(244,242,237,0.7)',
                                 margin: 0,
                               }}
                             >
@@ -228,8 +231,8 @@ export default function WasIchMache() {
                                   fontSize: '10px',
                                   letterSpacing: '0.18em',
                                   textTransform: 'uppercase',
-                                  color: 'var(--muted)',
-                                  border: '1px solid var(--faint)',
+                                  color: 'rgba(244,242,237,0.45)',
+                                  border: '1px solid rgba(244,242,237,0.18)',
                                   padding: '4px 10px',
                                 }}
                               >
@@ -248,7 +251,7 @@ export default function WasIchMache() {
                             fontWeight: 800,
                             fontSize: 'clamp(15px, 1.6vw, 22px)',
                             letterSpacing: '-0.02em',
-                            color: 'var(--dead-poet)',
+                            color: ORANGE,
                             textDecoration: 'none',
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -266,11 +269,11 @@ export default function WasIchMache() {
           })}
 
           {/* Last border */}
-          <div style={{ borderTop: '1px solid var(--faint)' }} />
+          <div style={{ borderTop: '1px solid rgba(244,242,237,0.1)' }} />
         </div>
       </section>
 
-      {/* Closing CTA */}
+      {/* ── Cream section: closing CTA ───────────────────────────── */}
       <section
         style={{
           paddingTop: 'clamp(80px, 12vw, 160px)',
@@ -281,94 +284,80 @@ export default function WasIchMache() {
           overflow: 'hidden',
         }}
       >
-        {/* Big typographic question */}
+        {/* Text block */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(20px, 3vw, 40px)' }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(32px, 5vw, 64px)' }}
         >
-          <h2
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              letterSpacing: '-0.03em',
-              margin: '0 0 clamp(16px, 2vw, 28px)',
-            }}
-          >
-            <span
-              style={{
-                display: 'block',
-                fontWeight: 400,
-                fontSize: 'clamp(20px, 3vw, 44px)',
-                color: 'var(--muted)',
-                lineHeight: 1.3,
-                marginBottom: '0.15em',
-              }}
-            >
-              Du weißt noch nicht genau
-            </span>
-            <span
-              style={{
-                display: 'block',
-                fontWeight: 800,
-                fontSize: 'clamp(52px, 9.5vw, 136px)',
-                color: 'var(--ink)',
-                lineHeight: 0.9,
-              }}
-            >
-              was du brauchst<span style={{ color: 'var(--dead-poet)' }}>?</span>
-            </span>
-          </h2>
           <p
             style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: 'clamp(12px, 1.1vw, 15px)',
-              letterSpacing: '0.12em',
-              lineHeight: 1.7,
-              color: 'var(--muted)',
-              margin: 0,
-              maxWidth: '42ch',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(26px, 4vw, 56px)',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              color: 'var(--ink)',
+              margin: '0 0 0.4em',
             }}
           >
-            Das ist meistens der beste Startpunkt —<br />
+            Du weißt noch nicht genau
+            <br />
+            was du brauchst<span style={{ color: 'var(--dead-poet)' }}>?</span>
+          </p>
+          <p
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 400,
+              fontSize: 'clamp(26px, 4vw, 56px)',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              color: 'var(--muted)',
+              margin: 0,
+            }}
+          >
+            Das ist meistens der beste Startpunkt —
+            <br />
             kein fertiger Brief nötig.
           </p>
         </motion.div>
 
-        {/* Arrow cluster → flows toward button */}
-        <motion.div
-          initial={{ opacity: 0, x: -16 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 0, 0, 1] }}
-          style={{
-            padding: `0 ${px}`,
-            display: 'flex',
-            gap: '6px',
-            alignItems: 'center',
-            marginBottom: 'clamp(20px, 2.5vw, 36px)',
-            color: 'var(--dead-poet)',
-          }}
-        >
-          <Arrow direction="right" size={28} />
-          <Arrow direction="right" size={28} />
-          <Arrow direction="right" size={28} />
-        </motion.div>
-
-        {/* Full-width CTA button */}
+        {/* Arrows + button on the same line */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.55, delay: 0.25, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}` }}
+          transition={{ duration: 0.55, delay: 0.2, ease: [0.22, 0, 0, 1] }}
+          style={{
+            padding: `0 ${px}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'clamp(12px, 2vw, 24px)',
+          }}
         >
+          {/* Arrow cluster pointing into the button */}
+          <div
+            style={{
+              display: 'flex',
+              gap: '4px',
+              color: 'var(--dead-poet)',
+              flexShrink: 0,
+            }}
+          >
+            <Arrow direction="right" size={28} />
+            <Arrow direction="right" size={28} />
+            <Arrow direction="right" size={28} />
+          </div>
+
+          {/* Full-width CTA button */}
           <Link
             href="/kontakt"
             data-hover
             className="schreib-mir-btn"
             style={{
+              flex: 1,
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
               fontSize: 'clamp(28px, 5vw, 72px)',
