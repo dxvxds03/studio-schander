@@ -74,6 +74,22 @@ export default function Footer() {
             gap: '10px',
           }}
         >
+          <a
+            href="https://www.linkedin.com/in/david-schander-2a3999233/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-hover
+            style={{
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: '12px',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+              textDecoration: 'none',
+            }}
+          >
+            LinkedIn ↗
+          </a>
           <div style={{ display: 'flex', gap: '20px' }}>
             <a
               href="/impressum"
