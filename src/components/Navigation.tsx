@@ -7,7 +7,7 @@ import Arrow from './Arrow'
 export default function Navigation() {
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50"
+      className="fixed top-0 left-0 right-0 z-50 nav-root"
       style={{ background: 'transparent' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

@@ -164,23 +164,19 @@ body {
   transition: background 0.18s ease, color 0.18s ease;
 }
 .nav-btn-arbeiten {
-  background: var(--dead-poet);
-  color: var(--cream);
+  color: var(--dead-poet);
   border-color: var(--dead-poet);
 }
 .nav-btn-arbeiten:hover {
-  background: var(--negroni) !important;
-  border-color: var(--negroni) !important;
+  background: var(--dead-poet) !important;
   color: var(--cream) !important;
 }
 .nav-btn-kontakt {
-  background: var(--negroni);
-  color: var(--cream);
+  color: var(--negroni);
   border-color: var(--negroni);
 }
 .nav-btn-kontakt:hover {
-  background: var(--ink) !important;
-  border-color: var(--ink) !important;
+  background: var(--negroni) !important;
   color: var(--cream) !important;
 }
 
@@ -207,6 +203,9 @@ body {
 
 /* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 680px) {
+
+  /* Nav: solid cream background on mobile */
+  .nav-root { background: var(--cream) !important; }
 
   /* Nav buttons: stack vertically on small screens */
   .nav-ctas { flex-direction: column !important; gap: 8px !important; }

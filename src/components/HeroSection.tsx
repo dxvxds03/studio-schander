@@ -499,10 +499,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                     alt={project.title}
                     draggable={false}
                     style={{
-                      height: 'clamp(240px, 34vh, 432px)',
+                      height: 'clamp(240px, 34vh, 540px)',
                       width: 'auto',
                       display: 'block',
-                      maxWidth: '480px',
                     }}
                   />
                   <div className="card-hover-ring" />
