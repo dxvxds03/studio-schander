@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import Arrow from './Arrow'
@@ -70,31 +70,10 @@ const ITEMS = [
 const px = 'clamp(16px, 2vw, 24px)'
 
 export default function WasIchMache() {
-  const [isTouch, setIsTouch] = useState(false)
-  const [activeKey, setActiveKey] = useState<string | null>('web')
-  const [hasInteracted, setHasInteracted] = useState(false)
+  const [activeKey, setActiveKey] = useState<string | null>(null)
+  const [hoveredKey, setHoveredKey] = useState<string | null>(null)
 
-  useEffect(() => {
-    setIsTouch(!window.matchMedia('(hover: hover) and (pointer: fine)').matches)
-  }, [])
-
-  const handleMouseEnter = (key: string) => {
-    if (isTouch) return
-    setActiveKey(key)
-    if (!hasInteracted) setHasInteracted(true)
-  }
-
-  const handleSectionLeave = () => {
-    if (isTouch) return
-    setActiveKey(null)
-  }
-
-  const handleClick = (key: string) => {
-    if (!isTouch) return
-    setActiveKey(prev => (prev === key ? null : key))
-  }
-
-  const isDimming = hasInteracted && activeKey !== null
+  const toggle = (key: string) => setActiveKey(prev => (prev === key ? null : key))
 
   return (
     <>
@@ -123,21 +102,22 @@ export default function WasIchMache() {
         </p>
 
         {/* Accordion */}
-        <div onMouseLeave={handleSectionLeave}>
-          {ITEMS.map((item, i) => {
+        <div>
+          {ITEMS.map((item) => {
             const isActive = activeKey === item.key
-            const isDimmed = isDimming && !isActive
+            const isHovered = hoveredKey === item.key
+            const highlight = isActive || isHovered
 
             return (
               <div
                 key={item.key}
-                onMouseEnter={() => handleMouseEnter(item.key)}
-                onClick={() => handleClick(item.key)}
+                onClick={() => toggle(item.key)}
+                onMouseEnter={() => setHoveredKey(item.key)}
+                onMouseLeave={() => setHoveredKey(null)}
                 style={{
                   borderTop: '1px solid var(--faint)',
-                  opacity: isDimmed ? 0.35 : 1,
-                  transition: 'opacity 0.25s ease',
-                  cursor: isTouch ? 'pointer' : 'default',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s ease',
                 }}
               >
                 {/* Title row */}
@@ -157,21 +137,24 @@ export default function WasIchMache() {
                       letterSpacing: '-0.035em',
                       lineHeight: 1,
                       textTransform: 'uppercase',
-                      color: 'var(--ink)',
+                      color: highlight ? 'var(--dead-poet)' : 'var(--ink)',
                       margin: 0,
+                      transition: 'color 0.2s ease, text-shadow 0.2s ease',
+                      textShadow: isHovered && !isActive
+                        ? '0 0 40px rgba(232,51,26,0.35), 0 0 80px rgba(232,51,26,0.15)'
+                        : 'none',
                     }}
                   >
                     {item.title}
                   </h3>
 
-                  {/* Mobile toggle indicator */}
+                  {/* Toggle indicator — always visible */}
                   <span
-                    className="wim-toggle"
                     style={{
                       fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
                       fontWeight: 800,
                       fontSize: 'clamp(24px, 4vw, 40px)',
-                      color: 'var(--muted)',
+                      color: highlight ? 'var(--dead-poet)' : 'var(--muted)',
                       lineHeight: 1,
                       flexShrink: 0,
                       marginLeft: '16px',
