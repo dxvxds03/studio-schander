@@ -160,17 +160,15 @@ export default async function ProjektePage() {
                       fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
                       fontWeight: 400,
                       fontStyle: 'italic',
-                      fontSize: 'clamp(13px, 1.3vw, 20px)',
-                      letterSpacing: '-0.01em',
-                      lineHeight: 1.4,
-                      color: 'var(--muted)',
-                      marginTop: 'clamp(4px, 0.5vw, 8px)',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
+                      fontSize: 'clamp(15px, 1.8vw, 28px)',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.3,
+                      color: 'var(--dead-poet)',
+                      marginTop: 'clamp(6px, 0.7vw, 12px)',
+                      maxWidth: '36ch',
                     }}
                   >
-                    <span style={{ color: 'var(--dead-poet)', fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em' }}>"</span>
+                    <span style={{ fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em' }}>"</span>
                     {project.quote}
                   </p>
                 )}
