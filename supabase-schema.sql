@@ -13,6 +13,8 @@ create table if not exists projects (
   images jsonb not null default '[]'::jsonb,
   "order" integer not null default 0,
   featured boolean not null default false,
+  quote text,
+  show_quote_on_list boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

@@ -38,6 +38,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       featured: body.featured ?? false,
       show_in_carousel: body.showInCarousel ?? true,
       project_type: body.projectType ?? 'client',
+      quote: body.quote ?? null,
+      show_quote_on_list: body.showQuoteOnList ?? false,
     })
     .eq('id', parseInt(params.id))
     .select()

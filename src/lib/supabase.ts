@@ -27,6 +27,8 @@ export interface Project {
   featured: boolean
   show_in_carousel: boolean
   project_type: 'client' | 'schander' | 'personal' | null
+  quote: string | null
+  show_quote_on_list: boolean
   created_at: string
   updated_at: string
 }

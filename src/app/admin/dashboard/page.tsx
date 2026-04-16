@@ -44,6 +44,8 @@ interface Project {
   tags: string[]
   show_in_carousel: boolean
   project_type: 'client' | 'schander' | 'personal' | null
+  quote: string | null
+  show_quote_on_list: boolean
 }
 
 const emptyForm = {
@@ -58,6 +60,8 @@ const emptyForm = {
   featured: false,
   showInCarousel: true,
   projectType: 'client' as 'client' | 'schander' | 'personal',
+  quote: '',
+  showQuoteOnList: false,
 }
 
 // ── Sortable image thumbnail ────────────────────────────────────────────────
@@ -289,6 +293,8 @@ export default function Dashboard() {
       order: parseInt(form.order) || 0,
       featured: form.featured,
       showInCarousel: form.showInCarousel,
+      quote: form.quote || null,
+      showQuoteOnList: form.showQuoteOnList,
     }
 
     const url = editingId ? `/api/projects/${editingId}` : '/api/projects'
@@ -339,6 +345,8 @@ export default function Dashboard() {
       featured: p.featured,
       showInCarousel: p.show_in_carousel !== false,
       projectType: (p.project_type ?? 'client') as 'client' | 'schander' | 'personal',
+      quote: p.quote || '',
+      showQuoteOnList: p.show_quote_on_list ?? false,
     })
     setExtraImages(p.images ?? [])
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -496,6 +504,28 @@ export default function Dashboard() {
             <div>
               <label style={lbl}>Beschreibung</label>
               <textarea style={{ ...inp, minHeight: '80px', resize: 'vertical' }} value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} placeholder="Kurze Projektbeschreibung…" />
+            </div>
+
+            <div>
+              <label style={lbl}>Projektzitat (optional)</label>
+              <textarea
+                style={{ ...inp, minHeight: '72px', resize: 'vertical' }}
+                value={form.quote}
+                onChange={(e) => setForm((p) => ({ ...p, quote: e.target.value }))}
+                placeholder="Die Fragestellung oder Denkweise hinter dem Projekt…"
+              />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '8px' }}>
+                <input
+                  type="checkbox"
+                  id="showQuoteOnList"
+                  checked={form.showQuoteOnList}
+                  onChange={(e) => setForm((p) => ({ ...p, showQuoteOnList: e.target.checked }))}
+                  style={{ width: '14px', height: '14px', cursor: 'pointer' }}
+                />
+                <label htmlFor="showQuoteOnList" style={{ ...lbl, marginBottom: 0, cursor: 'pointer' }}>
+                  Zitat auf Projektliste anzeigen
+                </label>
+              </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>

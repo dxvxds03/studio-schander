@@ -269,6 +269,44 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         </div>
       </section>
 
+      {/* Quote section */}
+      {project.quote && (
+        <section
+          style={{
+            padding: 'clamp(48px, 8vw, 120px) clamp(16px, 2vw, 24px)',
+            borderTop: '1px solid var(--faint)',
+            maxWidth: '900px',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 400,
+              fontStyle: 'italic',
+              fontSize: 'clamp(22px, 3.5vw, 52px)',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.3,
+              color: 'var(--ink)',
+              margin: 0,
+            }}
+          >
+            <span
+              style={{
+                color: 'var(--dead-poet)',
+                fontStyle: 'normal',
+                fontWeight: 800,
+                marginRight: '0.15em',
+                fontSize: '1.1em',
+                lineHeight: 1,
+              }}
+            >
+              "
+            </span>
+            {project.quote}
+          </p>
+        </section>
+      )}
+
       <Footer />
     </main>
   )
