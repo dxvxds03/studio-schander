@@ -295,7 +295,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
               scale: 0.86 + 0.14 * t,
               rotate: baseRot * (1 - t * 0.75),
               boxShadow: t > 0.04
-                ? `0 0 ${Math.round(t * 90)}px rgba(232,51,26,${(t * 0.5).toFixed(2)}), 0 0 ${Math.round(t * 45)}px rgba(232,51,26,${(t * 0.28).toFixed(2)})`
+                ? `0 0 ${Math.round(t * 90)}px rgba(25,25,23,${(t * 0.45).toFixed(2)}), 0 0 ${Math.round(t * 45)}px rgba(25,25,23,${(t * 0.25).toFixed(2)})`
                 : 'none',
             })
           })

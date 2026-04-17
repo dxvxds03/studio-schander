@@ -13,6 +13,7 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
   const padding  = size === 'sm' ? '3px 8px' : '4px 11px'
 
   if (projectType === 'schander') {
+    const tagColor = isLight ? '#F4F2ED' : '#191917'
     return (
       <span
         style={{
@@ -23,15 +24,15 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           fontSize,
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          color: '#E8331A',
-          border: '1px solid #E8331A',
+          color: tagColor,
+          border: `1px solid ${tagColor}`,
           padding,
           whiteSpace: 'nowrap',
           lineHeight: 1,
         }}
       >
         <svg width="8" height="8" viewBox="0 0 30 30" fill="none" style={{ flexShrink: 0 }}>
-          <circle cx="15" cy="15" r="6" fill="#E8331A"/>
+          <circle cx="15" cy="15" r="6" fill={tagColor}/>
           {[0,45,90,135,180,225,270,315].map((deg) => (
             <ellipse
               key={deg}
@@ -39,7 +40,7 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
               cy={15 + 11 * Math.sin((deg * Math.PI) / 180)}
               rx="4.5" ry="3"
               transform={`rotate(${deg} ${15 + 11 * Math.cos((deg * Math.PI) / 180)} ${15 + 11 * Math.sin((deg * Math.PI) / 180)})`}
-              fill="#E8331A"
+              fill={tagColor}
             />
           ))}
         </svg>
@@ -81,8 +82,8 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           color: isLight ? '#F4F2ED' : '#191917',
-          background: isLight ? 'rgba(244,242,237,0.15)' : 'rgba(232,88,26,0.08)',
-          border: `1.5px solid ${isLight ? 'rgba(244,242,237,0.6)' : '#E8581A'}`,
+          background: isLight ? 'rgba(244,242,237,0.15)' : 'rgba(25,25,23,0.08)',
+          border: `1.5px solid ${isLight ? 'rgba(244,242,237,0.6)' : 'rgba(25,25,23,0.45)'}`,
           padding,
           whiteSpace: 'nowrap',
           lineHeight: 1,
