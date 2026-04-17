@@ -8,7 +8,7 @@ export default function Navigation() {
   return (
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50 nav-root"
-      style={{ background: 'transparent' }}
+      style={{ background: 'var(--cream)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.5 }}
