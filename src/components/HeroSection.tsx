@@ -66,7 +66,7 @@ const GAP = 36
 // Organic tilts per card position
 const CARD_ROTS = [-4.0, 2.5, -1.8, 3.5, -3.0, 2.0, -2.5, 3.2]
 
-const CYCLING_WORDS = ['FREELANCE.', 'SCHANDER.', 'KREATIV.', 'STUDIO.', 'IDEEN.', 'DESIGN.']
+const CYCLING_WORDS = ['Freelance.', 'Schander.', 'Kreativ.', 'Studio.', 'Ideen.', 'Design.']
 
 function CyclingWord() {
   const [idx, setIdx] = useState(0)
@@ -520,7 +520,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{ whiteSpace: 'nowrap', color: '#E8331A' }}>PORTFOLIO.</span>
+            <span style={{ whiteSpace: 'nowrap', color: '#E8331A' }}>Portfolio.</span>
           </h1>
 
           {/* Scroll-down button → #leistungen */}
