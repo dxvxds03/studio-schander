@@ -41,24 +41,38 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           borderTop: '1px solid var(--faint)',
         }}
       >
-        {/* Heading — cream background */}
+        {/* Heading — fluid, stets volle Breite minus Padding */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(24px, 3vw, 40px)' }}
+          style={{
+            paddingLeft: px,
+            paddingRight: px,
+            marginBottom: 'clamp(24px, 3vw, 40px)',
+          }}
         >
           <h2
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(36px, 7.5vw, 108px)',
+              /*
+               * "WAS ICH MACHE." = 15 Zeichen.
+               * Cabinet Grotesk 800 uppercase hat ein Breiten-Verhältnis
+               * von ~0.62 zum Font-Size. Padding ≈ 2 * 4vw = 8vw.
+               * Verfügbare Breite ≈ 92vw.
+               * font-size = 92vw / (15 * 0.62) ≈ 9.89vw.
+               * Kein cap (9999px) damit die Schrift auf breiten Screens
+               * weiter wächst. Floor 36px für kleine Screens.
+               */
+              fontSize: 'clamp(36px, 9.89vw, 9999px)',
               letterSpacing: '-0.035em',
               lineHeight: 1,
               margin: 0,
               color: 'var(--ink)',
               textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
             }}
           >
             Was ich Mache<span style={{ color: ORANGE }}>.</span>
