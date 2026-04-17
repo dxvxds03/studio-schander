@@ -20,65 +20,43 @@ interface HeroProject {
   client?: string | null
 }
 
-const CIRCLE_TEXT = 'WEITERE PROJEKTE · WEITERE PROJEKTE · WEITERE PROJEKTE · '
-
 function CircularTextButton() {
-  const R = 82
-  const pathD = `M 100,100 m -${R},0 a ${R},${R} 0 1,1 ${R * 2},0 a ${R},${R} 0 1,1 -${R * 2},0`
-
   return (
     <a
       href="/projekte"
       data-hover
       data-end=""
       className="hero-carousel-card"
-      style={{ flexShrink: 0, display: 'block', textDecoration: 'none', transformOrigin: 'center center', pointerEvents: 'auto' }}
+      style={{
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textDecoration: 'none',
+        transformOrigin: 'center center',
+        pointerEvents: 'auto',
+        width: 'clamp(180px, 22vw, 320px)',
+        height: 'clamp(180px, 22vw, 320px)',
+        borderRadius: '50%',
+        border: '1.5px solid var(--ink)',
+        background: 'var(--cream)',
+        flexDirection: 'column',
+        gap: 'clamp(6px, 0.8vw, 12px)',
+      }}
     >
-      <div className="hero-end-btn" style={{ width: '180px', height: '180px', position: 'relative' }}>
-        {/* Rotating text ring */}
-        <motion.svg
-          viewBox="0 0 200 200"
-          style={{ width: '180px', height: '180px', position: 'absolute', inset: 0 }}
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
-        >
-          <defs>
-            <path id="circleTextPath" d={pathD} />
-          </defs>
-          <text
-            style={{
-              fontSize: '10.5px',
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
-              fontWeight: 800,
-              letterSpacing: '0.13em',
-              fill: 'var(--ink)',
-              textTransform: 'uppercase',
-            } as React.CSSProperties}
-          >
-            <textPath href="#circleTextPath" startOffset="0%">
-              {CIRCLE_TEXT}
-            </textPath>
-          </text>
-        </motion.svg>
-
-        {/* Static flower in center */}
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '110px',
-          height: '110px',
-          borderRadius: '50%',
-          border: '1.5px solid var(--ink)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'var(--cream)',
-        }}>
-          <FlowerIcon color="var(--negroni)" size={60} />
-        </div>
-      </div>
+      <FlowerIcon color="var(--negroni)" size={48} />
+      <span style={{
+        fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
+        fontWeight: 800,
+        fontSize: 'clamp(11px, 1.2vw, 17px)',
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        color: 'var(--ink)',
+        textAlign: 'center',
+        lineHeight: 1.2,
+      }}>
+        Weitere<br />Projekte
+      </span>
     </a>
   )
 }
@@ -261,8 +239,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
 
-  // Shared state for touch swipe handler — populated after images load + GSAP setup
-  const carouselState = useRef<{ txPerCard: number[]; snapFracs: number[]; total: number } | null>(null)
 
   useEffect(() => {
     if (!sectionRef.current || !carouselRef.current || n === 0) return
@@ -302,10 +278,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         // Snap fractions: 0 … 1 mapped to each card
         const snapFracs  = txPerCard.map(dx => Math.abs(dx) / (totalMove || 1))
 
-        // Expose for touch swipe handler
-        carouselState.current = { txPerCard, snapFracs, total }
-
-        // ── Glow + rotation + name opacity ─────────────────────────
+// ── Glow + rotation + name opacity ─────────────────────────
         const applyGlow = (rawIdx: number) => {
           cards.forEach((card, i) => {
             const dist = Math.abs(rawIdx - i)
@@ -377,55 +350,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
     return () => { ctx?.revert() }
   }, [n])
 
-  // Touch swipe → scroll to next/prev card (preserves GSAP scroll animation)
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
-
-    let startX = 0
-    let startY = 0
-
-    const onTouchStart = (e: TouchEvent) => {
-      startX = e.touches[0].clientX
-      startY = e.touches[0].clientY
-    }
-
-    const onTouchEnd = (e: TouchEvent) => {
-      const state = carouselState.current
-      if (!state) return
-
-      const deltaX = e.changedTouches[0].clientX - startX
-      const deltaY = e.changedTouches[0].clientY - startY
-
-      // Only act on predominantly horizontal swipes with enough distance
-      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY)) return
-
-      const { snapFracs, total } = state
-      const sectionTop = section.offsetTop
-      const sectionScrollable = section.scrollHeight - window.innerHeight
-      if (sectionScrollable <= 0) return
-
-      const progress = Math.max(0, Math.min(1, (window.scrollY - sectionTop) / sectionScrollable))
-      const currentIdx = Math.round(progress * (total - 1))
-
-      const targetIdx = deltaX < 0
-        ? Math.min(currentIdx + 1, total - 1)  // swipe left → next
-        : Math.max(currentIdx - 1, 0)           // swipe right → prev
-
-      if (targetIdx === currentIdx) return
-
-      const targetScrollY = sectionTop + snapFracs[targetIdx] * sectionScrollable
-      window.scrollTo({ top: targetScrollY, behavior: 'smooth' })
-    }
-
-    section.addEventListener('touchstart', onTouchStart, { passive: true })
-    section.addEventListener('touchend', onTouchEnd, { passive: true })
-
-    return () => {
-      section.removeEventListener('touchstart', onTouchStart)
-      section.removeEventListener('touchend', onTouchEnd)
-    }
-  }, [n])
 
   if (n === 0) return null
 
@@ -596,7 +520,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{ whiteSpace: 'nowrap', color: 'var(--ink)' }}>Portfolio.</span>
+            <span style={{ whiteSpace: 'nowrap', color: '#E8331A' }}>Portfolio.</span>
           </h1>
 
           {/* Scroll-down button → #leistungen */}
