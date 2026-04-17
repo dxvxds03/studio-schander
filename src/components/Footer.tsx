@@ -4,7 +4,7 @@ export default function Footer() {
       style={{
         position: 'relative',
         zIndex: 46,
-        background: 'var(--cream)',
+        background: '#E8331A',
       }}
     >
       {/* Brand colors — top */}
@@ -141,7 +141,7 @@ export default function Footer() {
               fontSize: '12px',
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--muted)',
+              color: 'rgba(25,25,23,0.55)',
               marginTop: '8px',
             }}
           >
@@ -154,7 +154,7 @@ export default function Footer() {
               fontFamily: '"Source Code Pro", monospace',
               fontSize: '12px',
               letterSpacing: '0.04em',
-              color: 'var(--muted)',
+              color: 'rgba(25,25,23,0.55)',
               textDecoration: 'none',
               display: 'inline-block',
               marginTop: '6px',
@@ -183,7 +183,7 @@ export default function Footer() {
               fontSize: '12px',
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              color: 'var(--muted)',
+              color: 'rgba(25,25,23,0.55)',
               textDecoration: 'none',
             }}
           >
@@ -198,7 +198,7 @@ export default function Footer() {
                 fontSize: '12px',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: 'var(--muted)',
+                color: 'rgba(25,25,23,0.55)',
                 textDecoration: 'none',
               }}
             >
@@ -212,7 +212,7 @@ export default function Footer() {
                 fontSize: '12px',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color: 'var(--muted)',
+                color: 'rgba(25,25,23,0.55)',
                 textDecoration: 'none',
               }}
             >
@@ -223,7 +223,7 @@ export default function Footer() {
             style={{
               fontFamily: '"Source Code Pro", monospace',
               fontSize: '11px',
-              color: 'var(--muted)',
+              color: 'rgba(25,25,23,0.55)',
             }}
           >
             © {new Date().getFullYear()} David Schander

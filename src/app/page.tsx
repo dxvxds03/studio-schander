@@ -25,8 +25,8 @@ export default async function HomePage() {
   const services = leistungen ?? []
 
   return (
-    <main>
-      <Navigation />
+    <main style={{ background: '#E8331A' }}>
+      <Navigation background="#E8331A" />
       <HeroSection projects={all} />
       <StatementBlock />
       <WasIchMache items={services} />

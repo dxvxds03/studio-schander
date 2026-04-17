@@ -18,7 +18,6 @@ export default function StatementBlock() {
     <section
       ref={sectionRef}
       style={{
-        background: 'var(--cream)',
         padding: 'clamp(80px, 18vw, 340px) clamp(80px, 18vw, 340px)',
         display: 'flex',
         justifyContent: 'center',
@@ -41,7 +40,7 @@ export default function StatementBlock() {
             letterSpacing: '0.12em',
             lineHeight: 1.9,
             textTransform: 'uppercase',
-            color: 'var(--dead-poet)',
+            color: 'var(--ink)',
             textAlign: 'justify',
             maxWidth: 'clamp(260px, 34ch, 420px)',
             width: '100%',

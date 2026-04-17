@@ -36,7 +36,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
         style={{
           position: 'relative',
           zIndex: 46,
-          background: 'var(--cream)',
+          background: '#E8331A',
         }}
       >
         {/* Heading — fluid, stets volle Breite minus Padding */}
@@ -85,7 +85,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
             ))}
             <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}>
               <motion.span
-                style={{ display: 'inline-block', color: ORANGE }}
+                style={{ display: 'inline-block', color: CREAM }}
                 variants={{
                   hidden: { y: '110%', rotate: 4 },
                   visible: {
@@ -262,7 +262,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           paddingBottom: 'clamp(64px, 9vw, 120px)',
           position: 'relative',
           zIndex: 46,
-          background: 'var(--cream)',
+          background: '#E8331A',
         }}
       >
         {/* Text block */}
@@ -286,7 +286,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           >
             Du weißt noch nicht genau
             <br />
-            was du brauchst<span style={{ color: ORANGE }}>?</span>
+            was du brauchst<span style={{ color: CREAM }}>?</span>
           </p>
           <p
             style={{
@@ -295,7 +295,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               fontSize: 'clamp(32px, 5vw, 72px)',
               letterSpacing: '-0.03em',
               lineHeight: 1.05,
-              color: 'var(--muted)',
+              color: 'rgba(25,25,23,0.5)',
               margin: 0,
             }}
           >
@@ -324,8 +324,8 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               textTransform: 'uppercase',
               textDecoration: 'none',
               color: CREAM,
-              background: ORANGE,
-              border: `2px solid ${ORANGE}`,
+              background: DARK_BG,
+              border: `2px solid ${DARK_BG}`,
               padding: '14px 28px',
               display: 'inline-flex',
               alignItems: 'center',
@@ -334,14 +334,14 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
             }}
             onMouseEnter={e => {
               const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = '#34160F'
-              el.style.borderColor = '#34160F'
+              el.style.background = 'var(--ink)'
+              el.style.borderColor = 'var(--ink)'
               el.style.color = CREAM
             }}
             onMouseLeave={e => {
               const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = ORANGE
-              el.style.borderColor = ORANGE
+              el.style.background = DARK_BG
+              el.style.borderColor = DARK_BG
               el.style.color = CREAM
             }}
           >

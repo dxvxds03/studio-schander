@@ -206,8 +206,7 @@ body {
 /* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 680px) {
 
-  /* Nav: solid cream background on mobile */
-  .nav-root { background: var(--cream) !important; }
+  /* Nav: solid background on mobile (inherits inline style from component) */
 
   /* Nav buttons: stack vertically on small screens */
   .nav-ctas { flex-direction: column !important; gap: 8px !important; }
