@@ -493,10 +493,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                   fontSize: 'clamp(12px, 1.3vw, 16px)',
                   letterSpacing: '0.01em',
                   lineHeight: 1,
-                  color: 'var(--cream)',
-                  background: 'var(--ink)',
-                  borderRadius: '100px',
-                  padding: '11px 18px 8px',
+                  color: 'var(--ink)',
                   whiteSpace: 'nowrap',
                   userSelect: 'none',
                   transition: 'opacity 0.3s ease',
@@ -505,7 +502,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 <ClientBadge
                   projectType={project.project_type ?? null}
                   client={project.client ?? null}
-                  variant="light"
+                  variant="dark"
                   size="sm"
                 />
                 <span>
