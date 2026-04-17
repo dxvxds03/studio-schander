@@ -20,7 +20,6 @@ export async function generateMetadata(
 
   if (!project) return {}
 
-  // title uses the root layout template: "Projektname — Studio Schander"
   const pageTitle = project.title
   const description = project.description
     ?? `${project.title}${project.year ? ` (${project.year})` : ''}${project.client ? ` · ${project.client}` : ''} — Ausgewählte Arbeit von Studio Schander.`
@@ -70,221 +69,233 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         <ProjectPinboard images={allImages} title={project.title} />
       )}
 
-      {/* Title + meta */}
+      {/* Title + meta
+          Outer wrapper: begrenzter max-width + symmetrisches Padding,
+          damit auf breiten Screens kein riesiges Loch in der Mitte entsteht.
+      */}
       <section
-        className="project-detail-grid"
         style={{
-          padding: 'clamp(40px, 6vw, 80px) clamp(16px, 2vw, 24px) clamp(64px, 10vw, 120px)',
-          display: 'grid',
-          gridTemplateColumns: '1fr minmax(min-content, min(340px, 38%))',
-          gap: 'clamp(24px, 4vw, 64px)',
-          alignItems: 'flex-start',
+          /* Horizontales Padding: großzügiger als vorher (min 24px, fluid 5vw, max 80px) */
+          padding: 'clamp(40px, 6vw, 80px) clamp(24px, 5vw, 80px) clamp(64px, 10vw, 120px)',
         }}
       >
-        {/* Left: title + description */}
-        <div style={{ minWidth: 0 }}>
-          {/* Back link */}
-          <a
-            href="/projekte"
-            data-hover
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: 'clamp(10px, 0.85vw, 12px)',
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: 'var(--muted)',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              marginBottom: 'clamp(20px, 3vw, 40px)',
-              padding: '8px 0',
-            }}
-          >
-            <Arrow direction="left" size={14} /> Alle Projekte
-          </a>
-
-          <h1
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-              fontWeight: 800,
-              fontSize: 'clamp(40px, 8vw, 120px)',
-              letterSpacing: '-0.045em',
-              lineHeight: 0.92,
-              color: 'var(--ink)',
-              textTransform: 'uppercase',
-              margin: 0,
-              overflowWrap: 'break-word',
-              wordBreak: 'break-word',
-              hyphens: 'auto',
-            }}
-            lang="de"
-          >
-            {project.title}
-          </h1>
-
-          {project.quote && (
-            <p
-              style={{
-                fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-                fontWeight: 400,
-                fontStyle: 'italic',
-                fontSize: 'clamp(20px, 3vw, 48px)',
-                letterSpacing: '-0.02em',
-                lineHeight: 1.25,
-                color: 'var(--dead-poet)',
-                marginTop: 'clamp(20px, 3vw, 40px)',
-                maxWidth: '22ch',
-              }}
-            >
-              <span style={{ fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em' }}>"</span>
-              {project.quote}
-            </p>
-          )}
-
-          {project.description && (
-            <p
-              style={{
-                fontFamily: '"Source Code Pro", monospace',
-                fontSize: 'clamp(13px, 1.1vw, 16px)',
-                lineHeight: 1.75,
-                color: 'var(--muted)',
-                marginTop: 'clamp(20px, 3vw, 36px)',
-                maxWidth: '56ch',
-              }}
-            >
-              {project.description}
-            </p>
-          )}
-        </div>
-
-        {/* Meta sidebar */}
+        {/* Max-width Container verhindert das "Loch" auf breiten Screens */}
         <div
-          className="project-meta"
+          className="project-detail-grid"
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '24px',
-            alignItems: 'flex-end',
-            textAlign: 'right',
-            paddingTop: 'clamp(48px, 7vw, 80px)',
-            flexShrink: 0,
+            maxWidth: '1400px',
+            marginInline: 'auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr minmax(min-content, min(360px, 35%))',
+            gap: 'clamp(32px, 5vw, 96px)',
+            alignItems: 'flex-start',
           }}
         >
-          {project.year && (
-            <div>
-              <p
-                style={{
-                  fontFamily: '"Source Code Pro", monospace',
-                  fontSize: '10px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--muted)',
-                  marginBottom: '4px',
-                }}
-              >
-                Jahr
-              </p>
-              <p
-                style={{
-                  fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
-                  fontWeight: 800,
-                  fontSize: 'clamp(18px, 2vw, 28px)',
-                  letterSpacing: '-0.02em',
-                  color: 'var(--ink)',
-                }}
-              >
-                {project.year}
-              </p>
-            </div>
-          )}
-
-          {(project.project_type || project.client) && (
-            <div>
-              <p
-                style={{
-                  fontFamily: '"Source Code Pro", monospace',
-                  fontSize: '10px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--muted)',
-                  marginBottom: '8px',
-                }}
-              >
-                {project.project_type === 'client' ? 'Kunde' : 'Projekt'}
-              </p>
-              <ClientBadge
-                projectType={project.project_type ?? null}
-                client={project.client ?? null}
-                variant="dark"
-                size="md"
-              />
-            </div>
-          )}
-
-          {tags.length > 0 && (
-            <div style={{ maxWidth: '100%' }}>
-              <p
-                style={{
-                  fontFamily: '"Source Code Pro", monospace',
-                  fontSize: '10px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--muted)',
-                  marginBottom: '8px',
-                }}
-              >
-                Tags
-              </p>
-              <div
-                className="flex-end-tags"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'flex-end',
-                  gap: '6px',
-                  maxWidth: '100%',
-                }}
-              >
-                {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    style={{
-                      fontFamily: '"Source Code Pro", monospace',
-                      fontSize: '10px',
-                      letterSpacing: '0.14em',
-                      textTransform: 'uppercase',
-                      color: 'var(--dead-poet)',
-                      border: '1px solid var(--dead-poet)',
-                      padding: '4px 8px',
-                      lineHeight: 1.4,
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {project.link && (
+          {/* Left: title + description */}
+          <div style={{ minWidth: 0 }}>
+            {/* Back link */}
             <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/projekte"
               data-hover
-              className="btn-negroni"
               style={{
-                fontSize: '12px',
-                letterSpacing: '0.06em',
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: 'clamp(10px, 0.85vw, 12px)',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
-                padding: '10px 20px',
+                color: 'var(--muted)',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                marginBottom: 'clamp(20px, 3vw, 40px)',
+                padding: '8px 0',
               }}
             >
-              Projekt ansehen ↗
+              <Arrow direction="left" size={14} /> Alle Projekte
             </a>
-          )}
+
+            <h1
+              style={{
+                fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                fontWeight: 800,
+                fontSize: 'clamp(40px, 8vw, 120px)',
+                letterSpacing: '-0.045em',
+                lineHeight: 0.92,
+                color: 'var(--ink)',
+                textTransform: 'uppercase',
+                margin: 0,
+                overflowWrap: 'break-word',
+                wordBreak: 'break-word',
+                hyphens: 'auto',
+              }}
+              lang="de"
+            >
+              {project.title}
+            </h1>
+
+            {project.quote && (
+              <p
+                style={{
+                  fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+                  fontWeight: 400,
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(20px, 3vw, 48px)',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.25,
+                  color: 'var(--dead-poet)',
+                  marginTop: 'clamp(20px, 3vw, 40px)',
+                  maxWidth: '22ch',
+                }}
+              >
+                <span style={{ fontStyle: 'normal', fontWeight: 800, marginRight: '0.1em' }}>"</span>
+                {project.quote}
+              </p>
+            )}
+
+            {project.description && (
+              <p
+                style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: 'clamp(13px, 1.1vw, 16px)',
+                  lineHeight: 1.75,
+                  color: 'var(--muted)',
+                  marginTop: 'clamp(20px, 3vw, 36px)',
+                  maxWidth: '56ch',
+                }}
+              >
+                {project.description}
+              </p>
+            )}
+          </div>
+
+          {/* Meta sidebar */}
+          <div
+            className="project-meta"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '24px',
+              alignItems: 'flex-end',
+              textAlign: 'right',
+              paddingTop: 'clamp(48px, 7vw, 80px)',
+              flexShrink: 0,
+            }}
+          >
+            {project.year && (
+              <div>
+                <p
+                  style={{
+                    fontFamily: '"Source Code Pro", monospace',
+                    fontSize: '10px',
+                    letterSpacing: '0.22em',
+                    textTransform: 'uppercase',
+                    color: 'var(--muted)',
+                    marginBottom: '4px',
+                  }}
+                >
+                  Jahr
+                </p>
+                <p
+                  style={{
+                    fontFamily: '"Cabinet Grotesk", "Source Code Pro", monospace',
+                    fontWeight: 800,
+                    fontSize: 'clamp(18px, 2vw, 28px)',
+                    letterSpacing: '-0.02em',
+                    color: 'var(--ink)',
+                  }}
+                >
+                  {project.year}
+                </p>
+              </div>
+            )}
+
+            {(project.project_type || project.client) && (
+              <div>
+                <p
+                  style={{
+                    fontFamily: '"Source Code Pro", monospace',
+                    fontSize: '10px',
+                    letterSpacing: '0.22em',
+                    textTransform: 'uppercase',
+                    color: 'var(--muted)',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {project.project_type === 'client' ? 'Kunde' : 'Projekt'}
+                </p>
+                <ClientBadge
+                  projectType={project.project_type ?? null}
+                  client={project.client ?? null}
+                  variant="dark"
+                  size="md"
+                />
+              </div>
+            )}
+
+            {tags.length > 0 && (
+              <div style={{ maxWidth: '100%' }}>
+                <p
+                  style={{
+                    fontFamily: '"Source Code Pro", monospace',
+                    fontSize: '10px',
+                    letterSpacing: '0.22em',
+                    textTransform: 'uppercase',
+                    color: 'var(--muted)',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Tags
+                </p>
+                <div
+                  className="flex-end-tags"
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'flex-end',
+                    gap: '6px',
+                    maxWidth: '100%',
+                  }}
+                >
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        fontFamily: '"Source Code Pro", monospace',
+                        fontSize: '10px',
+                        letterSpacing: '0.14em',
+                        textTransform: 'uppercase',
+                        color: 'var(--dead-poet)',
+                        border: '1px solid var(--dead-poet)',
+                        padding: '4px 8px',
+                        lineHeight: 1.4,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-hover
+                className="btn-negroni"
+                style={{
+                  fontSize: '12px',
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  padding: '10px 20px',
+                }}
+              >
+                Projekt ansehen ↗
+              </a>
+            )}
+          </div>
         </div>
       </section>
 
