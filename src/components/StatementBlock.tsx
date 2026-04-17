@@ -1,17 +1,48 @@
-import React from 'react'
+'use client'
+
+import { useRef, useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+const WORDS = [
+  'Ich', 'designe', 'seit', 'ich', '16', 'bin.', 'Inzwischen', 'studiere', 'ich',
+  'Digitalisierungsmanagement,', 'baue', 'nebenbei', 'eigene', 'Marken',
+  'und', 'schreibe', 'gerade', 'meine', 'Bachelorarbeit', 'darüber', 'wie',
+  'KI', 'die', 'Suche', 'verändert.', 'Einfach', 'weil', 'mich', 'das', 'alles',
+  'interessiert.', 'So', 'arbeite', 'ich', 'auch', 'mit', 'Kunden.',
+]
 
 export default function StatementBlock() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(() => {
+      const spans = gsap.utils.toArray<HTMLElement>('.statement-word', sectionRef.current!)
+      gsap.fromTo(
+        spans,
+        { opacity: 0.12 },
+        {
+          opacity: 1,
+          stagger: { each: 0.7 / spans.length },
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 65%',
+            end: 'bottom 35%',
+            scrub: 1.4,
+          },
+        }
+      )
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       style={{
         background: 'var(--cream)',
-        /*
-         * Das Padding auf allen Seiten soll so groß sein wie der Textblock breit ist.
-         * Der Textblock ist auf ~34ch begrenzt. Bei ~10px/ch à Source Code Pro 11px
-         * à letter-spacing 0.12em ergibt das grob ~380px.
-         * Wir nähern uns dem mit einem großzügigen fluid-Wert:
-         * clamp(80px, 18vw, 340px) — auf 1440px = ~259px, auf 375px = ~68px.
-         */
         padding: 'clamp(80px, 18vw, 340px) clamp(80px, 18vw, 340px)',
         display: 'flex',
         justifyContent: 'center',
@@ -30,17 +61,20 @@ export default function StatementBlock() {
           textTransform: 'uppercase',
           color: 'var(--dead-poet)',
           textAlign: 'justify',
-          /* Breite: so klein wie möglich — Statement wirkt durch die Leere drum herum */
           maxWidth: 'clamp(260px, 34ch, 420px)',
           width: '100%',
           hyphens: 'none',
         }}
       >
-        Ich designe seit ich 16 bin. Inzwischen studiere ich
-        Digitalisierungsmanagement, baue nebenbei eigene Marken
-        und schreibe gerade meine Bachelorarbeit darüber wie
-        KI die Suche verändert. Einfach weil mich das alles
-        interessiert. So arbeite ich auch mit Kunden.
+        {WORDS.map((word, i) => (
+          <span
+            key={i}
+            className="statement-word"
+            style={{ opacity: 0.12, display: 'inline' }}
+          >
+            {word}{i < WORDS.length - 1 ? '\u00a0' : ''}
+          </span>
+        ))}
       </p>
     </section>
   )

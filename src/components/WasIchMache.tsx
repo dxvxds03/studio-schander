@@ -41,10 +41,9 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
       >
         {/* Heading — fluid, stets volle Breite minus Padding */}
         <motion.div
-          initial={{ opacity: 0, y: 48 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
           style={{
             paddingLeft: px,
             paddingRight: px,
@@ -55,15 +54,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
-              /*
-               * "WAS ICH MACHE." = 15 Zeichen.
-               * Cabinet Grotesk 800 uppercase hat ein Breiten-Verhältnis
-               * von ~0.62 zum Font-Size. Padding ≈ 2 * 4vw = 8vw.
-               * Verfügbare Breite ≈ 92vw.
-               * font-size = 92vw / (15 * 0.62) ≈ 9.89vw.
-               * Kein cap (9999px) damit die Schrift auf breiten Screens
-               * weiter wächst. Floor 36px für kleine Screens.
-               */
               fontSize: 'clamp(36px, 9.89vw, 9999px)',
               letterSpacing: '-0.035em',
               lineHeight: 1,
@@ -71,9 +61,43 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               color: 'var(--ink)',
               textTransform: 'uppercase',
               whiteSpace: 'nowrap',
+              display: 'flex',
+              gap: '0.22em',
+              alignItems: 'baseline',
             }}
           >
-            Was ich Mache<span style={{ color: ORANGE }}>.</span>
+            {['Was', 'ich', 'Mache'].map((word, i) => (
+              <span key={word} style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}>
+                <motion.span
+                  style={{ display: 'inline-block' }}
+                  variants={{
+                    hidden: { y: '110%', rotate: 4 },
+                    visible: {
+                      y: 0,
+                      rotate: 0,
+                      transition: { duration: 0.9, delay: i * 0.13, ease: [0.76, 0, 0.24, 1] },
+                    },
+                  }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+            ))}
+            <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}>
+              <motion.span
+                style={{ display: 'inline-block', color: ORANGE }}
+                variants={{
+                  hidden: { y: '110%', rotate: 4 },
+                  visible: {
+                    y: 0,
+                    rotate: 0,
+                    transition: { duration: 0.9, delay: 0.42, ease: [0.76, 0, 0.24, 1] },
+                  },
+                }}
+              >
+                .
+              </motion.span>
+            </span>
           </h2>
         </motion.div>
 
@@ -87,10 +111,10 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
             return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -48, skewX: -3 }}
+                whileInView={{ opacity: 1, x: 0, skewX: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0, 0, 1] }}
+                transition={{ duration: 0.65, delay: i * 0.08, ease: [0.22, 0, 0, 1] }}
                 onClick={() => toggle(item.id)}
                 onMouseEnter={() => setHoveredKey(item.id)}
                 onMouseLeave={() => setHoveredKey(null)}
