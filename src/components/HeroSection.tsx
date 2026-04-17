@@ -261,6 +261,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   const items = projects.filter(p => p.cover_image && p.show_in_carousel !== false)
   const n = items.length
 
+  // Shared state for touch swipe handler — populated after images load + GSAP setup
+  const carouselState = useRef<{ txPerCard: number[]; snapFracs: number[]; total: number } | null>(null)
+
   useEffect(() => {
     if (!sectionRef.current || !carouselRef.current || n === 0) return
 
@@ -298,6 +301,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         const totalMove  = Math.abs(txPerCard[total - 1])
         // Snap fractions: 0 … 1 mapped to each card
         const snapFracs  = txPerCard.map(dx => Math.abs(dx) / (totalMove || 1))
+
+        // Expose for touch swipe handler
+        carouselState.current = { txPerCard, snapFracs, total }
 
         // ── Glow + rotation + name opacity ─────────────────────────
         const applyGlow = (rawIdx: number) => {
@@ -369,6 +375,56 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
     ).then(setup)
 
     return () => { ctx?.revert() }
+  }, [n])
+
+  // Touch swipe → scroll to next/prev card (preserves GSAP scroll animation)
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    let startX = 0
+    let startY = 0
+
+    const onTouchStart = (e: TouchEvent) => {
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+    }
+
+    const onTouchEnd = (e: TouchEvent) => {
+      const state = carouselState.current
+      if (!state) return
+
+      const deltaX = e.changedTouches[0].clientX - startX
+      const deltaY = e.changedTouches[0].clientY - startY
+
+      // Only act on predominantly horizontal swipes with enough distance
+      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY)) return
+
+      const { snapFracs, total } = state
+      const sectionTop = section.offsetTop
+      const sectionScrollable = section.scrollHeight - window.innerHeight
+      if (sectionScrollable <= 0) return
+
+      const progress = Math.max(0, Math.min(1, (window.scrollY - sectionTop) / sectionScrollable))
+      const currentIdx = Math.round(progress * (total - 1))
+
+      const targetIdx = deltaX < 0
+        ? Math.min(currentIdx + 1, total - 1)  // swipe left → next
+        : Math.max(currentIdx - 1, 0)           // swipe right → prev
+
+      if (targetIdx === currentIdx) return
+
+      const targetScrollY = sectionTop + snapFracs[targetIdx] * sectionScrollable
+      window.scrollTo({ top: targetScrollY, behavior: 'smooth' })
+    }
+
+    section.addEventListener('touchstart', onTouchStart, { passive: true })
+    section.addEventListener('touchend', onTouchEnd, { passive: true })
+
+    return () => {
+      section.removeEventListener('touchstart', onTouchStart)
+      section.removeEventListener('touchend', onTouchEnd)
+    }
   }, [n])
 
   if (n === 0) return null
