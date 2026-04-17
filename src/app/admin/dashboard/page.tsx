@@ -21,6 +21,27 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
+interface Leistung {
+  id: number
+  title: string
+  lines: string[]
+  cta_label: string
+  cta_href: string
+  badges: string[]
+  order: number
+  active: boolean
+}
+
+const emptyLeistungForm = {
+  title: '',
+  lines: '',
+  ctaLabel: '',
+  ctaHref: '/kontakt',
+  badges: '',
+  order: '0',
+  active: true,
+}
+
 interface Submission {
   id: number
   name: string
@@ -177,7 +198,12 @@ function SortableProjectRow({
 // ── Main dashboard ──────────────────────────────────────────────────────────
 export default function Dashboard() {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState<'projekte' | 'anfragen'>('projekte')
+  const [activeTab, setActiveTab] = useState<'projekte' | 'leistungen' | 'anfragen'>('projekte')
+  const [leistungen, setLeistungen] = useState<Leistung[]>([])
+  const [leistungForm, setLeistungForm] = useState(emptyLeistungForm)
+  const [editingLeistungId, setEditingLeistungId] = useState<number | null>(null)
+  const [leistungMsg, setLeistungMsg] = useState('')
+  const [leistungSaving, setLeistungSaving] = useState(false)
   const [projects, setProjects] = useState<Project[]>([])
   const [submissions, setSubmissions] = useState<Submission[]>([])
   const [expandedId, setExpandedId] = useState<number | null>(null)
@@ -194,10 +220,74 @@ export default function Dashboard() {
 
   useEffect(() => { fetchProjects() }, [])
   useEffect(() => { if (activeTab === 'anfragen') fetchSubmissions() }, [activeTab])
+  useEffect(() => { if (activeTab === 'leistungen') fetchLeistungen() }, [activeTab])
 
   const fetchProjects = async () => {
     const res = await fetch('/api/projects')
     if (res.ok) setProjects(await res.json())
+  }
+
+  const fetchLeistungen = async () => {
+    const res = await fetch('/api/leistungen')
+    if (res.ok) setLeistungen(await res.json())
+  }
+
+  const handleLeistungSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLeistungSaving(true)
+    setLeistungMsg('')
+
+    const payload = {
+      title: leistungForm.title,
+      lines: leistungForm.lines.split('\n').map(l => l.trim()).filter(Boolean),
+      ctaLabel: leistungForm.ctaLabel,
+      ctaHref: leistungForm.ctaHref || '/kontakt',
+      badges: leistungForm.badges.split(',').map(b => b.trim()).filter(Boolean),
+      order: parseInt(leistungForm.order) || 0,
+      active: leistungForm.active,
+    }
+
+    const url = editingLeistungId ? `/api/leistungen/${editingLeistungId}` : '/api/leistungen'
+    const method = editingLeistungId ? 'PUT' : 'POST'
+    const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+
+    if (res.ok) {
+      setLeistungMsg(editingLeistungId ? 'Aktualisiert.' : 'Erstellt.')
+      setLeistungForm(emptyLeistungForm)
+      setEditingLeistungId(null)
+      fetchLeistungen()
+    } else if (res.status === 401) {
+      router.push('/admin')
+    } else {
+      setLeistungMsg('Fehler beim Speichern.')
+    }
+    setLeistungSaving(false)
+  }
+
+  const handleLeistungEdit = (l: Leistung) => {
+    setEditingLeistungId(l.id)
+    setLeistungForm({
+      title: l.title,
+      lines: l.lines.join('\n'),
+      ctaLabel: l.cta_label,
+      ctaHref: l.cta_href,
+      badges: l.badges.join(', '),
+      order: String(l.order),
+      active: l.active,
+    })
+    setLeistungMsg('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleLeistungDelete = async (id: number, title: string) => {
+    if (!confirm(`"${title}" wirklich löschen?`)) return
+    const res = await fetch(`/api/leistungen/${id}`, { method: 'DELETE' })
+    if (res.ok) {
+      fetchLeistungen()
+      if (editingLeistungId === id) { setEditingLeistungId(null); setLeistungForm(emptyLeistungForm) }
+    } else if (res.status === 401) {
+      router.push('/admin')
+    }
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -395,7 +485,7 @@ export default function Dashboard() {
         </p>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <div style={{ display: 'flex', gap: '2px' }}>
-            {(['projekte', 'anfragen'] as const).map((tab) => (
+            {(['projekte', 'leistungen', 'anfragen'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -408,7 +498,9 @@ export default function Dashboard() {
                   transition: 'all 0.15s',
                 }}
               >
-                {tab === 'projekte' ? `Projekte (${projects.length})` : `Anfragen${submissions.length ? ` (${submissions.length})` : ''}`}
+                {tab === 'projekte' ? `Projekte (${projects.length})`
+                  : tab === 'leistungen' ? `Leistungen (${leistungen.length})`
+                  : `Anfragen${submissions.length ? ` (${submissions.length})` : ''}`}
               </button>
             ))}
           </div>
@@ -416,6 +508,114 @@ export default function Dashboard() {
           <button onClick={handleLogout} style={{ ...lbl, marginBottom: 0, background: 'none', border: 'none', cursor: 'pointer' }}>Abmelden</button>
         </div>
       </div>
+
+      {activeTab === 'leistungen' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 'calc(100vh - 65px)' }}>
+          {/* Form */}
+          <div style={{ padding: '40px 32px', borderRight: '1px solid #E8E5DF' }}>
+            <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em', marginBottom: '28px' }}>
+              {editingLeistungId ? 'Leistung bearbeiten' : 'Neue Leistung'}
+            </p>
+            <form onSubmit={handleLeistungSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <div>
+                <label style={lbl}>Titel *</label>
+                <input style={inp} value={leistungForm.title} onChange={e => setLeistungForm(p => ({ ...p, title: e.target.value }))} required placeholder="z.B. Webentwicklung" />
+              </div>
+              <div>
+                <label style={lbl}>Text (eine Zeile pro Absatz)</label>
+                <textarea
+                  style={{ ...inp, minHeight: '120px', resize: 'vertical' }}
+                  value={leistungForm.lines}
+                  onChange={e => setLeistungForm(p => ({ ...p, lines: e.target.value }))}
+                  placeholder={'Erste Zeile des Textes.\nZweite Zeile.\nDritte Zeile.'}
+                />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div>
+                  <label style={lbl}>CTA Beschriftung</label>
+                  <input style={inp} value={leistungForm.ctaLabel} onChange={e => setLeistungForm(p => ({ ...p, ctaLabel: e.target.value }))} placeholder="Erzähl mir davon" />
+                </div>
+                <div>
+                  <label style={lbl}>CTA Link</label>
+                  <input style={inp} value={leistungForm.ctaHref} onChange={e => setLeistungForm(p => ({ ...p, ctaHref: e.target.value }))} placeholder="/kontakt" />
+                </div>
+              </div>
+              <div>
+                <label style={lbl}>Badges (kommagetrennt)</label>
+                <input style={inp} value={leistungForm.badges} onChange={e => setLeistungForm(p => ({ ...p, badges: e.target.value }))} placeholder="Projekt A, Projekt B" />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', alignItems: 'end' }}>
+                <div>
+                  <label style={lbl}>Reihenfolge</label>
+                  <input style={inp} type="number" value={leistungForm.order} onChange={e => setLeistungForm(p => ({ ...p, order: e.target.value }))} min="0" />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '10px' }}>
+                  <input type="checkbox" id="lActive" checked={leistungForm.active} onChange={e => setLeistungForm(p => ({ ...p, active: e.target.checked }))} style={{ width: '14px', height: '14px', cursor: 'pointer' }} />
+                  <label htmlFor="lActive" style={{ ...lbl, marginBottom: 0, cursor: 'pointer' }}>Aktiv (auf Website anzeigen)</label>
+                </div>
+              </div>
+              {leistungMsg && (
+                <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '12px', color: leistungMsg.startsWith('Fehler') ? '#E8331A' : '#191917' }}>
+                  {leistungMsg}
+                </p>
+              )}
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button type="submit" disabled={leistungSaving}
+                  style={{ padding: '12px 24px', background: leistungSaving ? '#787672' : '#191917', color: '#F4F2ED', border: 'none', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: leistungSaving ? 'not-allowed' : 'pointer', fontFamily: '"Source Code Pro", monospace' }}>
+                  {leistungSaving ? 'Speichert…' : editingLeistungId ? 'Aktualisieren' : 'Erstellen'}
+                </button>
+                {editingLeistungId && (
+                  <button type="button" onClick={() => { setEditingLeistungId(null); setLeistungForm(emptyLeistungForm); setLeistungMsg('') }}
+                    style={{ padding: '12px 24px', background: 'none', border: '1px solid #E8E5DF', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: '"Source Code Pro", monospace', color: '#787672' }}>
+                    Abbrechen
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          {/* List */}
+          <div style={{ padding: '40px 32px' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '28px' }}>
+              <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: '26px', color: '#191917', letterSpacing: '-0.03em' }}>
+                Leistungen
+              </p>
+              <span style={{ ...lbl, marginBottom: 0 }}>({leistungen.length})</span>
+            </div>
+            {leistungen.length === 0 ? (
+              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#787672' }}>
+                Noch keine Leistungen. Erstelle die erste oben.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                {leistungen.map(l => (
+                  <div key={l.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 0', borderBottom: '1px solid #E8E5DF', background: editingLeistungId === l.id ? 'rgba(232,88,26,0.05)' : 'transparent' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', color: '#191917' }}>
+                        {l.title}
+                        {!l.active && <span style={{ marginLeft: '8px', fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8C5BF' }}>Inaktiv</span>}
+                      </p>
+                      <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', color: '#787672', letterSpacing: '0.05em', marginTop: '2px' }}>
+                        {l.lines[0] ? l.lines[0].slice(0, 60) + (l.lines[0].length > 60 ? '…' : '') : '—'}
+                      </p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                      <button onClick={() => handleLeistungEdit(l)}
+                        style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid #E8E5DF', padding: '5px 10px', cursor: 'pointer', color: '#191917', fontFamily: '"Source Code Pro", monospace' }}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleLeistungDelete(l.id, l.title)}
+                        style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', background: 'none', border: '1px solid transparent', padding: '5px 10px', cursor: 'pointer', color: '#E8331A', fontFamily: '"Source Code Pro", monospace' }}>
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {activeTab === 'anfragen' && (
         <div style={{ padding: '40px 32px', maxWidth: '900px' }}>

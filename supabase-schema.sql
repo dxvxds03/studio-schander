@@ -48,6 +48,28 @@ values ('project-images', 'project-images', true)
 on conflict (id) do nothing;
 
 -- -------------------------------------------------------
+-- Leistungen (Was ich mache — editable from admin)
+-- -------------------------------------------------------
+create table if not exists leistungen (
+  id bigserial primary key,
+  title text not null,
+  lines jsonb not null default '[]'::jsonb,
+  cta_label text not null default '',
+  cta_href text not null default '/kontakt',
+  badges jsonb not null default '[]'::jsonb,
+  "order" integer not null default 0,
+  active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+alter table leistungen enable row level security;
+
+create policy "allow_all" on leistungen
+  for all
+  using (true)
+  with check (true);
+
+-- -------------------------------------------------------
 -- Kontakt submissions (contact form)
 -- -------------------------------------------------------
 create table if not exists kontakt_submissions (

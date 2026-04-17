@@ -5,67 +5,16 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import Arrow from './Arrow'
 
-const ITEMS = [
-  {
-    key: 'ideen',
-    title: 'Ideen umsetzen',
-    lines: [
-      'Du hast etwas im Kopf. Vielleicht ist es noch vage –',
-      'ein Gefühl, eine Richtung, ein "das müsste es eigentlich geben".',
-      'Ich nehme genau diesen Punkt und baue daraus etwas Echtes.',
-    ],
-    cta: { label: 'Erzähl mir davon', href: '/kontakt' },
-    badges: [] as string[],
-  },
-  {
-    key: 'web',
-    title: 'Webentwicklung',
-    lines: [
-      'Hast du eine Website, die du selbst nicht mehr stolz teilst?',
-      'Ich baue Websites und Web-Apps, die funktionieren und gut aussehen –',
-      'nicht nur beim Launch, sondern auch wenn es komplizierter wird.',
-      'HTML, CSS, JavaScript. Mit echtem Backend wenn nötig.',
-    ],
-    cta: { label: 'Projekte ansehen', href: '/projekte' },
-    badges: ['Serving with David', 'Lernwald'],
-  },
-  {
-    key: 'design',
-    title: 'Design & Branding',
-    lines: [
-      'Sieht dein Auftritt so aus, wie du dich anfühlst?',
-      'Visuelle Identitäten, die sofort sagen worum es geht –',
-      'ohne dass irgendjemand etwas erklären muss.',
-      'Editorial Design, Magazingestaltung, Markensysteme.',
-    ],
-    cta: { label: 'Meine Marken ansehen', href: '/projekte' },
-    badges: ['Schander Marken'],
-  },
-  {
-    key: 'konzept',
-    title: 'Konzeption',
-    lines: [
-      'Weißt du schon was du willst – oder weißt du noch was du brauchst?',
-      'Bevor irgendetwas gebaut wird, muss es gedacht werden.',
-      'Struktur, Inhalt, Strategie. Das ist kein Schritt den man überspringt –',
-      'das ist der wichtigste.',
-    ],
-    cta: { label: 'Lass uns das herausfinden', href: '/kontakt' },
-    badges: [] as string[],
-  },
-  {
-    key: 'ki',
-    title: 'KI-Integration',
-    lines: [
-      'Arbeitest du noch neben der KI – oder schon mit ihr?',
-      'Ich arbeite täglich mit KI-Tools und weiß wo sie helfen',
-      'und wo sie im Weg stehen.',
-      'Prompt Engineering, AI-gestützte Workflows, eigene Produkte.',
-    ],
-    cta: { label: 'Mehr erfahren', href: '/kontakt' },
-    badges: [] as string[],
-  },
-]
+export interface LeistungItem {
+  id: number
+  title: string
+  lines: string[]
+  cta_label: string
+  cta_href: string
+  badges: string[]
+  order: number
+  active: boolean
+}
 
 const px = 'clamp(24px, 4vw, 64px)'
 
@@ -73,11 +22,11 @@ const DARK_BG = '#34160F'
 const CREAM = '#F4F2ED'
 const ORANGE = '#E8331A'
 
-export default function WasIchMache() {
-  const [activeKey, setActiveKey] = useState<string | null>(null)
-  const [hoveredKey, setHoveredKey] = useState<string | null>(null)
+export default function WasIchMache({ items }: { items: LeistungItem[] }) {
+  const [activeKey, setActiveKey] = useState<number | null>(null)
+  const [hoveredKey, setHoveredKey] = useState<number | null>(null)
 
-  const toggle = (key: string) => setActiveKey(prev => (prev === key ? null : key))
+  const toggle = (id: number) => setActiveKey(prev => (prev === id ? null : id))
 
   return (
     <>
@@ -118,20 +67,20 @@ export default function WasIchMache() {
 
         {/* Accordion — dark background */}
         <div style={{ background: DARK_BG }}>
-          {ITEMS.map((item, i) => {
-            const isActive = activeKey === item.key
-            const isHovered = hoveredKey === item.key
+          {items.map((item, i) => {
+            const isActive = activeKey === item.id
+            const isHovered = hoveredKey === item.id
             const highlight = isActive || isHovered
 
             return (
               <motion.div
-                key={item.key}
+                key={item.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 0, 0, 1] }}
-                onClick={() => toggle(item.key)}
-                onMouseEnter={() => setHoveredKey(item.key)}
+                onClick={() => toggle(item.id)}
+                onMouseEnter={() => setHoveredKey(item.id)}
                 onMouseLeave={() => setHoveredKey(null)}
                 style={{
                   borderTop: '1px solid rgba(244,242,237,0.1)',
@@ -242,7 +191,7 @@ export default function WasIchMache() {
                         )}
 
                         <Link
-                          href={item.cta.href}
+                          href={item.cta_href}
                           data-hover
                           style={{
                             fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
@@ -256,7 +205,7 @@ export default function WasIchMache() {
                             gap: '10px',
                           }}
                         >
-                          {item.cta.label} <Arrow direction="right" size={20} />
+                          {item.cta_label} <Arrow direction="right" size={20} />
                         </Link>
                       </div>
                     </motion.div>
