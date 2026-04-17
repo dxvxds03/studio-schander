@@ -1,6 +1,7 @@
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
 import WasIchMache from '@/components/WasIchMache'
+import StatementBlock from '@/components/StatementBlock'
 import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
@@ -27,6 +28,7 @@ export default async function HomePage() {
     <main>
       <Navigation />
       <HeroSection projects={all} />
+      <StatementBlock />
       <WasIchMache items={services} />
 
       <div style={{ marginTop: 'clamp(56px, 8vw, 112px)', position: 'relative', zIndex: 46 }}>
