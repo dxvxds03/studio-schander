@@ -596,7 +596,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             }}
           >
             <CyclingWord />
-            <span style={{ whiteSpace: 'nowrap', color: '#E8331A' }}>Portfolio.</span>
+            <span style={{ whiteSpace: 'nowrap', color: 'var(--ink)' }}>Portfolio.</span>
           </h1>
 
           {/* Scroll-down button → #leistungen */}

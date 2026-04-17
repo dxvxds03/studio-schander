@@ -34,11 +34,9 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
       <section
         id="leistungen"
         style={{
-          paddingTop: 'clamp(80px, 12vw, 160px)',
           position: 'relative',
           zIndex: 46,
           background: 'var(--cream)',
-          borderTop: '1px solid var(--faint)',
         }}
       >
         {/* Heading — fluid, stets volle Breite minus Padding */}
@@ -294,22 +292,20 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           <Link
             href="/kontakt"
             data-hover
-            className="schreib-mir-btn"
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(28px, 5vw, 72px)',
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(16px, 1.6vw, 22px)',
+              letterSpacing: '-0.01em',
               textTransform: 'uppercase',
               textDecoration: 'none',
               color: CREAM,
               background: ORANGE,
               border: `2px solid ${ORANGE}`,
-              padding: 'clamp(16px, 2.5vw, 36px) clamp(20px, 3vw, 48px)',
-              display: 'flex',
-              justifyContent: 'space-between',
+              padding: '14px 28px',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: 'clamp(20px, 4vw, 60px)',
+              gap: '12px',
               transition: 'background 0.22s ease, color 0.22s ease, border-color 0.22s ease',
             }}
             onMouseEnter={e => {
@@ -326,7 +322,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
             }}
           >
             Schreib mir
-            <Arrow direction="right" size={48} />
+            <Arrow direction="right" size={18} />
           </Link>
         </motion.div>
       </section>
