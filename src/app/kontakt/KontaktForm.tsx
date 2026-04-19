@@ -19,7 +19,7 @@ const TYPES = [
 function CalEmbed() {
   useEffect(() => {
     ;(async function () {
-      const cal = await getCalApi({ namespace: 'erstgesprach' })
+      const cal = await getCalApi({ namespace: 'erstgesprach', origin: 'https://app.cal.eu' })
       cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
     })()
   }, [])
@@ -29,7 +29,7 @@ function CalEmbed() {
       namespace="erstgesprach"
       calLink="schander/erstgesprach"
       style={{ width: '100%', height: '100%', overflow: 'scroll' }}
-      config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true' }}
+      config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', origin: 'https://app.cal.eu' }}
     />
   )
 }
@@ -93,7 +93,6 @@ export default function KontaktForm() {
         maxWidth: '1200px',
       }}
     >
-      {/* Heading */}
       <h1
         style={{
           fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
@@ -147,7 +146,7 @@ export default function KontaktForm() {
         ))}
       </div>
 
-      {/* ── TAB: Termin ── */}
+      {/* TAB: Termin */}
       {tab === 'termin' && (
         <div>
           <p
@@ -167,7 +166,7 @@ export default function KontaktForm() {
         </div>
       )}
 
-      {/* ── TAB: Nachricht ── */}
+      {/* TAB: Nachricht */}
       {tab === 'nachricht' && (
         <div style={{ maxWidth: '720px' }}>
           {status === 'success' ? (
