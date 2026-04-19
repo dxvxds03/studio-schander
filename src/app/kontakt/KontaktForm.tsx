@@ -17,7 +17,6 @@ const TYPES = [
 
 function CalEmbed() {
   useEffect(() => {
-    // Altes Script entfernen falls vorhanden
     const existing = document.getElementById('cal-embed-script')
     if (existing) existing.remove()
 
@@ -103,11 +102,11 @@ export default function KontaktForm() {
 
   const inp: React.CSSProperties = {
     fontFamily: '"Source Code Pro", monospace',
-    fontSize: '14px',
+    fontSize: '16px',
     color: 'var(--ink)',
     background: 'transparent',
     border: '1px solid var(--faint)',
-    padding: '12px 16px',
+    padding: '14px 18px',
     width: '100%',
     outline: 'none',
     transition: 'border-color 0.18s ease',
@@ -115,13 +114,14 @@ export default function KontaktForm() {
   }
 
   const lbl: React.CSSProperties = {
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+    fontWeight: 700,
     fontSize: '13px',
-    letterSpacing: '0.1em',
+    letterSpacing: '0.12em',
     textTransform: 'uppercase',
     color: 'var(--ink)',
     display: 'block',
-    marginBottom: '10px',
+    marginBottom: '12px',
   }
 
   return (
@@ -134,16 +134,17 @@ export default function KontaktForm() {
         maxWidth: '1200px',
       }}
     >
+      {/* H1 */}
       <h1
         style={{
           fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
           fontWeight: 800,
-          fontSize: 'clamp(48px, 9vw, 130px)',
+          fontSize: 'clamp(56px, 10vw, 140px)',
           letterSpacing: '-0.045em',
-          lineHeight: 0.9,
+          lineHeight: 0.88,
           color: 'var(--ink)',
           textTransform: 'uppercase',
-          margin: '0 0 clamp(36px, 5vw, 56px)',
+          margin: '0 0 clamp(48px, 6vw, 72px)',
         }}
       >
         Lass uns<br />
@@ -156,7 +157,7 @@ export default function KontaktForm() {
           display: 'inline-flex',
           alignItems: 'center',
           border: '1px solid var(--faint)',
-          marginBottom: 'clamp(40px, 5vw, 64px)',
+          marginBottom: 'clamp(48px, 6vw, 80px)',
           overflow: 'hidden',
         }}
       >
@@ -168,15 +169,16 @@ export default function KontaktForm() {
             key={key}
             onClick={() => setTab(key)}
             style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '11px',
-              letterSpacing: '0.18em',
+              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+              fontWeight: 700,
+              fontSize: '15px',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
               background: tab === key ? 'var(--ink)' : 'transparent',
               color: tab === key ? 'var(--cream)' : 'var(--muted)',
               border: 'none',
               borderLeft: i === 1 ? '1px solid var(--faint)' : 'none',
-              padding: '11px 24px',
+              padding: '14px 32px',
               cursor: 'pointer',
               transition: 'background 0.18s ease, color 0.18s ease',
               whiteSpace: 'nowrap',
@@ -190,19 +192,6 @@ export default function KontaktForm() {
       {/* TAB: Termin */}
       {tab === 'termin' && (
         <div>
-          <p
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '14px',
-              lineHeight: 1.8,
-              color: 'var(--muted)',
-              maxWidth: '52ch',
-              marginBottom: 'clamp(28px, 4vw, 40px)',
-            }}
-          >
-            30 Minuten, kein Stress. Wir schauen gemeinsam, ob und wie ich helfen kann —
-            ob Branding, Web oder Konzept.
-          </p>
           <CalEmbed />
         </div>
       )}
@@ -216,15 +205,22 @@ export default function KontaktForm() {
                 style={{
                   fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
                   fontWeight: 800,
-                  fontSize: 'clamp(22px, 3vw, 36px)',
+                  fontSize: 'clamp(28px, 4vw, 48px)',
                   letterSpacing: '-0.03em',
+                  lineHeight: 1.05,
                   color: 'var(--ink)',
-                  marginBottom: '16px',
+                  marginBottom: '20px',
                 }}
               >
                 Nachricht angekommen.
               </p>
-              <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '14px', lineHeight: 1.7, color: 'var(--muted)', maxWidth: '44ch' }}>
+              <p style={{
+                fontFamily: '"Source Code Pro", monospace',
+                fontSize: '16px',
+                lineHeight: 1.75,
+                color: 'var(--muted)',
+                maxWidth: '44ch',
+              }}>
                 Ich melde mich so schnell wie möglich. Bis dahin — schau dir gerne noch ein paar{' '}
                 <a href="/projekte" style={{ color: 'var(--dead-poet)', textDecoration: 'none' }}>Projekte</a> an.
               </p>
@@ -233,11 +229,11 @@ export default function KontaktForm() {
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
             >
               <div
                 className="kontakt-row"
-                style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}
+                style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}
               >
                 <div>
                   <label htmlFor="kf-name" style={lbl}>Name *</label>
@@ -263,19 +259,20 @@ export default function KontaktForm() {
 
               <div>
                 <label style={lbl}>Art des Projekts</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                   {TYPES.map(([val, label]) => (
                     <label
                       key={val}
                       style={{
-                        fontFamily: '"Source Code Pro", monospace',
-                        fontSize: '11px',
-                        letterSpacing: '0.14em',
+                        fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+                        fontWeight: 600,
+                        fontSize: '14px',
+                        letterSpacing: '0.06em',
                         textTransform: 'uppercase',
                         border: `1px solid ${type === val ? 'var(--ink)' : 'var(--faint)'}`,
                         color: type === val ? 'var(--cream)' : 'var(--muted)',
                         background: type === val ? 'var(--ink)' : 'transparent',
-                        padding: '6px 12px',
+                        padding: '9px 18px',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
                         userSelect: 'none',
@@ -298,14 +295,20 @@ export default function KontaktForm() {
                 <textarea
                   id="kf-msg" name="nachricht" required rows={6}
                   placeholder="Beschreib kurz worum es geht — Kontext, Ziel, Zeitrahmen, alles was hilft."
-                  style={{ ...inp, resize: 'vertical', minHeight: '140px' }}
+                  style={{ ...inp, resize: 'vertical', minHeight: '160px' }}
                   onFocus={e => (e.currentTarget.style.borderColor = 'var(--ink)')}
                   onBlur={e  => (e.currentTarget.style.borderColor = 'var(--faint)')}
                 />
               </div>
 
               {status === 'error' && (
-                <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '11px', letterSpacing: '0.1em', color: 'var(--dead-poet)' }}>
+                <p style={{
+                  fontFamily: '"Source Code Pro", monospace',
+                  fontSize: '14px',
+                  letterSpacing: '0.06em',
+                  color: 'var(--dead-poet)',
+                  lineHeight: 1.6,
+                }}>
                   Etwas ist schiefgelaufen — versuch es nochmal oder schreib direkt an{' '}
                   <a href="mailto:mail@studio-schander.de" style={{ color: 'inherit' }}>mail@studio-schander.de</a>.
                 </p>
@@ -316,21 +319,22 @@ export default function KontaktForm() {
                   type="submit"
                   disabled={status === 'sending'}
                   style={{
-                    fontFamily: '"Source Code Pro", monospace',
-                    fontSize: '11px',
-                    letterSpacing: '0.22em',
+                    fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
+                    fontWeight: 700,
+                    fontSize: '15px',
+                    letterSpacing: '0.1em',
                     textTransform: 'uppercase',
                     background: status === 'sending' ? 'var(--muted)' : 'var(--ink)',
                     color: 'var(--cream)',
                     border: 'none',
-                    padding: '14px 32px',
+                    padding: '16px 40px',
                     cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                     transition: 'background 0.18s ease',
                   }}
                 >
                   {status === 'sending'
                     ? 'Wird gesendet…'
-                    : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>Abschicken <Arrow direction="right" size={14} /></span>
+                    : <span style={{ display: 'inline-flex', alignItems: 'center', gap: '12px' }}>Abschicken <Arrow direction="right" size={16} /></span>
                   }
                 </button>
               </div>
