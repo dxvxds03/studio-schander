@@ -74,10 +74,23 @@ function CalEmbed() {
   }, [])
 
   return (
-    <div
-      id="cal-home-inline"
-      style={{ width: '100%', height: '700px', overflow: 'scroll' }}
-    />
+    <>
+      <div
+        id="cal-home-inline"
+        style={{ width: '100%', height: '700px', overflow: 'scroll' }}
+      />
+      <style>{`
+        @media (min-width: 768px) {
+          #cal-home-inline {
+            margin-left: 0;
+          }
+          .cal-home-wrapper {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+          }
+        }
+      `}</style>
+    </>
   )
 }
 
@@ -89,24 +102,16 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
 
   return (
     <>
-      {/* ── Section: heading (cream) + accordion (dark) ─────────── */}
+      {/* ── Section: heading + accordion ─────────────────────────── */}
       <section
         id="leistungen"
-        style={{
-          position: 'relative',
-          zIndex: 46,
-          background: '#E8331A',
-        }}
+        style={{ position: 'relative', zIndex: 46, background: '#E8331A' }}
       >
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          style={{
-            paddingLeft: px,
-            paddingRight: px,
-            marginBottom: 'clamp(24px, 3vw, 40px)',
-          }}
+          style={{ paddingLeft: px, paddingRight: px, marginBottom: 'clamp(24px, 3vw, 40px)' }}
         >
           <h2
             style={{
@@ -130,11 +135,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                   style={{ display: 'inline-block' }}
                   variants={{
                     hidden: { y: '110%', rotate: 4 },
-                    visible: {
-                      y: 0,
-                      rotate: 0,
-                      transition: { duration: 0.9, delay: i * 0.13, ease: [0.76, 0, 0.24, 1] },
-                    },
+                    visible: { y: 0, rotate: 0, transition: { duration: 0.9, delay: i * 0.13, ease: [0.76, 0, 0.24, 1] } },
                   }}
                 >
                   {word}
@@ -146,11 +147,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                 style={{ display: 'inline-block', color: CREAM }}
                 variants={{
                   hidden: { y: '110%', rotate: 4 },
-                  visible: {
-                    y: 0,
-                    rotate: 0,
-                    transition: { duration: 0.9, delay: 0.42, ease: [0.76, 0, 0.24, 1] },
-                  },
+                  visible: { y: 0, rotate: 0, transition: { duration: 0.9, delay: 0.42, ease: [0.76, 0, 0.24, 1] } },
                 }}
               >
                 .
@@ -159,7 +156,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           </h2>
         </motion.div>
 
-        {/* Accordion */}
         <div style={{ background: DARK_BG }}>
           {items.map((item, i) => {
             const isActive = activeKey === item.id
@@ -176,10 +172,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                 onClick={() => toggle(item.id)}
                 onMouseEnter={() => setHoveredKey(item.id)}
                 onMouseLeave={() => setHoveredKey(null)}
-                style={{
-                  borderTop: '1px solid rgba(244,242,237,0.1)',
-                  cursor: 'pointer',
-                }}
+                style={{ borderTop: '1px solid rgba(244,242,237,0.1)', cursor: 'pointer' }}
               >
                 <div
                   style={{
@@ -200,9 +193,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                       color: highlight ? ORANGE : CREAM,
                       margin: 0,
                       transition: 'color 0.2s ease, text-shadow 0.2s ease',
-                      textShadow: isHovered && !isActive
-                        ? '0 0 40px rgba(232,51,26,0.5), 0 0 80px rgba(232,51,26,0.2)'
-                        : 'none',
+                      textShadow: isHovered && !isActive ? '0 0 40px rgba(232,51,26,0.5), 0 0 80px rgba(232,51,26,0.2)' : 'none',
                     }}
                   >
                     {item.title}
@@ -245,56 +236,24 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                       >
                         <div>
                           {item.lines.map((line, j) => (
-                            <p
-                              key={j}
-                              style={{
-                                fontFamily: '"Source Code Pro", monospace',
-                                fontSize: 'clamp(13px, 1.2vw, 17px)',
-                                lineHeight: 1.75,
-                                color: 'rgba(244,242,237,0.7)',
-                                margin: 0,
-                              }}
-                            >
+                            <p key={j} style={{ fontFamily: '"Source Code Pro", monospace', fontSize: 'clamp(13px, 1.2vw, 17px)', lineHeight: 1.75, color: 'rgba(244,242,237,0.7)', margin: 0 }}>
                               {line}
                             </p>
                           ))}
                         </div>
-
                         {item.badges.length > 0 && (
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                             {item.badges.map(b => (
-                              <span
-                                key={b}
-                                style={{
-                                  fontFamily: '"Source Code Pro", monospace',
-                                  fontSize: '10px',
-                                  letterSpacing: '0.18em',
-                                  textTransform: 'uppercase',
-                                  color: 'rgba(244,242,237,0.45)',
-                                  border: '1px solid rgba(244,242,237,0.18)',
-                                  padding: '4px 10px',
-                                }}
-                              >
+                              <span key={b} style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(244,242,237,0.45)', border: '1px solid rgba(244,242,237,0.18)', padding: '4px 10px' }}>
                                 {b}
                               </span>
                             ))}
                           </div>
                         )}
-
                         <Link
                           href={item.cta_href}
                           data-hover
-                          style={{
-                            fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-                            fontWeight: 800,
-                            fontSize: 'clamp(15px, 1.6vw, 22px)',
-                            letterSpacing: '-0.02em',
-                            color: ORANGE,
-                            textDecoration: 'none',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                          }}
+                          style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: 'clamp(15px, 1.6vw, 22px)', letterSpacing: '-0.02em', color: ORANGE, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '10px' }}
                         >
                           {item.cta_label} <Arrow direction="right" size={20} />
                         </Link>
@@ -305,7 +264,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               </motion.div>
             )
           })}
-
           <div style={{ borderTop: '1px solid rgba(244,242,237,0.1)' }} />
         </div>
       </section>
@@ -314,58 +272,50 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
       <section
         style={{
           paddingTop: 'clamp(80px, 12vw, 160px)',
-          paddingBottom: 'clamp(64px, 9vw, 120px)',
+          paddingBottom: 'clamp(32px, 4vw, 48px)',
           position: 'relative',
           zIndex: 46,
           background: '#E8331A',
         }}
       >
+        {/* Text */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(40px, 6vw, 64px)' }}
+          style={{ paddingLeft: px, paddingRight: px, marginBottom: 'clamp(40px, 6vw, 64px)' }}
         >
-          <p
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(32px, 5vw, 72px)',
-              letterSpacing: '-0.03em',
-              lineHeight: 1.05,
-              color: 'var(--ink)',
-              margin: '0 0 0.2em',
-            }}
-          >
+          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--ink)', margin: '0 0 0.2em' }}>
             Du weißt noch nicht genau
             <br />
             was du brauchst<span style={{ color: CREAM }}>?</span>
           </p>
-          <p
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 400,
-              fontSize: 'clamp(32px, 5vw, 72px)',
-              letterSpacing: '-0.03em',
-              lineHeight: 1.05,
-              color: 'rgba(25,25,23,0.5)',
-              margin: 0,
-            }}
-          >
+          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 400, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'rgba(25,25,23,0.5)', margin: 0 }}>
             Lass uns gemeinsam schauen:
           </p>
         </motion.div>
 
+        {/* Cal Embed — auf Desktop kein seitliches Padding */}
         <motion.div
+          className="cal-home-wrapper"
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}` }}
+          style={{ paddingLeft: px, paddingRight: px }}
         >
           <CalEmbed />
         </motion.div>
+
+        <style>{`
+          @media (min-width: 768px) {
+            .cal-home-wrapper {
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+            }
+          }
+        `}</style>
       </section>
     </>
   )
