@@ -28,7 +28,7 @@ export default function Navigation({ background = 'var(--cream)' }: { background
             src="/logo_schander.svg"
             alt="Studio Schander"
             className="nav-logo"
-            style={{ height: '51px', width: 'auto', display: 'block' }}
+            style={{ height: '51px', width: 'auto', display: 'block', background: isOrange ? '#34160f' : 'transparent', padding: isOrange ? '4px 8px' : 0 }}
             whileHover={{ opacity: 0.55 }}
             transition={{ duration: 0.15 }}
           />

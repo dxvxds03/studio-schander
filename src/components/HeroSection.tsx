@@ -174,7 +174,7 @@ function SchaderSvgLogo() {
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{ position: 'relative', width: '100%', pointerEvents: 'auto', background: '#34160f', borderRadius: '4px' }}
+        style={{ position: 'relative', width: '100%', pointerEvents: 'auto' }}
       >
         {/* Base — subtle, always visible */}
         <svg viewBox="0 0 2791.7 1020.62" fill="#34160f" style={{ width: '100%', height: 'auto', display: 'block', opacity: 0.18 }} aria-label="Studio Schander">
