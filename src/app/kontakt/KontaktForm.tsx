@@ -18,16 +18,9 @@ const TYPES = [
 
 function CalEmbed() {
   useEffect(() => {
-    ;(async () => {
+    ;(async function () {
       const cal = await getCalApi({ namespace: 'erstgesprach' })
-      cal('ui', {
-        cssVarsPerTheme: {
-          light: { 'cal-brand': '#E8331A' },
-          dark:  { 'cal-brand': '#E8331A' },
-        },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      })
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
     })()
   }, [])
 
@@ -36,7 +29,7 @@ function CalEmbed() {
       namespace="erstgesprach"
       calLink="schander/erstgesprach"
       style={{ width: '100%', height: '100%', overflow: 'scroll' }}
-      config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'auto' }}
+      config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true' }}
     />
   )
 }
