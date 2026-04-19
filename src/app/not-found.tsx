@@ -89,7 +89,7 @@ export default function NotFound() {
             oder war nie vorhanden. Kein Drama — zurück zur Startseite.
           </p>
 
-          {/* CTAs */}
+          {/* CTA */}
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
             <Link
               href="/"
@@ -102,18 +102,6 @@ export default function NotFound() {
               }}
             >
               Zurück zur Startseite
-            </Link>
-            <Link
-              href="/projekte"
-              className="nav-btn nav-btn-arbeiten"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontSize: 'clamp(13px, 1.3vw, 17px)',
-              }}
-            >
-              Alle Arbeiten →
             </Link>
           </div>
         </div>
