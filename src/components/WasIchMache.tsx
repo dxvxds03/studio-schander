@@ -73,25 +73,10 @@ function CalEmbed() {
   }, [])
 
   return (
-    <>
-      <div
-        id="cal-home-inline"
-        style={{ width: '100%', height: '700px', overflow: 'scroll' }}
-      />
-      <style>{`
-        @media (min-width: 768px) {
-          /* wrapper that Cal injects */
-          #cal-home-inline,
-          #cal-home-inline > *,
-          #cal-home-inline iframe,
-          #cal-home-inline div[style],
-          #cal-home-inline > div {
-            margin-left: 0 !important;
-            margin-right: auto !important;
-          }
-        }
-      `}</style>
-    </>
+    <div
+      id="cal-home-inline"
+      style={{ width: '100%', height: '700px', overflow: 'scroll' }}
+    />
   )
 }
 
@@ -284,14 +269,19 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ paddingLeft: px, paddingRight: px, marginBottom: 'clamp(40px, 6vw, 64px)' }}
+          style={{
+            paddingLeft: px,
+            paddingRight: px,
+            marginBottom: 'clamp(40px, 6vw, 64px)',
+            textAlign: 'center',
+          }}
         >
-          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--ink)', margin: '0 0 0.2em' }}>
+          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--ink)', margin: '0 0 0.2em', maxWidth: 'none' }}>
             Du weißt noch nicht genau
             <br />
             was du brauchst<span style={{ color: CREAM }}>?</span>
           </p>
-          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 400, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'rgba(25,25,23,0.5)', margin: 0 }}>
+          <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 400, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'rgba(25,25,23,0.5)', margin: 0, maxWidth: 'none' }}>
             Lass uns gemeinsam schauen:
           </p>
         </motion.div>
