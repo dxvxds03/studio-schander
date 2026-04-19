@@ -1,19 +1,21 @@
-type Variant = 'light' | 'dark'
+type Variant = 'light' | 'dark' | 'orange'
 
 interface Props {
   projectType: 'client' | 'schander' | 'personal' | null
   client: string | null
-  variant?: Variant // 'light' = on dark bg, 'dark' = on light bg
+  variant?: Variant
   size?: 'sm' | 'md'
 }
 
 export default function ClientBadge({ projectType, client, variant = 'dark', size = 'sm' }: Props) {
-  const isLight = variant === 'light'
+  const isLight  = variant === 'light'
+  const isOrange = variant === 'orange'
   const fontSize = size === 'sm' ? '10px' : '12px'
   const padding  = size === 'sm' ? '3px 8px' : '4px 11px'
 
   if (projectType === 'schander') {
-    const tagColor = isLight ? '#F4F2ED' : '#191917'
+    // orange variant: outline orange; light: outline cream; dark: outline ink
+    const tagColor = isOrange ? '#E8331A' : isLight ? '#F4F2ED' : '#191917'
     return (
       <span
         style={{
@@ -81,9 +83,9 @@ export default function ClientBadge({ projectType, client, variant = 'dark', siz
           fontSize,
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          color: isLight ? '#F4F2ED' : '#191917',
-          background: isLight ? 'rgba(244,242,237,0.15)' : 'rgba(25,25,23,0.08)',
-          border: `1.5px solid ${isLight ? 'rgba(244,242,237,0.6)' : 'rgba(25,25,23,0.45)'}`,
+          color: isOrange ? '#F4F2ED' : isLight ? '#191917' : '#191917',
+          background: isOrange ? '#E8331A' : isLight ? '#F4F2ED' : '#F4F2ED',
+          border: `1.5px solid ${isOrange ? '#E8331A' : isLight ? '#F4F2ED' : 'rgba(25,25,23,0.45)'}`,
           padding,
           whiteSpace: 'nowrap',
           lineHeight: 1,

@@ -119,7 +119,7 @@ export default async function ProjektePage() {
                   <ClientBadge
                     projectType={(project.project_type as 'client' | 'schander' | 'personal' | null) ?? null}
                     client={project.client ?? null}
-                    variant="dark"
+                    variant="orange"
                     size="md"
                   />
                 </div>
