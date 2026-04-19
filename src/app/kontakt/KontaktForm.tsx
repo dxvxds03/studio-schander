@@ -19,7 +19,10 @@ const TYPES = [
 function CalEmbed() {
   useEffect(() => {
     ;(async function () {
-      const cal = await getCalApi({ namespace: 'erstgesprach', origin: 'https://app.cal.eu' })
+      const cal = await getCalApi({
+        namespace: 'erstgesprach',
+        embedJsUrl: 'https://app.cal.eu/embed/embed.js',
+      })
       cal('ui', { hideEventTypeDetails: false, layout: 'month_view' })
     })()
   }, [])
