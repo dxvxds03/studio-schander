@@ -278,10 +278,10 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         // Snap fractions: 0 … 1 mapped to each card
         const snapFracs  = txPerCard.map(dx => Math.abs(dx) / (totalMove || 1))
 
-        // Buffer ratio: carousel animation uses only the first n/(n+1) of scroll height.
-        // The remaining 1 screen is a deceleration buffer before leaving the hero.
-        const bufferRatio = n / (n + 1)
-        const adjustedSnapFracs = snapFracs.map(f => f * bufferRatio)
+        // On mobile: add 1 extra screen as a deceleration buffer before leaving the hero.
+        const isMobile = window.innerWidth < 768
+        const bufferRatio = isMobile ? n / (n + 1) : 1
+        const adjustedSnapFracs = isMobile ? snapFracs.map(f => f * bufferRatio) : snapFracs
 
 // ── Glow + rotation + name opacity ─────────────────────────
         const applyGlow = (rawIdx: number) => {
