@@ -19,29 +19,40 @@ export default function KontaktForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [type, setType] = useState('')
   const [tab, setTab] = useState<Tab>('termin')
+  const [calReady, setCalReady] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
-  // Load Cal.com embed script once
+  // Load Cal.com script once; init inline embed when termin-tab is active
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    if ((window as any).Cal) return
+    const initCal = () => {
+      const Cal = (window as any).Cal
+      if (!Cal) return
+      Cal('init', 'erstgesprach', { origin: 'https://app.cal.eu' })
+      Cal.ns.erstgesprach('inline', {
+        elementOrSelector: '#my-cal-inline-erstgesprach',
+        config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
+        calLink: 'schander/erstgesprach',
+      })
+      Cal.ns.erstgesprach('ui', {
+        cssVarsPerTheme: {
+          light: { 'cal-brand': '#E8331A' },
+          dark:  { 'cal-brand': '#E8331A' },
+        },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      })
+      setCalReady(true)
+    }
+
+    if ((window as any).Cal) {
+      initCal()
+      return
+    }
 
     const script = document.createElement('script')
     script.src = 'https://app.cal.eu/embed/embed.js'
     script.async = true
-    script.onload = () => {
-      const Cal = (window as any).Cal
-      if (!Cal) return
-      Cal('init', 'erstgesprach', { origin: 'https://app.cal.eu' })
-      Cal.ns.erstgesprach('ui', {
-        cssVarsPerTheme: {
-          light: { 'cal-brand': '#E8331A' },
-          dark:  { 'cal-brand': '#34160F' },
-        },
-        hideEventTypeDetails: false,
-        layout: 'week_view',
-      })
-    }
+    script.onload = initCal
     document.head.appendChild(script)
   }, [])
 
@@ -108,54 +119,73 @@ export default function KontaktForm() {
           lineHeight: 0.9,
           color: 'var(--ink)',
           textTransform: 'uppercase',
-          margin: '0 0 clamp(48px, 7vw, 80px)',
+          margin: '0 0 clamp(36px, 5vw, 56px)',
         }}
       >
         Lass uns<br />
         <span style={{ color: 'var(--dead-poet)' }}>reden.</span>
       </h1>
 
-      {/* Tab switcher */}
+      {/* ODER-Toggle */}
       <div
         style={{
-          display: 'flex',
+          display: 'inline-flex',
+          alignItems: 'center',
           gap: '0',
+          border: '1px solid var(--faint)',
           marginBottom: 'clamp(40px, 5vw, 64px)',
-          borderBottom: '1px solid var(--faint)',
+          overflow: 'hidden',
         }}
       >
-        {([['termin', 'Erstgespräch buchen'], ['nachricht', 'Nachricht schreiben']] as [Tab, string][]).map(([key, label]) => (
+        {([
+          ['termin',    'Termin buchen'],
+          ['nachricht', 'Nachricht schreiben'],
+        ] as [Tab, string][]).map(([key, label], i) => (
           <button
             key={key}
             onClick={() => setTab(key)}
             style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(13px, 1.4vw, 17px)',
-              letterSpacing: '0.04em',
+              fontFamily: '"Source Code Pro", monospace',
+              fontSize: '11px',
+              letterSpacing: '0.18em',
               textTransform: 'uppercase',
-              background: 'none',
+              background: tab === key ? 'var(--ink)' : 'transparent',
+              color: tab === key ? 'var(--cream)' : 'var(--muted)',
               border: 'none',
-              borderBottom: tab === key ? '2px solid var(--ink)' : '2px solid transparent',
-              color: tab === key ? 'var(--ink)' : 'var(--muted)',
-              padding: '12px 24px 12px 0',
-              marginBottom: '-1px',
+              borderLeft: i === 1 ? '1px solid var(--faint)' : 'none',
+              padding: '11px 24px',
               cursor: 'pointer',
-              transition: 'color 0.18s ease, border-color 0.18s ease',
+              transition: 'background 0.18s ease, color 0.18s ease',
+              whiteSpace: 'nowrap',
             }}
           >
-            {key === 'termin' && (
-              <span style={{ marginRight: '8px', opacity: 0.6, fontSize: '0.85em' }}>01</span>
-            )}
-            {key === 'nachricht' && (
-              <span style={{ marginRight: '8px', opacity: 0.6, fontSize: '0.85em' }}>02</span>
-            )}
             {label}
           </button>
         ))}
+        {/* ODER pill zwischen den buttons */}
+        <style>{`
+          .kontakt-toggle-or {
+            font-family: "Source Code Pro", monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--faint);
+            padding: 0 14px;
+            pointer-events: none;
+            user-select: none;
+            border-left: 1px solid var(--faint);
+            border-right: 1px solid var(--faint);
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+          }
+          @media (max-width: 560px) {
+            .kontakt-row { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
       </div>
 
-      {/* ── TAB 1: Erstgespräch ── */}
+      {/* ── TAB: Termin ── */}
       {tab === 'termin' && (
         <div>
           <p
@@ -165,73 +195,26 @@ export default function KontaktForm() {
               lineHeight: 1.8,
               color: 'var(--muted)',
               maxWidth: '52ch',
-              marginBottom: 'clamp(32px, 4vw, 48px)',
+              marginBottom: 'clamp(28px, 4vw, 40px)',
             }}
           >
             30 Minuten, kein Stress. Wir schauen gemeinsam, ob und wie ich helfen kann —
-            ob Branding, Web oder Konzept. Einfach Termin wählen und loslegen.
+            ob Branding, Web oder Konzept.
           </p>
 
-          <button
-            data-cal-link="schander/erstgesprach"
-            data-cal-namespace="erstgesprach"
-            data-cal-config='{"layout":"week_view","useSlotsViewOnSmallScreen":"true"}'
+          {/* Cal.com inline embed */}
+          <div
+            id="my-cal-inline-erstgesprach"
             style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '11px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              background: 'var(--ink)',
-              color: 'var(--cream)',
-              border: 'none',
-              padding: '16px 40px',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '12px',
-              transition: 'background 0.18s ease',
+              width: '100%',
+              minHeight: '600px',
+              overflow: 'scroll',
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'var(--dead-poet)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'var(--ink)')}
-          >
-            Termin buchen <Arrow direction="right" size={14} />
-          </button>
-
-          {/* Divider hint */}
-          <p
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '11px',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'var(--faint)',
-              marginTop: 'clamp(40px, 6vw, 72px)',
-            }}
-          >
-            Lieber schreiben?{' '}
-            <button
-              onClick={() => setTab('nachricht')}
-              style={{
-                fontFamily: 'inherit',
-                fontSize: 'inherit',
-                letterSpacing: 'inherit',
-                textTransform: 'inherit',
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                color: 'var(--muted)',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-                textUnderlineOffset: '3px',
-              }}
-            >
-              Zum Kontaktformular →
-            </button>
-          </p>
+          />
         </div>
       )}
 
-      {/* ── TAB 2: Kontaktformular ── */}
+      {/* ── TAB: Nachricht ── */}
       {tab === 'nachricht' && (
         <div style={{ maxWidth: '720px' }}>
           {status === 'success' ? (
@@ -378,46 +361,8 @@ export default function KontaktForm() {
               </div>
             </form>
           )}
-
-          {/* Divider hint */}
-          <p
-            style={{
-              fontFamily: '"Source Code Pro", monospace',
-              fontSize: '11px',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'var(--faint)',
-              marginTop: 'clamp(40px, 6vw, 72px)',
-            }}
-          >
-            Lieber direkt einen Termin?{' '}
-            <button
-              onClick={() => setTab('termin')}
-              style={{
-                fontFamily: 'inherit',
-                fontSize: 'inherit',
-                letterSpacing: 'inherit',
-                textTransform: 'inherit',
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                color: 'var(--muted)',
-                cursor: 'pointer',
-                textDecoration: 'underline',
-                textUnderlineOffset: '3px',
-              }}
-            >
-              Erstgespräch buchen →
-            </button>
-          </p>
         </div>
       )}
-
-      <style>{`
-        @media (max-width: 560px) {
-          .kontakt-row { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   )
 }
