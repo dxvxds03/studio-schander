@@ -154,11 +154,13 @@ export default function KontaktForm() {
       {/* Toggle */}
       <div
         style={{
-          display: 'inline-flex',
-          alignItems: 'center',
+          display: 'flex',
+          flexWrap: 'wrap',
           border: '1px solid var(--faint)',
           marginBottom: 'clamp(48px, 6vw, 80px)',
           overflow: 'hidden',
+          width: 'fit-content',
+          maxWidth: '100%',
         }}
       >
         {([
@@ -171,17 +173,18 @@ export default function KontaktForm() {
             style={{
               fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
               fontWeight: 700,
-              fontSize: '15px',
+              fontSize: 'clamp(13px, 3vw, 15px)',
               letterSpacing: '0.06em',
               textTransform: 'uppercase',
               background: tab === key ? 'var(--ink)' : 'transparent',
               color: tab === key ? 'var(--cream)' : 'var(--muted)',
               border: 'none',
               borderLeft: i === 1 ? '1px solid var(--faint)' : 'none',
-              padding: '14px 32px',
+              padding: 'clamp(11px, 2vw, 14px) clamp(16px, 4vw, 32px)',
               cursor: 'pointer',
               transition: 'background 0.18s ease, color 0.18s ease',
               whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             {label}

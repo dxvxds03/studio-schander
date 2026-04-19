@@ -11,14 +11,13 @@ export default function StatementBlock() {
     offset: ['start end', 'end start'],
   })
 
-  // Subtle parallax: block floats up as section scrolls into view
   const y = useTransform(scrollYProgress, [0, 1], [60, -60])
 
   return (
     <section
       ref={sectionRef}
       style={{
-        padding: 'clamp(80px, 18vw, 340px) clamp(80px, 18vw, 340px)',
+        padding: 'clamp(120px, 18vw, 340px) clamp(80px, 18vw, 340px)',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
