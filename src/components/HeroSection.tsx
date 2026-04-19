@@ -278,6 +278,11 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
         // Snap fractions: 0 … 1 mapped to each card
         const snapFracs  = txPerCard.map(dx => Math.abs(dx) / (totalMove || 1))
 
+        // Buffer ratio: carousel animation uses only the first n/(n+1) of scroll height.
+        // The remaining 1 screen is a deceleration buffer before leaving the hero.
+        const bufferRatio = n / (n + 1)
+        const adjustedSnapFracs = snapFracs.map(f => f * bufferRatio)
+
 // ── Glow + rotation + name opacity ─────────────────────────
         const applyGlow = (rawIdx: number) => {
           cards.forEach((card, i) => {
@@ -315,7 +320,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
           end: 'bottom bottom',
           scrub: 0.7,
           snap: {
-            snapTo: snapFracs,
+            snapTo: adjustedSnapFracs,
             duration: { min: 0.18, max: 0.45 },
             ease: 'power3.inOut',
             delay: 0.06,
