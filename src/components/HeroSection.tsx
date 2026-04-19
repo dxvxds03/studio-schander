@@ -326,7 +326,9 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             delay: 0.06,
           },
           onUpdate(self) {
-            const rawIdx = self.progress * (total - 1)
+            // Clamp progress to the animation range, leaving the buffer zone inert
+            const clampedProgress = Math.min(self.progress / bufferRatio, 1)
+            const rawIdx = clampedProgress * (total - 1)
             // Interpolate carousel translateX between measured positions
             const i0 = Math.min(Math.floor(rawIdx), total - 2)
             const i1 = i0 + 1
@@ -334,7 +336,6 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
             const tx = txPerCard[i0] + frac * (txPerCard[i1] - txPerCard[i0])
             gsap.set(carousel, { x: tx })
             applyGlow(rawIdx)
-
           },
         })
 
@@ -361,7 +362,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   return (
     <section
       ref={sectionRef}
-      style={{ height: `calc(${n} * 100vh)`, position: 'relative' }}
+      style={{ height: `calc(${n + 1} * 100vh)`, position: 'relative' }}
     >
       {/* Sticky viewport */}
       <div
