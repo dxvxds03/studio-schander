@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Cal, { getCalApi } from '@calcom/embed-react'
 import { supabase } from '@/lib/supabase'
 import Arrow from '@/components/Arrow'
 
@@ -15,25 +16,11 @@ const TYPES = [
   ['sonstiges', 'Sonstiges'],
 ] as const
 
-export default function KontaktForm() {
-  const [status, setStatus] = useState<Status>('idle')
-  const [type, setType] = useState('')
-  const [tab, setTab] = useState<Tab>('termin')
-  const [calReady, setCalReady] = useState(false)
-  const formRef = useRef<HTMLFormElement>(null)
-
-  // Load Cal.com script once; init inline embed when termin-tab is active
+function CalEmbed() {
   useEffect(() => {
-    const initCal = () => {
-      const Cal = (window as any).Cal
-      if (!Cal) return
-      Cal('init', 'erstgesprach', { origin: 'https://app.cal.eu' })
-      Cal.ns.erstgesprach('inline', {
-        elementOrSelector: '#my-cal-inline-erstgesprach',
-        config: { layout: 'month_view', useSlotsViewOnSmallScreen: 'true' },
-        calLink: 'schander/erstgesprach',
-      })
-      Cal.ns.erstgesprach('ui', {
+    ;(async () => {
+      const cal = await getCalApi({ namespace: 'erstgesprach' })
+      cal('ui', {
         cssVarsPerTheme: {
           light: { 'cal-brand': '#E8331A' },
           dark:  { 'cal-brand': '#E8331A' },
@@ -41,20 +28,24 @@ export default function KontaktForm() {
         hideEventTypeDetails: false,
         layout: 'month_view',
       })
-      setCalReady(true)
-    }
-
-    if ((window as any).Cal) {
-      initCal()
-      return
-    }
-
-    const script = document.createElement('script')
-    script.src = 'https://app.cal.eu/embed/embed.js'
-    script.async = true
-    script.onload = initCal
-    document.head.appendChild(script)
+    })()
   }, [])
+
+  return (
+    <Cal
+      namespace="erstgesprach"
+      calLink="schander/erstgesprach"
+      style={{ width: '100%', height: '100%', overflow: 'scroll' }}
+      config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true', theme: 'auto' }}
+    />
+  )
+}
+
+export default function KontaktForm() {
+  const [status, setStatus] = useState<Status>('idle')
+  const [type, setType]     = useState('')
+  const [tab, setTab]       = useState<Tab>('termin')
+  const formRef             = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -131,7 +122,6 @@ export default function KontaktForm() {
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '0',
           border: '1px solid var(--faint)',
           marginBottom: 'clamp(40px, 5vw, 64px)',
           overflow: 'hidden',
@@ -162,27 +152,6 @@ export default function KontaktForm() {
             {label}
           </button>
         ))}
-        {/* ODER pill zwischen den buttons */}
-        <style>{`
-          .kontakt-toggle-or {
-            font-family: "Source Code Pro", monospace;
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--faint);
-            padding: 0 14px;
-            pointer-events: none;
-            user-select: none;
-            border-left: 1px solid var(--faint);
-            border-right: 1px solid var(--faint);
-            align-self: stretch;
-            display: flex;
-            align-items: center;
-          }
-          @media (max-width: 560px) {
-            .kontakt-row { grid-template-columns: 1fr !important; }
-          }
-        `}</style>
       </div>
 
       {/* ── TAB: Termin ── */}
@@ -201,16 +170,7 @@ export default function KontaktForm() {
             30 Minuten, kein Stress. Wir schauen gemeinsam, ob und wie ich helfen kann —
             ob Branding, Web oder Konzept.
           </p>
-
-          {/* Cal.com inline embed */}
-          <div
-            id="my-cal-inline-erstgesprach"
-            style={{
-              width: '100%',
-              minHeight: '600px',
-              overflow: 'scroll',
-            }}
-          />
+          <CalEmbed />
         </div>
       )}
 
@@ -242,7 +202,6 @@ export default function KontaktForm() {
               onSubmit={handleSubmit}
               style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
             >
-              {/* Name + E-Mail */}
               <div
                 className="kontakt-row"
                 style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}
@@ -250,32 +209,25 @@ export default function KontaktForm() {
                 <div>
                   <label htmlFor="kf-name" style={lbl}>Name *</label>
                   <input
-                    id="kf-name"
-                    name="name"
-                    type="text"
-                    required
+                    id="kf-name" name="name" type="text" required
                     placeholder="David Mustermann"
                     style={inp}
                     onFocus={e => (e.currentTarget.style.borderColor = 'var(--ink)')}
-                    onBlur={e => (e.currentTarget.style.borderColor = 'var(--faint)')}
+                    onBlur={e  => (e.currentTarget.style.borderColor = 'var(--faint)')}
                   />
                 </div>
                 <div>
                   <label htmlFor="kf-email" style={lbl}>E-Mail *</label>
                   <input
-                    id="kf-email"
-                    name="email"
-                    type="email"
-                    required
+                    id="kf-email" name="email" type="email" required
                     placeholder="hallo@beispiel.de"
                     style={inp}
                     onFocus={e => (e.currentTarget.style.borderColor = 'var(--ink)')}
-                    onBlur={e => (e.currentTarget.style.borderColor = 'var(--faint)')}
+                    onBlur={e  => (e.currentTarget.style.borderColor = 'var(--faint)')}
                   />
                 </div>
               </div>
 
-              {/* Projekt-Art */}
               <div>
                 <label style={lbl}>Art des Projekts</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -297,9 +249,7 @@ export default function KontaktForm() {
                       }}
                     >
                       <input
-                        type="radio"
-                        name="projektart"
-                        value={val}
+                        type="radio" name="projektart" value={val}
                         checked={type === val}
                         onChange={() => setType(val)}
                         style={{ display: 'none' }}
@@ -310,32 +260,24 @@ export default function KontaktForm() {
                 </div>
               </div>
 
-              {/* Nachricht */}
               <div>
                 <label htmlFor="kf-msg" style={lbl}>Nachricht / Projektidee *</label>
                 <textarea
-                  id="kf-msg"
-                  name="nachricht"
-                  required
-                  rows={6}
+                  id="kf-msg" name="nachricht" required rows={6}
                   placeholder="Beschreib kurz worum es geht — Kontext, Ziel, Zeitrahmen, alles was hilft."
                   style={{ ...inp, resize: 'vertical', minHeight: '140px' }}
                   onFocus={e => (e.currentTarget.style.borderColor = 'var(--ink)')}
-                  onBlur={e => (e.currentTarget.style.borderColor = 'var(--faint)')}
+                  onBlur={e  => (e.currentTarget.style.borderColor = 'var(--faint)')}
                 />
               </div>
 
-              {/* Error */}
               {status === 'error' && (
                 <p style={{ fontFamily: '"Source Code Pro", monospace', fontSize: '11px', letterSpacing: '0.1em', color: 'var(--dead-poet)' }}>
                   Etwas ist schiefgelaufen — versuch es nochmal oder schreib direkt an{' '}
-                  <a href="mailto:mail@studio-schander.de" style={{ color: 'inherit' }}>
-                    mail@studio-schander.de
-                  </a>.
+                  <a href="mailto:mail@studio-schander.de" style={{ color: 'inherit' }}>mail@studio-schander.de</a>.
                 </p>
               )}
 
-              {/* Submit */}
               <div>
                 <button
                   type="submit"
@@ -363,6 +305,12 @@ export default function KontaktForm() {
           )}
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 560px) {
+          .kontakt-row { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   )
 }
