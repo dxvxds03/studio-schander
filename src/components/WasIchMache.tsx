@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import Arrow from './Arrow'
@@ -22,6 +22,65 @@ const DARK_BG = '#34160F'
 const CREAM = '#F4F2ED'
 const ORANGE = '#E8331A'
 
+function CalEmbed() {
+  useEffect(() => {
+    const existing = document.getElementById('cal-home-script')
+    if (existing) existing.remove()
+
+    const script = document.createElement('script')
+    script.id = 'cal-home-script'
+    script.type = 'text/javascript'
+    script.innerHTML = `
+      (function (C, A, L) {
+        let p = function (a, ar) { a.q.push(ar); };
+        let d = C.document;
+        C.Cal = C.Cal || function () {
+          let cal = C.Cal; let ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {}; cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () { p(api, arguments); };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p(cal.ns[namespace], ar);
+              p(cal, ["initNamespace", namespace]);
+            } else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.eu/embed/embed.js", "init");
+
+      Cal("init", "erstgesprach", { origin: "https://app.cal.eu" });
+
+      Cal.ns.erstgesprach("inline", {
+        elementOrSelector: "#cal-home-inline",
+        config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
+        calLink: "schander/erstgesprach",
+      });
+
+      Cal.ns.erstgesprach("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    `
+    document.body.appendChild(script)
+
+    return () => {
+      document.getElementById('cal-home-script')?.remove()
+    }
+  }, [])
+
+  return (
+    <div
+      id="cal-home-inline"
+      style={{ width: '100%', height: '700px', overflow: 'scroll' }}
+    />
+  )
+}
+
 export default function WasIchMache({ items }: { items: LeistungItem[] }) {
   const [activeKey, setActiveKey] = useState<number | null>(null)
   const [hoveredKey, setHoveredKey] = useState<number | null>(null)
@@ -39,7 +98,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           background: '#E8331A',
         }}
       >
-        {/* Heading — fluid, stets volle Breite minus Padding */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -101,7 +159,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           </h2>
         </motion.div>
 
-        {/* Accordion — dark background */}
+        {/* Accordion */}
         <div style={{ background: DARK_BG }}>
           {items.map((item, i) => {
             const isActive = activeKey === item.id
@@ -123,7 +181,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                   cursor: 'pointer',
                 }}
               >
-                {/* Title row */}
                 <div
                   style={{
                     display: 'flex',
@@ -150,7 +207,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                   >
                     {item.title}
                   </h3>
-
                   <span
                     style={{
                       fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
@@ -168,7 +224,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
                   </span>
                 </div>
 
-                {/* Expanded content */}
                 <AnimatePresence initial={false}>
                   {isActive && (
                     <motion.div
@@ -255,7 +310,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
         </div>
       </section>
 
-      {/* ── Cream section: closing CTA ───────────────────────────── */}
+      {/* ── Closing CTA mit Cal Embed ────────────────────────────── */}
       <section
         style={{
           paddingTop: 'clamp(80px, 12vw, 160px)',
@@ -265,13 +320,12 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           background: '#E8331A',
         }}
       >
-        {/* Text block */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{ padding: `0 ${px}`, marginBottom: 'clamp(40px, 6vw, 80px)' }}
+          style={{ padding: `0 ${px}`, marginBottom: 'clamp(40px, 6vw, 64px)' }}
         >
           <p
             style={{
@@ -281,7 +335,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               letterSpacing: '-0.03em',
               lineHeight: 1.05,
               color: 'var(--ink)',
-              margin: '0 0 0.35em',
+              margin: '0 0 0.2em',
             }}
           >
             Du weißt noch nicht genau
@@ -299,55 +353,18 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               margin: 0,
             }}
           >
-            Das ist meistens der beste Startpunkt —
-            <br />
-            kein fertiger Brief nötig.
+            Lass uns gemeinsam schauen:
           </p>
         </motion.div>
 
-        {/* Pulsing orange CTA button */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.55, delay: 0.2, ease: [0.22, 0, 0, 1] }}
+          transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 0, 0, 1] }}
           style={{ padding: `0 ${px}` }}
         >
-          <Link
-            href="/kontakt"
-            data-hover
-            style={{
-              fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(16px, 1.6vw, 22px)',
-              letterSpacing: '-0.01em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              color: CREAM,
-              background: DARK_BG,
-              border: `2px solid ${DARK_BG}`,
-              padding: '14px 28px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '12px',
-              transition: 'background 0.22s ease, color 0.22s ease, border-color 0.22s ease',
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = 'var(--ink)'
-              el.style.borderColor = 'var(--ink)'
-              el.style.color = CREAM
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLAnchorElement
-              el.style.background = DARK_BG
-              el.style.borderColor = DARK_BG
-              el.style.color = CREAM
-            }}
-          >
-            Schreib mir
-            <Arrow direction="right" size={18} />
-          </Link>
+          <CalEmbed />
         </motion.div>
       </section>
     </>
