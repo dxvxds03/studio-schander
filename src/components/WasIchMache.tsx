@@ -107,7 +107,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
               letterSpacing: '-0.035em',
               lineHeight: 1,
               margin: 0,
-              color: 'var(--ink)',
+              color: CREAM,
               textTransform: 'uppercase',
               whiteSpace: 'nowrap',
               display: 'flex',
@@ -269,12 +269,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.7, ease: [0.22, 0, 0, 1] }}
-          style={{
-            paddingLeft: px,
-            paddingRight: px,
-            marginBottom: 'clamp(40px, 6vw, 64px)',
-            textAlign: 'center',
-          }}
+          style={{ paddingLeft: px, paddingRight: px, marginBottom: 'clamp(40px, 6vw, 64px)', textAlign: 'center' }}
         >
           <p style={{ fontFamily: '"Cabinet Grotesk", "Helvetica Neue", sans-serif', fontWeight: 800, fontSize: 'clamp(32px, 5vw, 72px)', letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--ink)', margin: '0 0 0.2em', maxWidth: 'none' }}>
             Du weißt noch nicht genau
