@@ -17,7 +17,6 @@ export interface LeistungItem {
 }
 
 const px = 'clamp(24px, 4vw, 64px)'
-
 const DARK_BG = '#34160F'
 const CREAM = '#F4F2ED'
 const ORANGE = '#E8331A'
@@ -81,12 +80,14 @@ function CalEmbed() {
       />
       <style>{`
         @media (min-width: 768px) {
-          #cal-home-inline {
-            margin-left: 0;
-          }
-          .cal-home-wrapper {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+          /* wrapper that Cal injects */
+          #cal-home-inline,
+          #cal-home-inline > *,
+          #cal-home-inline iframe,
+          #cal-home-inline div[style],
+          #cal-home-inline > div {
+            margin-left: 0 !important;
+            margin-right: auto !important;
           }
         }
       `}</style>
@@ -278,7 +279,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           background: '#E8331A',
         }}
       >
-        {/* Text */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -296,9 +296,7 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
           </p>
         </motion.div>
 
-        {/* Cal Embed — auf Desktop kein seitliches Padding */}
         <motion.div
-          className="cal-home-wrapper"
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
@@ -307,15 +305,6 @@ export default function WasIchMache({ items }: { items: LeistungItem[] }) {
         >
           <CalEmbed />
         </motion.div>
-
-        <style>{`
-          @media (min-width: 768px) {
-            .cal-home-wrapper {
-              padding-left: 0 !important;
-              padding-right: 0 !important;
-            }
-          }
-        `}</style>
       </section>
     </>
   )
