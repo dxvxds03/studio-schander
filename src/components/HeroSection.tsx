@@ -362,7 +362,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
   return (
     <section
       ref={sectionRef}
-      style={{ height: `calc(${n + 1} * 100vh)`, position: 'relative' }}
+      style={{ height: `calc(${n + 0.2} * 100vh)`, position: 'relative' }}
     >
       {/* Sticky viewport */}
       <div
