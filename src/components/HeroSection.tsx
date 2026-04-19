@@ -44,7 +44,7 @@ function CircularTextButton() {
         gap: 'clamp(6px, 0.8vw, 12px)',
       }}
     >
-      <FlowerIcon color="var(--negroni)" size={48} />
+      <FlowerIcon color="var(--dead-poet)" size={48} />
       <span style={{
         fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
         fontWeight: 800,
