@@ -90,7 +90,8 @@ export default function CustomCursor() {
 
   if (!hasPointer || pathname.startsWith('/admin')) return null
 
-  const color = isDragging ? '#34160f' : '#F4F2ED'
+  const isHomepage = pathname === '/'
+  const color = isDragging ? '#34160f' : isHomepage ? '#F4F2ED' : '#E8331A'
 
   return (
     <>

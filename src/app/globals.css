@@ -119,7 +119,7 @@ body {
 .hero-carousel-card .card-hover-ring {
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 2.5px #E8331A;
+  box-shadow: inset 0 0 0 2.5px #34160f;
   opacity: 0;
   transition: opacity 0.22s ease;
   pointer-events: none;

@@ -38,20 +38,20 @@ function CircularTextButton() {
         width: 'clamp(140px, 14vw, 220px)',
         height: 'clamp(140px, 14vw, 220px)',
         borderRadius: '50%',
-        border: '1.5px solid var(--ink)',
-        background: 'var(--cream)',
+        border: '1.5px solid #F4F2ED',
+        background: 'transparent',
         flexDirection: 'column',
         gap: 'clamp(6px, 0.8vw, 12px)',
       }}
     >
-      <FlowerIcon color="var(--dead-poet)" size={48} />
+      <FlowerIcon color="#F4F2ED" size={48} />
       <span style={{
         fontFamily: '"Cabinet Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif',
         fontWeight: 800,
         fontSize: 'clamp(11px, 1.2vw, 17px)',
         letterSpacing: '0.08em',
         textTransform: 'uppercase',
-        color: 'var(--ink)',
+        color: '#F4F2ED',
         textAlign: 'center',
         lineHeight: 1.2,
       }}>
@@ -174,7 +174,7 @@ function SchaderSvgLogo() {
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{ position: 'relative', width: '100%', pointerEvents: 'auto' }}
+        style={{ position: 'relative', width: '100%', pointerEvents: 'auto', background: '#34160f', borderRadius: '4px' }}
       >
         {/* Base — subtle, always visible */}
         <svg viewBox="0 0 2791.7 1020.62" fill="#34160f" style={{ width: '100%', height: 'auto', display: 'block', opacity: 0.18 }} aria-label="Studio Schander">
@@ -426,7 +426,7 @@ export default function HeroSection({ projects }: { projects: HeroProject[] }) {
                 <ClientBadge
                   projectType={project.project_type ?? null}
                   client={project.client ?? null}
-                  variant="dark"
+                  variant="light"
                   size="sm"
                 />
                 <span>
